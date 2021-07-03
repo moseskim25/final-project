@@ -1,1 +1,1 @@
-CREATE DATABASE hobbynet;
+-- CREATE DATABASE hobbynet;
