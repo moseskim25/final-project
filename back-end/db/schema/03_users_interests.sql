@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS users_interests CASCADE;
 
 
 CREATE TABLE users_interests (
-  id SERIAL PRIMARY KEY,
-  user_id INT,
-  interest_id INT,
-  level INT
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INT REFERENCES users(id) ON DELETE CASCADE,
+  interest_id INT REFERENCES interests(id) ON DELETE CASCADE,
+  level INT  NOT NULL
 );
