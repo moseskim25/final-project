@@ -16,7 +16,7 @@ import {
   Center
 } from "@chakra-ui/react";
 import Toggle from './Toggle'
-import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon, WarningTwoIcon } from "@chakra-ui/icons";
 
 // the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
@@ -71,6 +71,11 @@ const Navbar = (props) => {
                     <Text>Messages</Text>
                 </Stack>
                 <Toggle></Toggle>
+                {/* this is a button for testing purposes - this toggles the logged in navbar and the logged out taskbar (replace later w/  login features) */}
+                <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}} onClick={() => setIsLoggedIn(!isLoggedIn)}>
+                    <WarningTwoIcon align="center"></WarningTwoIcon>
+                    <Text>Toggle Login Mode</Text>
+                </Stack>
 
             </Stack>
             <Stack _hover={{color: "#b3b3b3"}}>
@@ -135,6 +140,11 @@ const Navbar = (props) => {
             >   
                 {/* this is the navbar menu options, add/subtract later as necessary */}
                 <Toggle></Toggle>
+                {/* this is a button for testing purposes - this toggles the logged in navbar and the logged out taskbar (replace later w/  login features) */}
+                <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}} onClick={() => setIsLoggedIn(!isLoggedIn)}>
+                    <WarningTwoIcon align="center"></WarningTwoIcon>
+                    <Text>Toggle Login Mode</Text>
+                </Stack>
 
             </Stack>
             <Stack 
