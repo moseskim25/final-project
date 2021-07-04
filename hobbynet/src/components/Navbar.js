@@ -18,6 +18,7 @@ import {
 import Toggle from './Toggle'
 import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon } from "@chakra-ui/icons";
 
+// the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
@@ -34,6 +35,7 @@ const Navbar = (props) => {
     >
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+          {/* note to self: design a logo & title and stick it here later */}
           LOREM IPSUM
         </Heading>
       </Flex>
@@ -55,6 +57,7 @@ const Navbar = (props) => {
                 mt={{ base: 4, md: 0 }}
                 spacing="50px"
             >   
+                {/* this is the navbar menu options, add/subtract later as necessary */}
                 <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}}>
                     <ViewIcon align="center"></ViewIcon>
                     <Text>Browse</Text>
@@ -84,6 +87,7 @@ const Navbar = (props) => {
                             <Center>Moses Kim<ChevronDownIcon ml="5px"></ChevronDownIcon></Center>
                         </Stack>
                     </MenuButton>
+                    {/* the dropdown list for a user - currently all redirects to w3schools but can update later */}
                     <MenuList bg="white" color="black">
                         <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Profile</MenuItem>
                         <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
