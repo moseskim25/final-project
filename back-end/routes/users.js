@@ -15,8 +15,6 @@ module.exports = (db) => {
   
   router.post("/new", (req, res) => {
     const {email, password} = req.body
-    console.log(email)
-    console.log(password)
 
     db.query(`INSERT INTO users (email, password)
     VALUES ($1, $2)`,
