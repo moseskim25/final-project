@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import './styles/Registration.scss';
+import { Link } from 'react-router-dom';
+
 
 export default function Registration(props) {
 
@@ -19,7 +21,9 @@ export default function Registration(props) {
             <input className="pass" type="password" align="center" placeholder="Password" onChange={event => {
               setPassword(event.target.value);
             }}/>
-            <button className="submit" align="center" onClick={() => createUser(email, password)}>Submit</button>
+            <Link to='/register'>
+              <button className="submit" align="center" onClick={() => createUser(email, password)}>Submit</button>
+            </Link>
             <p className="forgot" align="center"><a href="#" />Forgot Password?</p>
           </form>
       </div>
