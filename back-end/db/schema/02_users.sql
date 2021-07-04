@@ -1,16 +1,16 @@
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY NOT NULL,
   first_name VARCHAR(50),
   last_name VARCHAR(50),
-  email VARCHAR(50),
-  password VARCHAR(50),
+  email VARCHAR(50) NOT NULL,
+  password VARCHAR(50) NOT NULL,
   postal_code VARCHAR(25),
   birthday DATE,
-  profile_image VARCHAR,
-  gender VARCHAR(25),
-  created_at TIMESTAMP
+  profile_image VARCHAR(255),
+  gender VARCHAR(50),
+  created_at TIMESTAMP default current_timestamp NOT NULL
 );
 
 -- INSERT INTO users (first_name, last_name, email, password, postal_code, age, profile_image, gender)
