@@ -15,7 +15,7 @@ import {
   Image,
   Center
 } from "@chakra-ui/react";
-import { HamburgerIcon, ChevronDownIcon, ChatIcon, BellIcon, ViewIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon } from "@chakra-ui/icons";
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,8 +28,7 @@ const Navbar = (props) => {
       justify="space-between"
       wrap="wrap"
       padding={6}
-      bg="teal.500"
-      color="white"
+      color='gray.600'
       {...props}
     >
       <Flex align="center" mr={5}>
@@ -64,12 +63,12 @@ const Navbar = (props) => {
                     <Text>Notifications</Text>
                 </Stack>
                 <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}}>
-                    <ChatIcon align="center"></ChatIcon>
+                    <EmailIcon align="center"></EmailIcon>
                     <Text>Messages</Text>
                 </Stack>
 
             </Stack>
-            <Stack _hover={{opacity: 0.85}}>
+            <Stack _hover={{color: "#b3b3b3"}}>
                 <Menu>
                     <MenuButton>
                         <Stack direction="row">
@@ -83,7 +82,7 @@ const Navbar = (props) => {
                             <Center>Moses Kim<ChevronDownIcon ml="5px"></ChevronDownIcon></Center>
                         </Stack>
                     </MenuButton>
-                    <MenuList color="black">
+                    <MenuList bg="white" color="black">
                         <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Profile</MenuItem>
                         <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
                         <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
