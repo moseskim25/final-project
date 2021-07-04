@@ -1,31 +1,21 @@
 import Registration from './components/Registration';
-import Navbar from './components/Navbar';
-import React, {useState, useEffect} from 'react';
-import { createUser } from './hooks/helper';
+import Navbar from './components/Navbar'
+import LandingPage from './components/LandingPage';
+import { Switch, Route } from 'react-router-dom'
 
 function App() {
-
-  const [conversations, setConversations] = useState([]);
-
-  useEffect(() => {
-    const getConversations = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/conversations');
-        const data = await response.json();
-        setConversations(data.rows);
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
-    getConversations();
-
-  }, [])
-
   return (
-    <div>
-      <Navbar/>
-      <Registration createUser={createUser} />
-    </div>
+    <main>
+      <Switch>
+        <Route path='/' exact>
+          <Navbar/>
+          <Registration/>
+        </Route>
+        <Route path='/hello'>
+          <p>why</p>
+        </Route>
+      </Switch>
+    </main>
   );
 }
 

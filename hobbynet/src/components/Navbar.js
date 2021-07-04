@@ -60,7 +60,7 @@ const Navbar = (props) => {
                 {/* this is the navbar menu options, add/subtract later as necessary */}
                 <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}}>
                     <ViewIcon align="center"></ViewIcon>
-                    <Text>Browse</Text>
+                    <Text>Connect</Text>
                 </Stack>
                 <Stack display="flex" alignItems="center" spacing="0px" _hover={{opacity: 0.85}}>
                     <BellIcon align="center"></BellIcon>
