@@ -6,9 +6,14 @@ import {
   Flex,
   Text,
   Button,
-  useDisclosure
+  useDisclosure,
+  Menu,
+  MenuList, 
+  MenuButton,
+  MenuItem,
+  MenuDivider
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,13 +57,23 @@ const Navbar = (props) => {
         display={{ base: isOpen ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
       >
-        <Button
-          variant="outline"
-          _hover={{ bg: "teal.700", borderColor: "teal.700" }}
-        >
-          Create account
-        </Button>
       </Box>
+      <Menu>
+        {({ isOpen }) => (
+            <>
+            <MenuButton color="black" isActive={isOpen} as={Button} rightIcon={<ChevronDownIcon />}>
+                Moses Kim
+            </MenuButton>
+            <MenuList color="black">
+                <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Profile</MenuItem>
+                <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
+                <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
+                <MenuDivider/>
+                <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Logout</MenuItem>
+            </MenuList>
+            </>
+        )}
+    </Menu>
     </Flex>
   );
 };
