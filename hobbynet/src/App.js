@@ -9,7 +9,7 @@ function App() {
       <Switch>
         <Route path='/' exact>
           <Navbar/>
-          <Registration/>
+          <LandingPage/>
         </Route>
         <Route path='/hello'>
           <p>why</p>
