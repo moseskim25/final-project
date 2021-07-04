@@ -13,7 +13,6 @@ function App() {
         const response = await fetch('http://localhost:8000/conversations');
         const data = await response.json();
         setConversations(data.rows);
-        console.log('data:', data);
       } catch (err) {
         console.log(err.message);
       }
