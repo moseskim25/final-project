@@ -10,7 +10,7 @@ CREATE TABLE users (
   birthday DATE,
   profile_image VARCHAR(255),
   gender VARCHAR(50),
-  created_at TIMESTAMP NOT NULL
+  created_at TIMESTAMP default current_timestamp NOT NULL
 );
 
 -- INSERT INTO users (first_name, last_name, email, password, postal_code, age, profile_image, gender)
