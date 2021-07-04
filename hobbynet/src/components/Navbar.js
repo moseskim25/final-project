@@ -15,6 +15,7 @@ import {
   Image,
   Center
 } from "@chakra-ui/react";
+import Toggle from './Toggle'
 import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon } from "@chakra-ui/icons";
 
 const Navbar = (props) => {
@@ -66,6 +67,7 @@ const Navbar = (props) => {
                     <EmailIcon align="center"></EmailIcon>
                     <Text>Messages</Text>
                 </Stack>
+                <Toggle></Toggle>
 
             </Stack>
             <Stack _hover={{color: "#b3b3b3"}}>
@@ -76,7 +78,7 @@ const Navbar = (props) => {
                                 boxSize="2rem"
                                 borderRadius="full"
                                 src="https://placekitten.com/100/100"
-                                alt="Fluffybuns the destroyer"
+                                alt="cute kitty"
                                 mr="5px"
                             />
                             <Center>Moses Kim<ChevronDownIcon ml="5px"></ChevronDownIcon></Center>
