@@ -11,8 +11,6 @@ module.exports = router;
 
 
 module.exports = (db) => {
-
-
   router.post("/new", (req, res) => {
     const { email, password } = req.body
 
@@ -20,14 +18,9 @@ module.exports = (db) => {
     VALUES ($1, $2) RETURNING *;`,
       [email, password])
       .then(data => {
-        // console.log("~~~~~~inside users.js backend~~~~~~~~~~~~~");
-        // console.log(data.rows[0].id);
-        // console.log(req);
         return res.json(data.rows[0])
       })
       .catch(err => console.error(err));
   });
-  console.log("~~~~~");
-  console.log(router);
   return router;
 };
