@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import LandingPage from './components/LandingPage';
 import UserProfile from './components/UserProfile'
 import { Switch, Route } from 'react-router-dom'
+import Card from './components/Card';
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
           <Navbar/>
           <LandingPage/>
         </Route>
-        <Route path='/hello'>
-          <p>why</p>
+        <Route path='/testpath'>
           <UserProfile/>
+          <Card/>
         </Route>
       </Switch>
     </main>
