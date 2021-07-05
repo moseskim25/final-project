@@ -1,7 +1,8 @@
 import Registration from './components/Registration';
 import Navbar from './components/Navbar'
 import LandingPage from './components/LandingPage';
-import { Switch, Route } from 'react-router-dom'
+import Card from './components/Card';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
           <Navbar/>
           <LandingPage/>
         </Route>
-        <Route path='/hello'>
-          <p>why</p>
+        <Route path='/testpath'>
+          <Card/>
         </Route>
       </Switch>
     </main>
