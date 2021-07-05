@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   const login = () => {
-    axios.post('http://localhost:8000/login').then(res => setUser(res.data))
+    axios.post('/api/login').then(res => setUser(res.data))
   }
 
   return (
@@ -25,6 +25,9 @@ function App() {
         </Route>
         <Route path='/testpath'>
           <Card />
+        </Route>
+        <Route path='/register'>
+          <Registration createUser={createUser} />
         </Route>
       </Switch>
     </main>
