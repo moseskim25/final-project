@@ -14,7 +14,7 @@ import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 
 function App() {
-  const { createUser, createUserGeneral } = helper();
+  const { createUser, createUserGeneral, getInterests } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -27,7 +27,7 @@ function App() {
         </Route>
         <Route path="/register">
           <Navbar />
-          <Registration createUser={createUser} createUserGeneral={createUserGeneral} />
+          <Registration createUser={createUser} createUserGeneral={createUserGeneral} getInterests={getInterests} />
         </Route>
         <Route path="/testpath">
           <UserProfile />
