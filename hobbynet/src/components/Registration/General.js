@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 
 export default function General(props) {
 
-  const { createUserGeneral } = props;
+  const { createUserGeneral, setMode } = props;
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -12,7 +12,8 @@ export default function General(props) {
     setFirstName(firstName);
     setLastName(lastName);
     setPostalCode(postalCode);
-
+    // createUserGeneral(firstName, lastName, postalCode);
+    setMode();
     return;
   }
 
@@ -30,7 +31,7 @@ export default function General(props) {
             <input className="un " type="text" align="center" placeholder="Postal Code" onChange={event => {
               setPostalCode(event.target.value)
             }}/>
-            <button className="submit" align="center" onSubmit={validate}>Submit</button>
+            <button className="submit" align="center" onClick={validate}>Submit</button>
           </form>
       </div>
     </Fragment>

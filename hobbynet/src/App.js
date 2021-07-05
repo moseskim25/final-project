@@ -1,12 +1,13 @@
 import Registration from './components/Registration';
 import Navbar from './components/Navbar'
 import LandingPage from './components/LandingPage';
-import General from './components/Registration/General';
 import { Switch, Route } from 'react-router-dom'
-import {createUser} from './hooks/helper';
-import {createUserGeneral} from './hooks/helper';
+import helper from './hooks/helper';
 
 function App() {
+
+  const { createUser, createUserGeneral } = helper();
+
   return (
     <main>
       <Switch>
@@ -16,7 +17,7 @@ function App() {
         </Route>
         <Route path='/register'>
           <Navbar />
-          <General createUserGeneral={createUserGeneral}/>
+          <Registration createUser={createUser} createUserGeneral={createUserGeneral}/>
         </Route>
       </Switch>
     </main>
