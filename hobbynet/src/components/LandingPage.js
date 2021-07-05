@@ -25,13 +25,13 @@ import {
                   position: 'absolute',
                   bottom: 1,
                   left: 0,
-                  bg: 'blue.400',
+                  bg: 'pink.400',
                   zIndex: -1,
                 }}>
                 LOREM IPSUM
               </Text>
               <br />{' '}
-              <Text color={'blue.400'} as={'span'}>
+              <Text color={'pink.400'} as={'span'}>
                 DOLOR SIT AMET
               </Text>{' '}
             </Heading>
@@ -42,10 +42,10 @@ import {
             <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
               <Button
                 rounded={'full'}
-                bg={'blue.400'}pla
+                bg={'pink.400'}pla
                 color={'white'}
                 _hover={{
-                  bg: 'blue.500',
+                  bg: 'pink.500',
                 }}>
                 Register Now!
               </Button>
