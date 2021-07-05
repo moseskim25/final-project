@@ -22,5 +22,18 @@ module.exports = (db) => {
       })
       .catch(err => console.error(err));
   });
+
+  router.put("/new/general", (req, res) => {
+    const { first_name, last_name, postal_code, id } = req.body
+
+    db.query(`UPDATE users
+    SET first_name = $1, last_name = $2, postal_code = $3
+    WHERE id = $4;`,
+      [first_name, last_name, postal_code, id])
+      .then(data => {
+        return res.json(data.rows[0])
+      })
+      .catch(err => console.error(err));
+  });
   return router;
 };
