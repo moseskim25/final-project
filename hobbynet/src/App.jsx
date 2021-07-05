@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { createUser } from "./hooks/helper";
 import axios from "axios";
+import { Switch, Route } from "react-router-dom";
+
+import helper from "./hooks/helper";
 
 import Registration from "./components/Registration";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
-import helper from "./hooks/helper";
 import Card from "./components/Card";
-import { Switch, Route } from "react-router-dom";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const { createUser, createUserGeneral } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
-
-  // const login = () => {
-  //   axios.post("/api/login").then((res) => setUser(res.data));
-  // };
 
   return (
     <main>
@@ -31,6 +29,7 @@ function App() {
           <Registration createUser={createUser} createUserGeneral={createUserGeneral} />
         </Route>
         <Route path="/testpath">
+          <UserProfile />
           <Card />
         </Route>
         <Route path="/register">
