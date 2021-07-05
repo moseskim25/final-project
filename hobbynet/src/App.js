@@ -5,10 +5,12 @@ import axios from 'axios';
 import Registration from './components/Registration';
 import Navbar from './components/Navbar'
 import LandingPage from './components/LandingPage';
+import helper from './hooks/helper';
 import Card from './components/Card';
 import { Switch, Route } from 'react-router-dom';
 
 function App() {
+  const { createUser, createUserGeneral } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null)
 
@@ -20,8 +22,13 @@ function App() {
     <main>
       <Switch>
         <Route path='/' exact>
+          <Navbar/>
+          <Registration createUser={createUser}/>
+        </Route>
+        <Route path='/register'>
           <Navbar />
           <LandingPage />
+          <Registration createUser={createUser} createUserGeneral={createUserGeneral}/>
         </Route>
         <Route path='/testpath'>
           <Card />

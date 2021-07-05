@@ -5,18 +5,33 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies();
 
-export function createUser(email, password) {
-  console.log("in helper.js");
+const helper = () => {
 
-  const data = { email, password };
+  const createUser = (email, password) => {
+  
+    const data = { email, password };
+  
+    return axios.post('http://localhost:8000/users/new', data);
+  
+  }
+  
+  const createUserGeneral = (first_name, last_name, postal_code) => {
+  
+    const data = { first_name, last_name, postal_code };
+    // return axios.post('http://localhost:8000/users/new/general', data);
+    return 'nothing';
+  
+  }
 
-
-  return axios.post('http://localhost:8000/users/new', data)
-    .then(res => {
-      console.log("!!!!!");
-      console.log(res.data.id);
-      cookies.set("user_id", res.data.id, '/')
-    });
-
-
+  return { createUser, createUserGeneral };
 }
+
+  // return axios.post('http://localhost:8000/users/new', data)
+  //   .then(res => {
+  //     console.log("!!!!!");
+  //     console.log(res.data.id);
+  //     cookies.set("user_id", res.data.id, '/')
+    // });
+
+
+export default helper;
