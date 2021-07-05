@@ -15,9 +15,9 @@ function App() {
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
 
-  const login = () => {
-    axios.post("/api/login").then((res) => setUser(res.data));
-  };
+  // const login = () => {
+  //   axios.post("/api/login").then((res) => setUser(res.data));
+  // };
 
   return (
     <main>
