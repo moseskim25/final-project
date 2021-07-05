@@ -10,7 +10,7 @@ insert into conversations (user1_id, user2_id, messages) values (1, 2, '{
     "text": "Hello from user 2, this is the second message"
   }
 }');
-insert into conversations (id, user1_id, user2_id, messages) values (2, 3, 4, '{
+insert into conversations (user1_id, user2_id, messages) values (3, 4, '{
   "1": {
     "timestamp": "2021-07-04 11:20:44",
     "sender_id": "3",

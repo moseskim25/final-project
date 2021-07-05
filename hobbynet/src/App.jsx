@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
+import Conversations from "./components/Conversations";
 
 function App() {
   const { createUser, createUserGeneral } = helper();
@@ -37,6 +38,11 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/home">
+          <Navbar />
+          <UserProfile />
+          <Conversations />
         </Route>
       </Switch>
     </main>

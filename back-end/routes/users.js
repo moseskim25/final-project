@@ -22,5 +22,19 @@ module.exports = (db) => {
       })
       .catch(err => console.error(err));
   });
+
+  router.get("/:userId/chats", (req, res) => {
+    db.query(`SELECT * FROM conversations WHERE user1_id = $1 OR user2_id = $1`,
+      [Number(req.params.userId)])
+      .then(data => {
+        console.log("line 30");
+        console.log(data.rows);
+        return res.json(data.rows[0])
+      })
+      .catch(err => console.error(err));
+
+    console.log("inside users.js --> users/chats");
+    console.log("req.params", req.body);
+  })
   return router;
 };
