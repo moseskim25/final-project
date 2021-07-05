@@ -8,6 +8,7 @@ import {
     Link,
     useBreakpointValue,
   } from '@chakra-ui/react';
+
   
   export default function LandingPage() {
     return (
@@ -47,7 +48,9 @@ import {
                 _hover={{
                   bg: 'pink.500',
                 }}>
-                Register Now!
+                <Link href='/register'>
+                  Register Now!
+                </Link>
               </Button>
               <Button rounded={'full'}>How It Works</Button>
             </Stack>
