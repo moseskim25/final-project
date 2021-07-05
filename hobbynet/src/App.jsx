@@ -3,6 +3,7 @@ import { createUser } from "./hooks/helper";
 import axios from "axios";
 
 import Registration from "./components/Registration";
+import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import helper from "./hooks/helper";
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
       </Switch>
     </main>
