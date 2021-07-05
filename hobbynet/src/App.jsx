@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { createUser } from './hooks/helper';
+import { Switch, Route } from 'react-router-dom'
+
+import Navbar from './components/Navbar';
+import Registration from './components/Registration';
+import LandingPage from './components/LandingPage';
 import axios from 'axios';
 
-import Registration from './components/Registration';
-import Navbar from './components/Navbar'
-import LandingPage from './components/LandingPage';
-import Card from './components/Card';
-import { Switch, Route } from 'react-router-dom';
-
 function App() {
+
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null)
 
@@ -16,15 +16,28 @@ function App() {
     axios.post('http://localhost:8000/login').then(res => setUser(res.data))
   }
 
+
+  useEffect(() => {
+    const getUserB = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/users');
+        const data = await response.json();
+        setUser(data.rows);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  })
+
   return (
     <main>
       <Switch>
         <Route path='/' exact>
           <Navbar />
-          <LandingPage />
+          <Registration createUser={createUser} />
         </Route>
-        <Route path='/testpath'>
-          <Card />
+        <Route path='/hello'>
+          <p>why</p>
         </Route>
       </Switch>
     </main>
@@ -32,7 +45,6 @@ function App() {
 }
 
 export default App;
-
 
 
 // useEffect(() => {
@@ -48,16 +60,3 @@ export default App;
   //   getConversations();
 
   // }, [])
-
-
-  // useEffect(() => {
-  //   const getUserBy = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:8000/users');
-  //       const data = await response.json();
-  //       setUser(data.rows);
-  //     } catch (err) {
-  //       console.log(err.message);
-  //     }
-  //   }
-  // })
