@@ -22,14 +22,19 @@ const helper = () => {
   }
 
   const createUserGeneral = (first_name, last_name, postal_code) => {
+    const id = cookies.get('user_id');
 
-    const data = { first_name, last_name, postal_code };
-    // return axios.post('http://localhost:8000/users/new/general', data);
-    return 'nothing';
+    const data = { first_name, last_name, postal_code, id };
+    return axios.put('http://localhost:8000/users/new/general', data);
 
   }
 
-  return { createUser, createUserGeneral };
+  const getInterests = (category_name) => {
+    return axios.get(`http://localhost:8000/categories/${category_name}`)
+  }
+  
+  return { createUser, createUserGeneral, getInterests };
+  
 }
 
 

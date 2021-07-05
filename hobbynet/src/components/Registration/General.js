@@ -12,7 +12,7 @@ export default function General(props) {
     setFirstName(firstName);
     setLastName(lastName);
     setPostalCode(postalCode);
-    // createUserGeneral(firstName, lastName, postalCode);
+    createUserGeneral(firstName, lastName, postalCode);
     setMode();
     return;
   }
