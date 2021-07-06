@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../styles/Interests.scss'
 
 export default function Interests({ interestsArray, goNext }) {
 
@@ -13,12 +14,25 @@ export default function Interests({ interestsArray, goNext }) {
     return;
   }
 
-  const displayInterests = interestsArray.data.map(interest => <li 
+  const displayInterests = interestsArray.data.map(interest => <div
+    className='interestContainer'
     key={interest.id} 
-    onClick={() => select(interest.id)}>{interest.name}</li>)
+    onClick={() => select(interest.id)}>
 
-  return (<div>
-    {displayInterests}
-    <span>Back</span><span onClick={() => goNext(interests)}>Next</span>
-    </div>);
-}
+    <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'}src={interest.image} alt={interest.id}></img>
+    {interest.name}
+
+    </div>)
+
+  return (
+    <div className='display'>
+      <div className='display_interests'>
+        {displayInterests}
+      </div>
+      <div className='registration_navigate'>
+        <span className='back_next' >Back</span>
+        <p> </p>
+        <span  className='back_next' onClick={() => goNext(interests)}>Next</span>
+      </div>
+    </div>)
+};
