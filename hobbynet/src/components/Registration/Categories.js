@@ -9,7 +9,6 @@ export default function Categories(props) {
 
   const [selected, setCategory] = useState('');
 
-  // selectedImg sports category_image hvr-grow
   return (
     <ChakraProvider>
       <VStack>
@@ -33,7 +32,7 @@ export default function Categories(props) {
             <p>Art</p>
           </VStack>
           <VStack>
-            <Image className={`${selected === 'academic' ? 'selectedImg ' : ''}` + 'category_image hvr-grow'} src="https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Segun Adebayo" onClick={() => {setCategory('academic')}}/>
+            <Image className={`${selected === 'academics' ? 'selectedImg ' : ''}` + 'category_image hvr-grow'} src="https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Segun Adebayo" onClick={() => {setCategory('academics')}}/>
             <p>Academics</p>
           </VStack>
           <VStack>
