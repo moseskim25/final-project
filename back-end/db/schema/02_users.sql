@@ -9,6 +9,7 @@ CREATE TABLE users (
   postal_code VARCHAR(25),
   birthday DATE,
   profile_image VARCHAR(255),
+  upload_image BYTEA,
   gender VARCHAR(50),
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
