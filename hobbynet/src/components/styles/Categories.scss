@@ -1,3 +1,30 @@
-.category_image:hover {
-  border: solid black 2.5px;
+.category_image {
+  height: 200px;
+  border-radius: 4px;
+  padding: 10px;
+}
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+.hvr-grow:hover {
+  transform: scale(1.1);
+}
+
+.registration_navigate {
+  color: #8C55AA;
+
+  .back_next:hover {
+    cursor: pointer;
+  }
+}
+
+.selectedImg {
+  transform: scale(1.1);
 }
