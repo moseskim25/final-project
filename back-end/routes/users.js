@@ -49,5 +49,16 @@ module.exports = (db) => {
       .catch(err => console.error(err));
     })
   })
+
+  router.put('/new/photo', (req, res) => {
+
+    const fileStr = req.body.data;
+
+    db.query(`UPDATE users
+    SET upload_image = $1`,
+    [fileStr])
+    .then(() => res.send())
+    .catch(err => console.error(err));
+  })
   return router;
 };
