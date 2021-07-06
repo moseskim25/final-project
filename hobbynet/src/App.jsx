@@ -13,7 +13,7 @@ import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 
 function App() {
-  const { createUser, createUserGeneral, getInterests } = helper();
+  const { createUser, createUserGeneral, getInterests, setUserInterests } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -26,7 +26,11 @@ function App() {
         </Route>
         <Route path="/register">
           <Navbar />
-          <Registration createUser={createUser} createUserGeneral={createUserGeneral} getInterests={getInterests} />
+          <Registration 
+            createUser={createUser} 
+            createUserGeneral={createUserGeneral} 
+            getInterests={getInterests} 
+            setUserInterests={setUserInterests}/>
         </Route>
         <Route path="/testpath">
           <UserProfile />

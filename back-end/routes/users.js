@@ -35,5 +35,19 @@ module.exports = (db) => {
       })
       .catch(err => console.error(err));
   });
+
+  router.post('/new/:user_id/interests', (req, res) => {
+    const { interestsArray } = req.body;
+
+    interestsArray.forEach(interest_id => {
+      db.query(`INSERT INTO users_interests (user_id, interest_id, level)
+      VALUES ($1, $2, $3)`,
+      [req.params.user_id, interest_id, 1])
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch(err => console.error(err));
+    })
+  })
   return router;
 };

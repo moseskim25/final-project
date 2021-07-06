@@ -32,8 +32,13 @@ const helper = () => {
   const getInterests = (category_name) => {
     return axios.get(`http://localhost:8000/categories/${category_name}`)
   }
-  
-  return { createUser, createUserGeneral, getInterests };
+
+  const setUserInterests = (interestsArray) => {
+    const user_id = Number(cookies.get('user_id'));
+    return axios.post(`http://localhost:8000/users/new/${user_id}/interests`, { interestsArray });
+  }
+
+  return { createUser, createUserGeneral, getInterests, setUserInterests };
   
 }
 
