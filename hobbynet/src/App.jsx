@@ -11,9 +11,10 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
+import Conversations from "./components/Conversations";
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests } = helper();
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -41,6 +42,11 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/home">
+          <Navbar />
+          <UserProfile />
+          <Conversations getUserInfo={getUserInfo}/>
         </Route>
       </Switch>
     </main>

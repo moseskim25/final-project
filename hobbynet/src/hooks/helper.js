@@ -38,7 +38,12 @@ const helper = () => {
     return axios.post(`http://localhost:8000/users/new/${user_id}/interests`, { interestsArray });
   }
 
-  return { createUser, createUserGeneral, getInterests, setUserInterests };
+  const getUserInfo = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}`)
+  }
+  return { createUser, createUserGeneral, getInterests, getUserInfo };
+  
+  return { createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo };
   
 }
 

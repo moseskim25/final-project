@@ -23,6 +23,21 @@ module.exports = (db) => {
       .catch(err => console.error(err));
   });
 
+  router.get("/:userId/chats", (req, res) => {
+    db.query(`SELECT * FROM conversations
+    WHERE user1_id = $1 OR user2_id = $1`,
+      [Number(req.params.userId)])
+      .then(data => {
+        console.log("line 30");
+        console.log(data.rows);
+        return res.send(data.rows)
+      })
+      .catch(err => console.error(err));
+
+    console.log("inside users.js --> users/chats");
+    console.log("req.params", req.body);
+  })
+
   router.put("/new/general", (req, res) => {
     const { first_name, last_name, postal_code, id } = req.body
 
@@ -58,7 +73,17 @@ module.exports = (db) => {
     SET upload_image = $1`,
     [fileStr])
     .then(() => res.send())
-    .catch(err => console.error(err));
+    .catch(err => console.error(err))
+  });
+
+  //grabs user's info
+  router.get('/:user_id', (req, res) => {
+    db.query(`SELECT * FROM users
+    WHERE id = $1`,
+    [req.params.user_id])
+    .then(data => {
+      res.json(data.rows[0]);
+    }).catch(err => console.error(err));
   })
   return router;
 };
