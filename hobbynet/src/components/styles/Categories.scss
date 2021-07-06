@@ -18,8 +18,12 @@
 }
 
 .registration_navigate {
+  display: flex;
   color: #8C55AA;
 
+  span {
+    padding: 4px;
+  }
   .back_next:hover {
     cursor: pointer;
   }
