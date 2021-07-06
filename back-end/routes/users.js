@@ -28,7 +28,7 @@ module.exports = (db) => {
       [Number(req.params.userId)])
       .then(data => {
         console.log("line 30");
-        console.log(data.rows);
+        console.log(data.rows[0]);
         return res.json(data.rows[0])
       })
       .catch(err => console.error(err));

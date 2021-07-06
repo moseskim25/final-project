@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios'
-
+import Cookies from 'universal-cookie'
 
 import {
   Button,
@@ -16,27 +16,37 @@ import {
   Box
 } from '@chakra-ui/react';
 
+const cookies = new Cookies();
+
+const objToArray = obj => {
+  const output = []
+  for (const item of obj) {
+    output.push(item);
+  }
+  return output;
+}
 
 export default function Conversations(props) {
-  const { user } = props
+  const user_id = cookies.get('user_id')
 
-  const { conversations, setConversations } = useState({ messages: "default" });
+  const [conversations, setConversations] = useState([]);
+  console.log("conversations", conversations);
+
+  const getConversations = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/users/${1}/chats`);
+      const data = await response;
+      console.log('data is:', data);
+      setConversations(objToArray(data.messages));
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
 
   useEffect(() => {
-    const getConversations = async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/users/${1}/chats`);
-        const data = await response.json();
-        console.log("data", data);
-        setConversations(data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
     getConversations();
-
-  }, [conversations])
+  }, [])
 
   // const getUserData = () => {
   // hardcoded for now
@@ -66,7 +76,7 @@ export default function Conversations(props) {
           textAlign={'left'}
         >
           <h3>Sally McGee</h3>
-          <p>{conversations || ""}</p>
+          <p>{conversations[0]}</p>
         </Box>
       </Center>
     </Flex>
