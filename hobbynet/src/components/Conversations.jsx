@@ -20,34 +20,63 @@ const cookies = new Cookies();
 
 const objToArray = obj => {
   const output = []
-  for (const item of obj) {
-    output.push(item);
+  for (const item in obj) {
+    output.push(obj[item]);
   }
   return output;
 }
 
-export default function Conversations(props) {
+export default function Conversations({ getUserInfo }) {
   const user_id = cookies.get('user_id')
 
   const [conversations, setConversations] = useState([]);
-  console.log("conversations", conversations);
+  const [conversationsArray, setConversationsArray] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
 
-  const getConversations = async () => {
+
+  
+  const getConversations = async (user_id) => {
     try {
-      const response = await fetch(`http://localhost:8000/users/${1}/chats`);
-      const data = await response;
-      console.log('data is:', data);
-      setConversations(objToArray(data.messages));
+      const response = await fetch(`http://localhost:8000/users/${2}/chats`);
+      const data = await response.json();
+      setConversations(objToArray(data));
     } catch (err) {
       console.log(err.message);
     }
   }
-
-
+  
+  
   useEffect(() => {
-    getConversations();
-  }, [])
+    getConversations(user_id);
+  }, []);
 
+  const conversationsArr = conversations.map(async conversation => {
+
+    const message = conversation.messages[0].text;
+    const other_user = conversation.user1_id === Number(user_id) ? conversation.user2_id : conversation.user1_id;
+
+    const response = await getUserInfo(Number(other_user));
+    const otherUserName = await response.json();
+    
+    return (
+      <Box
+        key={conversation.id}
+        maxW={'640px'}
+        w={'full'}
+        boxShadow={'md'}
+        rounded={'lg'}
+        p={6}
+        textAlign={'left'}
+        >
+        <Text>{otherUserName}</Text>
+        <Text>{message}</Text>
+      </Box>
+    )
+  })
+
+
+  
+  
   // const getUserData = () => {
   // hardcoded for now
   // const data = 1;
@@ -64,56 +93,10 @@ export default function Conversations(props) {
   // getUserData()
 
   return (
-    <Flex p={8} flex={1} align={'center'} justify={'center'}>
-      <Center py={6} position={'relative'}>
-        <Box
-          maxW={'640px'}
-          w={'full'}
-          bg={useColorModeValue('white', 'gray.900')}
-          boxShadow={'2xl'}
-          rounded={'lg'}
-          p={6}
-          textAlign={'left'}
-        >
-          <h3>Sally McGee</h3>
-          <p>{conversations[0]}</p>
-        </Box>
-      </Center>
-    </Flex>
+    <Center>
+      <Stack direction="column">
+          {conversationsArr}
+      </Stack>
+    </Center>
   );
-}
-    // <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-    //   <Flex p={8} flex={1} align={''} justify={'center'}>
-    //     <Stack spacing={6} w={'full'} maxW={'lg'}>
-
-    //       <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-    //         Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-    //         Amet non, voluptatibus soluta voluptas suscipit fugit laudantium!
-    //       </Text>
-    //       <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-    //         <Button
-    //           rounded={'full'}
-    //           bg={'pink.400'} pla
-    //           color={'white'}
-    //           _hover={{
-    //             bg: 'pink.500',
-    //           }}>
-    //           <Link href='/register'>
-    //             Register Now!
-    //           </Link>
-    //         </Button>
-    //         <Button rounded={'full'}>How It Works</Button>
-    //       </Stack>
-    //       <Stack direction="row" spacing="5px" fontSize={{ base: 'sm', lg: 'md' }} color={'gray.500'}>
-    //         <Text>
-    //           Already Registered?
-    //         </Text>
-    //         {/* add link here w/ react-router */}
-    //         <Link as="b">
-    //           Login
-    //         </Link>
-    //       </Stack>
-    //     </Stack>
-    //   </Flex>
-
-    // </Stack>
+};

@@ -14,7 +14,7 @@ import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 
 function App() {
-  const { createUser, createUserGeneral, getInterests } = helper();
+  const { createUser, createUserGeneral, getInterests, getUserInfo } = helper();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -42,7 +42,7 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile />
-          <Conversations />
+          <Conversations getUserInfo={getUserInfo}/>
         </Route>
       </Switch>
     </main>

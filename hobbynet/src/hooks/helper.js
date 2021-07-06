@@ -32,8 +32,11 @@ const helper = () => {
   const getInterests = (category_name) => {
     return axios.get(`http://localhost:8000/categories/${category_name}`)
   }
-  
-  return { createUser, createUserGeneral, getInterests };
+
+  const getUserInfo = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}`)
+  }
+  return { createUser, createUserGeneral, getInterests, getUserInfo };
   
 }
 

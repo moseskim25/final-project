@@ -10,6 +10,21 @@ insert into conversations (user1_id, user2_id, messages) values (1, 2, '[
     "text": "Hello from user 2, this is the second message"
   }
 ]');
+
+insert into conversations (user1_id, user2_id, messages) values (2, 4, '[
+  {
+    "timestamp": "2021-07-03 11:13:44",
+    "sender_id": "2",
+    "text": "Second message"
+  },
+  {
+    "timestamp": "2021-07-03 11:14:06",
+    "sender_id": "4",
+    "text": "what do you want"
+  }
+]');
+
+
 insert into conversations (user1_id, user2_id, messages) values (3, 4, '[
   {
     "timestamp": "2021-07-04 11:20:44",
