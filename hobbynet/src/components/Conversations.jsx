@@ -7,7 +7,7 @@ import Conversation from './Conversation'
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations }) {
+export default function Conversations({ getConversations, clickConvo }) {
 
   const user_id = Number(cookies.get('user_id'));
   const [conversations, setConversations] = useState([]);
@@ -34,7 +34,6 @@ export default function Conversations({ getConversations }) {
     return output;
   }
   const conversationsArray = chat();
-  console.log('conversationsArray', conversationsArray);
 
   const displayConversations = conversationsArray.map(conversation => {
     const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
@@ -47,6 +46,7 @@ export default function Conversations({ getConversations }) {
           name={otherUser} 
           lastMessage={lastMessage} 
           img={otherUserImgUrl}
+          onClick={() => clickConvo(conversation)}
           />
       </Center>
     )
