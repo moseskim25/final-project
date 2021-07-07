@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Center } from '@chakra-ui/react'
-import axios from 'axios'
 import Cookies from 'universal-cookie'
 import Conversation from './Conversation'
 
@@ -11,7 +10,6 @@ export default function Conversations({ getConversations, clickConvo }) {
 
   const user_id = Number(cookies.get('user_id'));
   const [conversations, setConversations] = useState([]);
-  const [messages, setMessages] = useState([]);
   
 
   const uniqueConversations = () => {

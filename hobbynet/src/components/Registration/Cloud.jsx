@@ -6,8 +6,8 @@ export default function Upload() {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
-    const [successMsg, setSuccessMsg] = useState('');
-    const [errMsg, setErrMsg] = useState('');
+    // const [successMsg, setSuccessMsg] = useState('');
+    // const [errMsg, setErrMsg] = useState('');
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         previewFile(file);
@@ -33,7 +33,7 @@ export default function Upload() {
         };
         reader.onerror = () => {
             console.error('AHHHHHHHH!!');
-            setErrMsg('something went wrong!');
+            // setErrMsg('something went wrong!');
         };
     };
 
@@ -43,7 +43,7 @@ export default function Upload() {
       .then(() => {
         setFileInputState('');
         setPreviewSource('');
-        setSuccessMsg('Image uploaded successfully');
+        // setSuccessMsg('Image uploaded successfully');
       })
       .catch(err => console.error(err));
     };

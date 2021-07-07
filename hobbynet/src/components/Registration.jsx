@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import './styles/Registration.scss';
-import { Link } from 'react-router-dom';
 import General from './Registration/General';
 import Categories from './Registration/Categories';
 import Interests from './Registration/Interests';
@@ -15,7 +14,7 @@ const UPLOAD_PIC = 'UPLOAD_PIC';
 
 export default function Registration(props) {
 
-  const {createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo} = props;
+  const {createUser, createUserGeneral, getInterests, setUserInterests} = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
