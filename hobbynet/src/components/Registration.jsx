@@ -15,7 +15,7 @@ const UPLOAD_PIC = 'UPLOAD_PIC';
 
 export default function Registration(props) {
 
-  const {createUser, createUserGeneral, getInterests, setUserInterests} = props;
+  const {createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo} = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
