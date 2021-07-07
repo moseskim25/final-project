@@ -37,10 +37,11 @@ export default function Conversations({ getConversations }) {
 
   const displayConversations = conversationsArray.map(conversation => {
     const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
+    const otherUserImgUrl = `${conversation[0].profile_image}`;
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return(
       <Center>
-        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage}/>
+        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl}/>
       </Center>
     )
   })
