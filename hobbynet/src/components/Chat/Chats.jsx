@@ -1,7 +1,10 @@
 import React from 'react';
 import '../styles/Chats.scss';
 
-export default function Main() {
+export default function Main({ conversation }) {
+
+  console.log('conversation:', conversation);
+
   return (
     <div id="container">
       <aside>
