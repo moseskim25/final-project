@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Center } from '@chakra-ui/react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
@@ -41,7 +42,12 @@ export default function Conversations({ getConversations }) {
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return(
       <Center>
-        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl}/>
+        <Conversation 
+          key={otherUser} 
+          name={otherUser} 
+          lastMessage={lastMessage} 
+          img={otherUserImgUrl}
+          />
       </Center>
     )
   })
@@ -58,7 +64,9 @@ export default function Conversations({ getConversations }) {
 
   return (
     <div>
-      {displayConversations}
+      <Link to='/chats'>
+        {displayConversations}
+      </Link>
     </div>
   );
 };
