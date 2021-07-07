@@ -22,7 +22,6 @@ import {
     const user_id = cookies.get('user_id');
     const [userInfo, setUserInfo] = useState('');
     const [userInterests, setUserInterests] = useState([]);
-    console.log('user interests is:', userInterests);
 
     const displayUserInterests = userInterests.map(interest => 
       <div className='user_interest'>
