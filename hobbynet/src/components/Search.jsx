@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import { Select } from "@chakra-ui/react"
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -41,6 +42,9 @@ export default function Search() {
   // State for search status (whether there is a pending API request)
   const [isSearching, setIsSearching] = useState(false);
 
+  const [category, setCategory] = useState(null);
+  const [level, setLevel] = useState(null);
+
   // Now we call our hook, passing in the current searchTerm value.
   // The hook will only return the latest value (what we passed in) ...
   // ... if it's been more than 500ms since it was last called.
@@ -61,6 +65,12 @@ export default function Search() {
         searchCharacters(debouncedSearchTerm).then(results => {
           // Set back to false since request finished
           setIsSearching(false);
+          if(category){
+            results = results.filter(result => result.name === category)
+          }
+          if(level){
+            results = results.filter(result => result.level === Number(level))
+          }
           // Set results state
           setResults(results);
         });
@@ -72,26 +82,40 @@ export default function Search() {
     // Our useEffect function will only execute if this value changes ...
     // ... and thanks to our hook it will only change if the original ...
     // value (searchTerm) hasn't changed for more than 500ms.
-    [debouncedSearchTerm]
+    [debouncedSearchTerm, category, level]
   );
 
   // Pretty standard UI with search input and results
   return (
-    <div>
-      <input
-        placeholder="Search The DB"
-        onChange={e => setSearchTerm(e.target.value)}
-      />
+    <>
+      <Select placeholder="Select option" onChange={(e) => setCategory(e.target.value)}>
+        <option value="academics">Academics</option>
+        <option value="sports">Sports</option>
+        <option value="languages">Languages</option>
+        <option value="arts">Arts</option>
+        <option value="music">Music</option>
+      </Select>
+      <Select placeholder="Select option" onChange={(e) => setLevel(e.target.value)}>
+        <option value="1">Level 1</option>
+        <option value="2">Level 2</option>
+        <option value="3">Level 3</option>
+      </Select>
+      <div>
+        <input
+          placeholder="Search The DB"
+          onChange={e => setSearchTerm(e.target.value)}
+        />
 
-      {isSearching && <div>Searching ...</div>}
+        {isSearching && <div>Searching ...</div>}
 
-      {results.map(result => (
-        <div key={result.id}>
-          {result.first_name + ' ' + result.last_name + '\n'}
-          {result.interestname + ' ' + result.name + ' ' + 'Level:' + ' ' + result.level}
-        </div>
-      ))}
-    </div>
+        {results.map(result => (
+          <div key={result.id}>
+            {result.first_name + ' ' + result.last_name + '\n'}
+            {result.interestname + ' ' + result.name + ' ' + 'Level:' + ' ' + result.level}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
