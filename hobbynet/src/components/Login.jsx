@@ -20,7 +20,6 @@ export default function Registration(props) {
 
   const authenticateUser = () => {
     const data = { email, password };
-    console.log('data in front-end:', data);
     return axios.post('http://localhost:8000/login', data)
       .then(res => {
         cookies.set("user_id", res.data.id)
