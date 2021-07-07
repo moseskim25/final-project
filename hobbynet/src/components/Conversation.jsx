@@ -13,6 +13,8 @@ export default function Conversationt(props) {
       rounded={'xl'}
       p={10}
       position={'relative'}
+      _hover={{bg: "gray.50"}}
+      mb={5}
     >
       <Avatar
         height={'80px'}
