@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
+import Chats from './components/Chat/Chats';
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
@@ -46,6 +47,10 @@ function App() {
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
           <Conversations getConversations={getConversations} />
+        </Route>
+        <Route path="/chats">
+          <Navbar />
+          <Chats />
         </Route>
       </Switch>
     </main>
