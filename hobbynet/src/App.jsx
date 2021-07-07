@@ -14,8 +14,7 @@ import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo } = helper();
-  const [conversations, setConversations] = useState([]);
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations } = helper();
   const [user, setUser] = useState(null);
 
   return (
@@ -46,7 +45,7 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile />
-          <Conversations getUserInfo={getUserInfo}/>
+          <Conversations getConversations={getConversations} />
         </Route>
       </Switch>
     </main>

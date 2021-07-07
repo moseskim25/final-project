@@ -41,8 +41,12 @@ const helper = () => {
   const getUserInfo = (user_id) => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
   }
+
+  const getConversations = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}/conversations`)
+  }
   
-  return { createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo };
+  return { createUser, createUserGeneral, getInterests, setUserInterests, getConversations };
   
 }
 
