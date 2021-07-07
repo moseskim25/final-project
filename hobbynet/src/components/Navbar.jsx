@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import {
   Box,
   Stack,
@@ -17,12 +19,37 @@ import {
 } from "@chakra-ui/react";
 import Toggle from './Toggle'
 import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon, WarningTwoIcon } from "@chakra-ui/icons";
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies();
+
+
 
 // the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({})
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+
+  console.log("user", user);
+
+  const getUserInfo = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}`)
+      .then(res => {
+        setUser(res.data)
+      })
+      .catch(err => console.log("Error: ", err.message))
+  }
+
+  useState(() => {
+    const userId = cookies.get('user_id')
+    if (userId) {
+      setIsLoggedIn(true)
+      getUserInfo(userId)
+    }
+  }, [])
+
   if (isLoggedIn) {
     return (<Flex
       as="nav"
@@ -36,7 +63,7 @@ const Navbar = (props) => {
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg" letterSpacing={"tighter"}>
           {/* note to self: design a logo & title and stick it here later */}
-          LOREM IPSUM
+          HOBBYNET
         </Heading>
       </Flex>
 
@@ -85,11 +112,11 @@ const Navbar = (props) => {
                 <Image
                   boxSize="2rem"
                   borderRadius="full"
-                  src="https://placekitten.com/100/100"
-                  alt="cute kitty"
+                  src={user.profile_image}
+                  alt="profile image"
                   mr="5px"
                 />
-                <Center>Moses Kim<ChevronDownIcon ml="5px"></ChevronDownIcon></Center>
+                <Center>{`${user.first_name} ${user.last_name}`}<ChevronDownIcon ml="5px"></ChevronDownIcon></Center>
               </Stack>
             </MenuButton>
             {/* the dropdown list for a user - currently all redirects to w3schools but can update later */}
@@ -98,7 +125,10 @@ const Navbar = (props) => {
               <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
               <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Logout</MenuItem>
+              <MenuItem onClick={() => {
+                cookies.remove('user_id');
+                window.location.replace("/")
+              }}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </Stack>
@@ -118,7 +148,7 @@ const Navbar = (props) => {
     <Flex align="center" mr={5}>
       <Heading as="h1" size="lg" letterSpacing={"tighter"}>
         {/* note to self: design a logo & title and stick it here later */}
-        LOREM IPSUM
+        HOBBYNET
       </Heading>
     </Flex>
 
@@ -161,12 +191,13 @@ const Navbar = (props) => {
           Sign In
         </Button>
         <Button
+          as={'a'}
           display={{ base: 'none', md: 'inline-flex' }}
           fontSize={'md'}
           fontWeight={600}
           color={'white'}
           bg={'pink.400'}
-          href={'#'}
+          href={'/register'}
           _hover={{
             bg: 'pink.300',
           }}>

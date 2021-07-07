@@ -13,6 +13,7 @@ import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 import Chats from './components/Chat/Chats';
+import Conversation from "./components/Conversation"
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
@@ -47,6 +48,7 @@ function App() {
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
           <Conversations getConversations={getConversations} />
+          <Conversation/>
         </Route>
         <Route path="/chats">
           <Navbar />
