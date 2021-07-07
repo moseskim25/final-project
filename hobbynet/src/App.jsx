@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
+import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation"
 
 function App() {
@@ -48,6 +49,10 @@ function App() {
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
           <Conversations getConversations={getConversations} />
           <Conversation/>
+        </Route>
+        <Route path="/chats">
+          <Navbar />
+          <Chats />
         </Route>
       </Switch>
     </main>
