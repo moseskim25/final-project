@@ -1,6 +1,7 @@
 insert into users_interests (user_id, interest_id, level) values (8, 8, 2);
 insert into users_interests (user_id, interest_id, level) values (5, 2, 5);
 insert into users_interests (user_id, interest_id, level) values (2, 3, 5);
+insert into users_interests (user_id, interest_id, level) values (2, 5, 5);
 insert into users_interests (user_id, interest_id, level) values (5, 9, 4);
 insert into users_interests (user_id, interest_id, level) values (7, 5, 3);
 insert into users_interests (user_id, interest_id, level) values (9, 8, 5);
