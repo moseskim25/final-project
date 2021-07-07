@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
+import Search from "./components/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation"
 
@@ -42,6 +43,9 @@ function App() {
         <Route path="/testpath">
           <UserProfile />
           <Card />
+        </Route>
+        <Route path="/search">
+          <Search/>
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
