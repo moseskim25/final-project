@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Select } from "@chakra-ui/react"
+import { Select, Checkbox, Center } from "@chakra-ui/react"
+import { arrayOf } from 'prop-types';
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -42,8 +43,8 @@ export default function Search() {
   // State for search status (whether there is a pending API request)
   const [isSearching, setIsSearching] = useState(false);
 
-  const [category, setCategory] = useState(null);
-  const [level, setLevel] = useState(null);
+  const [category, setCategory] = useState(['academics', 'arts', 'languages', 'music', 'sports']);
+  const [level, setLevel] = useState(["1", "2", "3"]);
 
   // Now we call our hook, passing in the current searchTerm value.
   // The hook will only return the latest value (what we passed in) ...
@@ -52,6 +53,16 @@ export default function Search() {
   // The goal is to only have the API call fire when user stops typing ...
   // ... so that we aren't hitting our API rapidly.
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const removeFromStateArr = (value, arr) => {
+    let newArr = []
+    for(let i = 0; i < arr.length; i++){
+      if(arr[i] !== value){
+        newArr.push(arr[i])
+      }
+    }
+    return newArr
+  }
 
   // Here's where the API call happens
   // We use useEffect since this is an asynchronous action
@@ -65,12 +76,8 @@ export default function Search() {
         searchCharacters(debouncedSearchTerm).then(results => {
           // Set back to false since request finished
           setIsSearching(false);
-          if(category){
-            results = results.filter(result => result.name === category)
-          }
-          if(level){
-            results = results.filter(result => result.level === Number(level))
-          }
+          results = results.filter(result => category.indexOf(String(result.name)) > -1)
+          results = results.filter(result => level.indexOf(String(result.level)) > -1)
           // Set results state
           setResults(results);
         });
@@ -88,18 +95,123 @@ export default function Search() {
   // Pretty standard UI with search input and results
   return (
     <>
-      <Select placeholder="Select option" onChange={(e) => setCategory(e.target.value)}>
-        <option value="academics">Academics</option>
-        <option value="sports">Sports</option>
-        <option value="languages">Languages</option>
-        <option value="arts">Arts</option>
-        <option value="music">Music</option>
-      </Select>
-      <Select placeholder="Select option" onChange={(e) => setLevel(e.target.value)}>
-        <option value="1">Level 1</option>
-        <option value="2">Level 2</option>
-        <option value="3">Level 3</option>
-      </Select>
+      <Center>
+        <Checkbox
+          defaultIsChecked
+          value="academics"
+          onChange={(e) => {
+            if(category.indexOf(e.target.value) < 0){
+              setCategory(prev => [...prev, e.target.value])
+            } else {
+              let newCategory = removeFromStateArr(e.target.value, category)
+              setCategory(newCategory)
+            }
+          }}
+        >
+          Academics
+        </Checkbox>
+        <Checkbox
+          defaultIsChecked
+          value="arts"
+          onChange={(e) => {
+            if(category.indexOf(e.target.value) < 0){
+              setCategory(prev => [...prev, e.target.value])
+            } else {
+              let newCategory = removeFromStateArr(e.target.value, category)
+              setCategory(newCategory)
+            }
+          }}
+        >
+          Arts
+        </Checkbox>
+        <Checkbox
+          defaultIsChecked
+          value="languages"
+          onChange={(e) => {
+            if(category.indexOf(e.target.value) < 0){
+              setCategory(prev => [...prev, e.target.value])
+            } else {
+              let newCategory = removeFromStateArr(e.target.value, category)
+              setCategory(newCategory)
+            }
+          }}
+        >
+          Languages
+        </Checkbox>
+        <Checkbox
+          defaultIsChecked
+          value="music"
+          onChange={(e) => {
+            if(category.indexOf(e.target.value) < 0){
+              setCategory(prev => [...prev, e.target.value])
+            } else {
+              let newCategory = removeFromStateArr(e.target.value, category)
+              setCategory(newCategory)
+            }
+          }}
+        >
+          Music
+        </Checkbox>
+        <Checkbox
+          defaultIsChecked
+          value="sports"
+          onChange={(e) => {
+            if(category.indexOf(e.target.value) < 0){
+              setCategory(prev => [...prev, e.target.value])
+            } else {
+              let newCategory = removeFromStateArr(e.target.value, category)
+              setCategory(newCategory)
+            }
+          }}
+        >
+          Sports
+        </Checkbox>
+      </Center>
+      <Center>
+       <Checkbox
+         defaultIsChecked
+          value="1"
+          onChange={(e) => {
+            if(level.indexOf(e.target.value) < 0){
+              setLevel(prev => [...prev, e.target.value])
+            } else {
+              let newLevel = removeFromStateArr(e.target.value, level)
+              setLevel(newLevel)
+            }
+          }}
+        >
+          Level 1
+        </Checkbox>
+        <Checkbox
+          defaultIsChecked
+          value="2"
+          onChange={(e) => {
+            if(level.indexOf(e.target.value) < 0){
+              setLevel(prev => [...prev, e.target.value])
+            } else {
+              let newLevel = removeFromStateArr(e.target.value, level)
+              setLevel(newLevel)
+            }
+          }}
+        >
+          Level 2
+        </Checkbox>
+        <Checkbox
+         defaultIsChecked
+          value="3"
+          onChange={(e) => {
+            if(level.indexOf(e.target.value) < 0){
+              setLevel(prev => [...prev, e.target.value])
+            } else {
+              let newLevel = removeFromStateArr(e.target.value, level)
+              setLevel(newLevel)
+            }
+          }}
+        >
+          Level 3
+        </Checkbox>
+      </Center>
+
       <div>
         <input
           placeholder="Search The DB"
