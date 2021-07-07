@@ -46,20 +46,8 @@ export default function Upload() {
         setSuccessMsg('Image uploaded successfully');
       })
       .catch(err => console.error(err));
-        // try {
-        //     await fetch('http://localhost:8000/users/new/photo', {
-        //         method: 'PUT',
-        //         body: JSON.stringify({ data: base64EncodedImage }),
-        //         headers: { 'Content-Type': 'application/json' },
-        //     });
-        //     setFileInputState('');
-        //     setPreviewSource('');
-        //     setSuccessMsg('Image uploaded successfully');
-        // } catch (err) {
-        //     console.error(err);
-        //     setErrMsg('Something went wrong!');
-        // }
     };
+    
     return (
         <div>
             <h1 className="title">Upload an Image</h1>

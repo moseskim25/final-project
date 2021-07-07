@@ -86,6 +86,18 @@ module.exports = (db) => {
     }).catch(err => console.error(err));
   })
 
+  //grabs user's interests
+  router.get('/:user_id/interests', (req, res) => {
+    db.query(`SELECT users_interests.*, interests.*
+    FROM users_interests
+    JOIN interests ON interest_id = interests.id
+    WHERE user_id = $1`,
+    [req.params.user_id])
+    .then(data => {
+      res.json(data.rows);
+    }).catch(err => console.error(err));
+  })
+
   router.get('/:user_id/conversations', (req, res) => {
     db.query(`SELECT conversations.*, messages.*, users.* AS sender,
     (SELECT first_name FROM users WHERE users.id = user1_id) AS user1_first_name,
