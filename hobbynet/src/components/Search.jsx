@@ -87,7 +87,8 @@ export default function Search() {
 
       {results.map(result => (
         <div key={result.id}>
-          {result.first_name}
+          {result.first_name + ' ' + result.last_name + '\n'}
+          {result.interestname + ' ' + result.name + ' ' + 'Level:' + ' ' + result.level}
         </div>
       ))}
     </div>
