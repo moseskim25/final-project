@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { createUser } from "./hooks/helper";
-import axios from "axios";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import helper from "./hooks/helper";
@@ -18,7 +16,12 @@ import Conversation from "./components/Conversation"
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [conversation, setConversation] = useState({});
+
+  const clickConvo = (conversation) => {
+    setConversation(conversation);
+  }
 
   return (
     <main>
@@ -51,12 +54,12 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
-          <Conversations getConversations={getConversations} />
+          <Conversations getConversations={getConversations} clickConvo={(conversation) => clickConvo(conversation)}/>
           <Conversation/>
         </Route>
         <Route path="/chats">
           <Navbar />
-          <Chats />
+          <Chats conversation={conversation}/>
         </Route>
       </Switch>
     </main>

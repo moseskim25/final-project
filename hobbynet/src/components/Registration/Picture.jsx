@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Flex, FormControl, Button, Center, Form } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import axios from 'axios';
-import {Image} from 'cloudinary-react';
 import Cloud from './Cloud';
 
 
