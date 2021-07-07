@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Center } from '@chakra-ui/react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import Conversation from './Conversation'
@@ -38,7 +39,9 @@ export default function Conversations({ getConversations }) {
     const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return(
+      <Center>
         <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage}/>
+      </Center>
     )
   })
 
