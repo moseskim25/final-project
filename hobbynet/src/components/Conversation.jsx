@@ -2,7 +2,7 @@ import React from 'react'
 import { chakra, Flex, Avatar, useColorModeValue, Text, Stack, Center} from '@chakra-ui/react';
 
 export default function Conversationt(props) {
-    const { name, lastMessage } = props;
+    const { name, lastMessage, img } = props;
   return (
     name ? (
     <Flex
@@ -17,6 +17,7 @@ export default function Conversationt(props) {
       mb={5}
     >
       <Avatar
+        src={img}
         height={'80px'}
         width={'80px'}
         alignSelf={'center'}
@@ -27,7 +28,7 @@ export default function Conversationt(props) {
             <Text
                 fontSize={'2xl'}
                 fontWeight={700}
-            >
+            >    
                 {name}
             </Text>
             <Text
