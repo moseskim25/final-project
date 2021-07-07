@@ -118,7 +118,7 @@ const Navbar = (props) => {
     <Flex align="center" mr={5}>
       <Heading as="h1" size="lg" letterSpacing={"tighter"}>
         {/* note to self: design a logo & title and stick it here later */}
-        LOREM IPSUM
+        HOBBYNET
       </Heading>
     </Flex>
 
@@ -161,12 +161,13 @@ const Navbar = (props) => {
           Sign In
         </Button>
         <Button
+          as={'a'}
           display={{ base: 'none', md: 'inline-flex' }}
           fontSize={'md'}
           fontWeight={600}
           color={'white'}
           bg={'pink.400'}
-          href={'#'}
+          href={'/register'}
           _hover={{
             bg: 'pink.300',
           }}>
