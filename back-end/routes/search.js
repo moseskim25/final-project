@@ -11,7 +11,7 @@ module.exports = (db) => {
       WHERE interests.name LIKE $1
       OR users.first_name LIKE $1
       OR users.last_name LIKE $1;`
-    db.query(queryString, [`%${req.params.search}%`])
+    db.query(queryString, [`%${req.params.search.toLowerCase()}%`])
     .then(
       (data) => {res.send(data.rows)})
   })
