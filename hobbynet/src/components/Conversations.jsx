@@ -1,102 +1,72 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Center } from '@chakra-ui/react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
-
-import {
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  Link,
-  useBreakpointValue,
-  useColorModeValue,
-  Center,
-  Box
-} from '@chakra-ui/react';
+import Conversation from './Conversation'
 
 const cookies = new Cookies();
 
-const objToArray = obj => {
-  const output = []
-  for (const item in obj) {
-    output.push(obj[item]);
-  }
-  return output;
-}
+export default function Conversations({ getConversations }) {
 
-export default function Conversations({ getUserInfo }) {
-  const user_id = cookies.get('user_id')
-
+  const user_id = Number(cookies.get('user_id'));
   const [conversations, setConversations] = useState([]);
-  const [conversationsArray, setConversationsArray] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
-
-
+  const [messages, setMessages] = useState([]);
   
-  const getConversations = async (user_id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/users/${2}/chats`);
-      const data = await response.json();
-      setConversations(objToArray(data));
-    } catch (err) {
-      console.log(err.message);
-    }
+
+  const uniqueConversations = () => {
+    const output = [];
+    conversations.forEach(conversation => {
+      const id = conversation.conversations_id;
+      if (output.indexOf(id) === -1) {
+        output.push(id)
+      }
+    });
+    return output;
   }
-  
-  
-  useEffect(() => {
-    getConversations(user_id);
-  }, []);
+  const conversationIds = uniqueConversations();
 
-  const conversationsArr = conversations.map(async conversation => {
+  const chat = () => {
+    const output = conversationIds.map(conversationId => conversations.filter(conversation => {
+      return conversationId === conversation.conversations_id
+    }))
 
-    const message = conversation.messages[0].text;
-    const other_user = conversation.user1_id === Number(user_id) ? conversation.user2_id : conversation.user1_id;
+    return output;
+  }
+  const conversationsArray = chat();
+  console.log('conversationsArray', conversationsArray);
 
-    const response = await getUserInfo(Number(other_user));
-    const otherUserName = await response.json();
-    
-    return (
-      <Box
-        key={conversation.id}
-        maxW={'640px'}
-        w={'full'}
-        boxShadow={'md'}
-        rounded={'lg'}
-        p={6}
-        textAlign={'left'}
-        >
-        <Text>{otherUserName}</Text>
-        <Text>{message}</Text>
-      </Box>
+  const displayConversations = conversationsArray.map(conversation => {
+    const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
+    const otherUserImgUrl = `${conversation[0].profile_image}`;
+    const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
+    return(
+      <Center>
+        <Conversation 
+          key={otherUser} 
+          name={otherUser} 
+          lastMessage={lastMessage} 
+          img={otherUserImgUrl}
+          />
+      </Center>
     )
   })
 
 
-  
-  
-  // const getUserData = () => {
-  // hardcoded for now
-  // const data = 1;
-  // console.log("line 27");
-  // return axios.get(`http://localhost:8000/users/chats`, data)
-  //   .then(res => {
-  //     // console.log(res.data.conversations);
-  //     console.log("in Conversations.jsx, axios request");
-  //   })
-  //   .catch(err => console.log(err))
-  // }
+  useEffect(() => {
+    getConversations(user_id)
+    .then(res => {
+      setConversations(res.data)
+    })
+    .catch(err => console.error(err))
+  }, []);
 
-  // const { conversations } = getUserData()
-  // getUserData()
 
   return (
-    <Center>
-      <Stack direction="column">
-          {conversationsArr}
-      </Stack>
-    </Center>
+    <div>
+      <Link to='/chats'>
+        {displayConversations}
+      </Link>
+    </div>
   );
 };

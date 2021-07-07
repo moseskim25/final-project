@@ -4,22 +4,29 @@ import { Link } from 'react-router-dom';
 import General from './Registration/General';
 import Categories from './Registration/Categories';
 import Interests from './Registration/Interests';
+import Picture from './Registration/Picture';
 
 const EMAIL_PASS = 'EMAIL_PASS';
 const GENERAL = 'GENERAL';
 const CATEGORIES = 'CATEGORIES';
 const INTERESTS = 'INTERESTS';
+const UPLOAD_PIC = 'UPLOAD_PIC';
 
 
 export default function Registration(props) {
 
-  const {createUser, createUserGeneral, getInterests} = props;
+  const {createUser, createUserGeneral, getInterests, setUserInterests, getUserInfo} = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mode, setMode] = useState(EMAIL_PASS);
   const [interestsArray, setInterestsArray] = useState([]);
 
+  const goNext = (interests) => {
+    setUserInterests(interests);
+    setMode(UPLOAD_PIC);
+    return;
+  }
 
   return (
     <div>
@@ -58,7 +65,15 @@ export default function Registration(props) {
         }}/>
       }
       {mode === INTERESTS &&
-        <Interests interestsArray={interestsArray}/>
+        <div>
+          <Interests interestsArray={interestsArray} goNext={(interests) => goNext(interests)}/>
+        </div>
+      }
+
+      {mode === UPLOAD_PIC &&
+        <div>
+          <Picture />
+        </div>
       }
     </div>
   )

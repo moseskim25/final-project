@@ -13,10 +13,11 @@ import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 import Search from "./components/Search"
+import Chats from './components/Chat/Chats';
+import Conversation from "./components/Conversation"
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, getUserInfo } = helper();
-  const [conversations, setConversations] = useState([]);
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
   const [user, setUser] = useState(null);
 
   return (
@@ -28,7 +29,11 @@ function App() {
         </Route>
         <Route path="/register">
           <Navbar />
-          <Registration createUser={createUser} createUserGeneral={createUserGeneral} getInterests={getInterests} />
+          <Registration 
+            createUser={createUser} 
+            createUserGeneral={createUserGeneral} 
+            getInterests={getInterests} 
+            setUserInterests={setUserInterests}/>
         </Route>
         <Route path="/testpath">
           <UserProfile />
@@ -45,8 +50,13 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar />
-          <UserProfile />
-          <Conversations getUserInfo={getUserInfo}/>
+          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
+          <Conversations getConversations={getConversations} />
+          <Conversation/>
+        </Route>
+        <Route path="/chats">
+          <Navbar />
+          <Chats />
         </Route>
       </Switch>
     </main>
