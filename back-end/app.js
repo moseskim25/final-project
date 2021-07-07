@@ -12,7 +12,7 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
-var conversationsRouter = require('./routes/conversations');
+// var conversationsRouter = require('./routes/conversations');
 const categoriesRouter = require('./routes/categories');
 
 const { getUsers, getUserByEmail, addUser } = require('./helpers/dbHelpers')
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter());
 app.use('/users', usersRouter(db));
-app.use('/conversations', conversationsRouter(db));
+// app.use('/conversations', conversationsRouter(db));
 app.use('/login', loginRouter(db));
 app.use('/categories', categoriesRouter(db));
 
