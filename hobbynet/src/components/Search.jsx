@@ -44,7 +44,7 @@ export default function Search() {
   const [isSearching, setIsSearching] = useState(false);
 
   const [category, setCategory] = useState(['academics', 'arts', 'languages', 'music', 'sports']);
-  const [level, setLevel] = useState(["1", "2", "3"]);
+  const [level, setLevel] = useState(["1", "2", "3", "4", "5"]);
 
   // Now we call our hook, passing in the current searchTerm value.
   // The hook will only return the latest value (what we passed in) ...
@@ -70,6 +70,7 @@ export default function Search() {
     () => {
       // Make sure we have a value (user has entered something in input)
       if (debouncedSearchTerm) {
+        setResults([]);
         // Set isSearching state
         setIsSearching(true);
         // Fire off our API call
@@ -209,6 +210,34 @@ export default function Search() {
           }}
         >
           Level 3
+        </Checkbox>
+        <Checkbox
+         defaultIsChecked
+          value="4"
+          onChange={(e) => {
+            if(level.indexOf(e.target.value) < 0){
+              setLevel(prev => [...prev, e.target.value])
+            } else {
+              let newLevel = removeFromStateArr(e.target.value, level)
+              setLevel(newLevel)
+            }
+          }}
+        >
+          Level 4
+        </Checkbox>
+        <Checkbox
+         defaultIsChecked
+          value="5"
+          onChange={(e) => {
+            if(level.indexOf(e.target.value) < 0){
+              setLevel(prev => [...prev, e.target.value])
+            } else {
+              let newLevel = removeFromStateArr(e.target.value, level)
+              setLevel(newLevel)
+            }
+          }}
+        >
+          Level 5
         </Checkbox>
       </Center>
 
