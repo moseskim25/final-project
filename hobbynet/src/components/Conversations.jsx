@@ -6,11 +6,10 @@ import Conversation from './Conversation'
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations, clickConvo }) {
+export default function Conversations({ getConversations }) {
 
   const user_id = Number(cookies.get('user_id'));
   const [conversations, setConversations] = useState([]);
-  
 
   const uniqueConversations = () => {
     const output = [];
@@ -34,19 +33,28 @@ export default function Conversations({ getConversations, clickConvo }) {
   const conversationsArray = chat();
 
   const displayConversations = conversationsArray.map(conversation => {
+    const convo = conversation[0];
+    const otherUserId = convo.user1_id === user_id ? convo.user2_id : convo.user1_id;
     const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
     const otherUserImgUrl = `${conversation[0].profile_image}`;
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return(
-      <Center>
-        <Conversation 
-          key={otherUser} 
-          name={otherUser} 
-          lastMessage={lastMessage} 
-          img={otherUserImgUrl}
-          onClick={() => clickConvo(conversation)}
-          />
-      </Center>
+      <Link to={{
+        pathname: '/chats',
+        state: {
+          userId: user_id,
+          otherUserId: otherUserId
+        }
+      }}>
+        <Center >
+          <Conversation 
+            key={otherUser} 
+            name={otherUser} 
+            lastMessage={lastMessage} 
+            img={otherUserImgUrl}
+            />
+        </Center>
+      </Link>
     )
   })
 
@@ -62,9 +70,7 @@ export default function Conversations({ getConversations, clickConvo }) {
 
   return (
     <div>
-      <Link to='/chats'>
-        {displayConversations}
-      </Link>
+      {displayConversations}
     </div>
   );
 };

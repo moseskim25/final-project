@@ -15,7 +15,8 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var conversationsRouter = require('./routes/conversations');
 const categoriesRouter = require('./routes/categories');
-const searchRouter = require('./routes/search')
+const searchRouter = require('./routes/search');
+const chatsRouter = require('./routes/chats/chat');
 
 const { getUsers, getUserByEmail, addUser } = require('./helpers/dbHelpers')
 
@@ -43,6 +44,7 @@ app.use('/conversations', conversationsRouter(db));
 app.use('/login', loginRouter(db));
 app.use('/categories', categoriesRouter(db));
 app.use('/search', searchRouter(db));
+app.use('/chats', chatsRouter(db));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

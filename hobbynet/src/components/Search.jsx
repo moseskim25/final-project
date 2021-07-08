@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Select, Checkbox, Center } from "@chakra-ui/react"
 import { arrayOf } from 'prop-types';
+import SearchProfile from './SearchProfile'
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -69,19 +70,23 @@ export default function Search() {
   useEffect(
     () => {
       // Make sure we have a value (user has entered something in input)
+      getAll().then(results => {
+        results = results.slice(0, 10)
+        results = results.filter(result => category.indexOf(String(result.name)) > -1)
+        results = results.filter(result => level.indexOf(String(result.level)) > -1)
+        setResults(results)
+      })
       if (debouncedSearchTerm) {
-        setResults([]);
-        // Set isSearching state
         setIsSearching(true);
-        // Fire off our API call
-        searchCharacters(debouncedSearchTerm).then(results => {
-          // Set back to false since request finished
-          setIsSearching(false);
+        getAll().then(results => {
+          setResults([])
+          console.log(results)
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          // Set results state
-          setResults(results);
-        });
+          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1|| result.last_name.indexOf(debouncedSearchTerm) > -1|| result.interestname.indexOf(debouncedSearchTerm) > -1)
+          setResults(results)
+          setIsSearching(false);
+        })
       } else {
         setResults([]);
       }
@@ -250,10 +255,13 @@ export default function Search() {
         {isSearching && <div>Searching ...</div>}
 
         {results.map(result => (
-          <div key={result.id}>
-            {result.first_name + ' ' + result.last_name + '\n'}
-            {result.interestname + ' ' + result.name + ' ' + 'Level:' + ' ' + result.level}
-          </div>
+          <SearchProfile key={result.id} 
+                         firstName={result.first_name}
+                         lastName={result.last_name}
+                         interest={result.interestname}
+                         category={result.name}
+                         level={result.level}
+                         img={result.profile_image}/>
         ))}
       </div>
     </>
@@ -268,6 +276,15 @@ function searchCharacters(search) {
       console.error(error);
       return [];
     });
+}
+
+function getAll() {
+  return axios.get('http://localhost:8000/search/a')
+    .then(res => res.data)
+    .catch(error => {
+      console.error(error);
+      return [];
+    }); 
 }
 
 
