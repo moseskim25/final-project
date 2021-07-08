@@ -67,11 +67,12 @@ module.exports = (db) => {
 
   router.put('/new/photo', (req, res) => {
 
-    const fileStr = req.body.data;
+    const {image_url, user_id} = req.body;
 
     db.query(`UPDATE users
-    SET upload_image = $1`,
-    [fileStr])
+    SET profile_image = $1
+    WHERE id = $2`,
+    [image_url, user_id])
     .then(() => res.send())
     .catch(err => console.error(err))
   });
