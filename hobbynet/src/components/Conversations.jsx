@@ -6,11 +6,10 @@ import Conversation from './Conversation'
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations, clickConvo }) {
+export default function Conversations({ getConversations }) {
 
   const user_id = Number(cookies.get('user_id'));
   const [conversations, setConversations] = useState([]);
-  
 
   const uniqueConversations = () => {
     const output = [];
@@ -40,8 +39,14 @@ export default function Conversations({ getConversations, clickConvo }) {
     const otherUserImgUrl = `${conversation[0].profile_image}`;
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return(
-      <Link to={`/chats/${user_id}/${otherUserId}`}>
-        <Center>
+      <Link to={{
+        pathname: '/chats',
+        state: {
+          userId: user_id,
+          otherUserId: otherUserId
+        }
+      }}>
+        <Center >
           <Conversation 
             key={otherUser} 
             name={otherUser} 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useParams } from 'react-router';
 
 import helper from "./hooks/helper";
 
@@ -16,8 +17,6 @@ import Conversation from "./components/Conversation"
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
-  const [conversation, setConversation] = useState({});
-  console.log('conversation is:', conversation);
 
   return (
     <main>
@@ -55,7 +54,7 @@ function App() {
         </Route>
         <Route path="/chats">
           <Navbar />
-          <Chats conversation={conversation}/>
+          <Chats />
         </Route>
       </Switch>
     </main>
