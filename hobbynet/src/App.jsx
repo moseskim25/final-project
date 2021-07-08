@@ -27,11 +27,11 @@ function App() {
         </Route>
         <Route path="/register">
           <Navbar />
-          <Registration 
-            createUser={createUser} 
-            createUserGeneral={createUserGeneral} 
-            getInterests={getInterests} 
-            setUserInterests={setUserInterests}/>
+          <Registration
+            createUser={createUser}
+            createUserGeneral={createUserGeneral}
+            getInterests={getInterests}
+            setUserInterests={setUserInterests} />
         </Route>
         <Route path="/testpath">
           <UserProfile />
@@ -48,14 +48,19 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar />
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests}/>
+          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
           <Conversations getConversations={getConversations} />
-          <Conversation/>
+          <Conversation />
         </Route>
         <Route path="/chats">
           <Navbar />
           <Chats />
         </Route>
+        <Route path="/messenger">
+          <Navbar />
+          <Conversation />
+        </Route>
+
       </Switch>
     </main>
   );

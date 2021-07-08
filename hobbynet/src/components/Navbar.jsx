@@ -32,7 +32,6 @@ const Navbar = (props) => {
   const [user, setUser] = useState({})
   const handleToggle = () => (isOpen ? onClose() : onOpen());
 
-
   const getUserInfo = (user_id) => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
       .then(res => {
