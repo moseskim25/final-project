@@ -59,7 +59,7 @@ function App() {
         </Route>
         <Route path="/chats">
           <Navbar />
-          <Chats conversation={conversation}/>
+          <Chats />
         </Route>
       </Switch>
     </main>
