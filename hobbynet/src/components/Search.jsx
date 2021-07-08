@@ -65,6 +65,7 @@ export default function Search() {
     return newArr
   }
 
+  console.log(results);
   // Here's where the API call happens
   // We use useEffect since this is an asynchronous action
   useEffect(
@@ -255,7 +256,7 @@ export default function Search() {
         {isSearching && <div>Searching ...</div>}
 
         {results.map(result => (
-          <Link href={`/viewprofile/${result.id}`}>
+          <Link href={`/viewprofile/${result.user_id}`}>
             <SearchProfile key={result.id}
               firstName={result.first_name}
               lastName={result.last_name}
