@@ -9,7 +9,7 @@ CREATE TABLE users (
   postal_code VARCHAR(25),
   birthday DATE,
   profile_image VARCHAR(255),
-  upload_image BYTEA,
+  upload_image TEXT,
   gender VARCHAR(50),
   socket_id VARCHAR(50) default NULL,
   created_at TIMESTAMP default current_timestamp NOT NULL
