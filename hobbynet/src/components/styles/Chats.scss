@@ -207,7 +207,7 @@
       display: flex;
     }
   }
-  main footer textarea{
+  main footer input{
     resize:none;
     border:none;
     display:block;
@@ -218,14 +218,14 @@
     font-size:13px;
     margin-bottom:13px;
   }
-  main footer textarea::placeholder{
+  main footer input::placeholder{
     color:#ddd;
   }
   main footer img{
     height:30px;
     cursor:pointer;
   }
-  main footer a{
+  main footer button{
     text-decoration:none;
     text-transform:uppercase;
     font-weight:bold;
