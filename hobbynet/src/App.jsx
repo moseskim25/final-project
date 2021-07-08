@@ -17,7 +17,8 @@ import Conversation from "./components/Conversation"
 import SocketTest from "./components/SocketTest"
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } 
+  = helper();
 
   return (
     <main>
