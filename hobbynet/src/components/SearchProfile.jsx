@@ -3,7 +3,9 @@ import {
     Avatar,
     Center,
     Stack,
-    Text
+    Text,
+    Badge,
+    Button
   } from '@chakra-ui/react';
 
 // key={result.id} 
@@ -14,7 +16,25 @@ import {
 // level={result.level}/>
 
 export default function SearchProfile(props) {
-    const {key, firstName, lastName, interest, category, level, img} = props;
+  const {key, firstName, lastName, interest, category, level, img} = props;
+
+  function titleCase(str) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+    }
+    return str.join(' ');
+  }
+
+  function levelToColor(lvl) {
+    if(level <= 2){
+      return "green"
+    } else if(level <= 4){
+      return "yellow"
+    } else {
+      return "red"
+    }
+  }
   return (
     firstName ? (
     <Flex
@@ -28,23 +48,27 @@ export default function SearchProfile(props) {
       _hover={{bg: "gray.50"}}
       mb={5}
     >
-      <Avatar
-        src={img}
-        height={'80px'}
-        width={'80px'}
-        alignSelf={'center'}
-        m={{ base: '0 17px 35px 0', md: '0 25px 0 50px' }}
-      />
+      <Stack>
+        <Avatar
+          src={img}
+          height={'80px'}
+          width={'80px'}
+          alignSelf={'center'}
+          m={{ base: '0 17px 35px 0', md: '0 50px 0 50px' }}
+        />
+        <Center>
+          <Text
+              fontSize={'md'}
+              fontWeight={500}
+          >    
+              {firstName + ' ' + lastName}
+          </Text>
+        </Center>
+      </Stack>
       <Center>
         <Stack spacing='0px'>
-            <Text
-                fontSize={'2xl'}
-                fontWeight={700}
-            >    
-                {firstName + ' ' + lastName}
-            </Text>
-            <Text>
-                {interest + ' ' + category + ' ' + level}
+            <Text fontSize={'sm'}>
+                {'is looking for a buddy interested in learning...'} <Text fontWeight='bold' fontSize={'2xl'}>{titleCase(interest)}</Text>
             </Text>
             <Text
                 fontSize={'sm'}
@@ -54,6 +78,15 @@ export default function SearchProfile(props) {
             </Text>
         </Stack>
       </Center>
+      <Flex w="94%" justify='space-between' position={'absolute'} mt={'-20px'} ml={'-20px'}>
+        <Badge variant="subtle">
+            {category}
+        </Badge>
+        <Badge variant="outline" colorScheme={levelToColor(level)}>
+            {'Level ' + level}
+        </Badge>
+
+      </Flex>
     </Flex>) : ''
   );
 }

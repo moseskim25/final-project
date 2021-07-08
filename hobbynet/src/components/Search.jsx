@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Select, Checkbox, Center } from "@chakra-ui/react"
+import { Select, Checkbox, Center, Input, Spinner } from "@chakra-ui/react"
 import { arrayOf } from 'prop-types';
 import SearchProfile from './SearchProfile'
 
@@ -246,24 +246,29 @@ export default function Search() {
         </Checkbox>
       </Center>
 
-      <div>
-        <input
-          placeholder="Search The DB"
-          onChange={e => setSearchTerm(e.target.value)}
-        />
+        <Center>
+          <Input
+            w={[500, 600, 700]}
+            mb="50px"
+            size="lg"
+            placeholder="Search The DB"
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+        </Center>
 
-        {isSearching && <div>Searching ...</div>}
+        {isSearching && <Center><Spinner mr="10px"/>Searching...</Center>}
 
         {results.map(result => (
-          <SearchProfile key={result.id} 
+          <Center>
+              <SearchProfile key={result.id} 
                          firstName={result.first_name}
                          lastName={result.last_name}
                          interest={result.interestname}
                          category={result.name}
                          level={result.level}
                          img={result.profile_image}/>
+          </Center>
         ))}
-      </div>
     </>
   );
 }
