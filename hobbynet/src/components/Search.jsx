@@ -45,10 +45,10 @@ export default function Search() {
   // State for search status (whether there is a pending API request)
   const [isSearching, setIsSearching] = useState(false);
 
-  const [category, setCategory] = useState(['academics', 'arts', 'languages', 'music', 'sports']);
+  const [category, setCategory] = useState([]);
   const [showCategories, setShowCategories] = useState(false)
   const [showLevels, setShowLevels] = useState(false)
-  const [level, setLevel] = useState(["1", "2", "3", "4", "5"]);
+  const [level, setLevel] = useState([]);
 
   // Now we call our hook, passing in the current searchTerm value.
   // The hook will only return the latest value (what we passed in) ...
@@ -67,25 +67,41 @@ export default function Search() {
     }
     return newArr
   }
-
-  console.log(results);
   // Here's where the API call happens
   // We use useEffect since this is an asynchronous action
   useEffect(
     () => {
+      console.log(category)
+      console.log(level)
       // Make sure we have a value (user has entered something in input)
       getAll().then(results => {
-        results = results.filter(result => category.indexOf(String(result.name)) > -1)
-        results = results.filter(result => level.indexOf(String(result.level)) > -1)
-        setResults(results)
+        if(category.length === 0 && level.length === 0){
+          setResults(results)
+        } else if(category.length === 0){
+          results = results.filter(result => level.indexOf(String(result.level)) > -1)
+          setResults(results)
+        } else if(level.length === 0){
+          results = results.filter(result => category.indexOf(String(result.name)) > -1)
+          setResults(results)
+        } else {
+          results = results.filter(result => level.indexOf(String(result.level)) > -1)
+          results = results.filter(result => category.indexOf(String(result.name)) > -1)
+          setResults(results)
+        }
       })
       if (debouncedSearchTerm) {
         setIsSearching(true);
         getAll().then(results => {
           setResults([])
-          console.log(results)
-          results = results.filter(result => category.indexOf(String(result.name)) > -1)
-          results = results.filter(result => level.indexOf(String(result.level)) > -1)
+          if(category.length === 0 && level.length === 0){
+          } else if(category.length === 0){
+            results = results.filter(result => level.indexOf(String(result.level)) > -1)
+          } else if(level.length === 0){
+            results = results.filter(result => category.indexOf(String(result.name)) > -1)
+          } else {
+            results = results.filter(result => level.indexOf(String(result.level)) > -1)
+            results = results.filter(result => category.indexOf(String(result.name)) > -1)
+          }
           results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1 || result.last_name.indexOf(debouncedSearchTerm) > -1 || result.interestname.indexOf(debouncedSearchTerm) > -1)
           setResults(results)
           setIsSearching(false);
@@ -117,8 +133,8 @@ export default function Search() {
              <Stack position={'absolute'}>
               {showCategories && <Stack position={'absolute'} left="-20px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
                   <Checkbox
+                    isChecked={category.indexOf("academics") >= 0 ? true : false}
                     mr="10px"
-                    defaultIsChecked  
                     value="academics"
                     onChange={(e) => {
                       if(category.indexOf(e.target.value) < 0){
@@ -132,8 +148,8 @@ export default function Search() {
                     Academics
                   </Checkbox>
                   <Checkbox
+                    isChecked={category.indexOf("arts") >= 0 ? true : false}
                     mr="10px"
-                    defaultIsChecked
                     value="arts"
                     onChange={(e) => {
                       if(category.indexOf(e.target.value) < 0){
@@ -147,8 +163,8 @@ export default function Search() {
                     Arts
                   </Checkbox>
                   <Checkbox
+                    isChecked={category.indexOf("languages") >= 0 ? true : false}
                     mr="10px"
-                    defaultIsChecked
                     value="languages"
                     onChange={(e) => {
                       if(category.indexOf(e.target.value) < 0){
@@ -162,8 +178,8 @@ export default function Search() {
                     Languages
                   </Checkbox>
                   <Checkbox
+                    isChecked={category.indexOf("music") >= 0 ? true : false}
                     mr="10px"
-                    defaultIsChecked
                     value="music"
                     onChange={(e) => {
                       if(category.indexOf(e.target.value) < 0){
@@ -177,7 +193,7 @@ export default function Search() {
                     Music
                   </Checkbox>
                   <Checkbox
-                    defaultIsChecked
+                    isChecked={category.indexOf("sports") >= 0 ? true : false}
                     value="sports"
                     onChange={(e) => {
                       if(category.indexOf(e.target.value) < 0){
@@ -196,7 +212,7 @@ export default function Search() {
              <Stack position={'absolute'} w="100%">
               {showLevels && <Stack position={'absolute'} left="100px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
                 <Checkbox
-                  defaultIsChecked
+                    isChecked={level.indexOf("1") >= 0 ? true : false}
                     value="1"
                     onChange={(e) => {
                       if(level.indexOf(e.target.value) < 0){
@@ -210,7 +226,7 @@ export default function Search() {
                     Level 1
                   </Checkbox>
                   <Checkbox
-                    defaultIsChecked
+                    isChecked={level.indexOf("2") >= 0 ? true : false}
                     value="2"
                     onChange={(e) => {
                       if(level.indexOf(e.target.value) < 0){
@@ -224,7 +240,7 @@ export default function Search() {
                     Level 2
                   </Checkbox>
                   <Checkbox
-                  defaultIsChecked
+                   isChecked={level.indexOf("3") >= 0 ? true : false}
                     value="3"
                     onChange={(e) => {
                       if(level.indexOf(e.target.value) < 0){
@@ -238,7 +254,7 @@ export default function Search() {
                     Level 3
                   </Checkbox>
                   <Checkbox
-                  defaultIsChecked
+                    isChecked={level.indexOf("4") >= 0 ? true : false}
                     value="4"
                     onChange={(e) => {
                       if(level.indexOf(e.target.value) < 0){
@@ -252,7 +268,7 @@ export default function Search() {
                     Level 4
                   </Checkbox>
                   <Checkbox
-                  defaultIsChecked
+                    isChecked={level.indexOf("5") >= 0 ? true : false}
                     value="5"
                     onChange={(e) => {
                       if(level.indexOf(e.target.value) < 0){
