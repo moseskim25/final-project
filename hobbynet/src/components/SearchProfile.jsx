@@ -1,4 +1,19 @@
-export default function Conversationt(props) {
+import {
+    Flex,
+    Avatar,
+    Center,
+    Stack,
+    Text
+  } from '@chakra-ui/react';
+
+// key={result.id} 
+// firstName={result.first_name}
+// lastName={result.last_name}
+// interest={result.interestname}
+// category={result.name}
+// level={result.level}/>
+
+export default function SearchProfile(props) {
     const { name, lastMessage, img } = props;
   return (
     name ? (

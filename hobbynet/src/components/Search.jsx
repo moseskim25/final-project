@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Select, Checkbox, Center } from "@chakra-ui/react"
 import { arrayOf } from 'prop-types';
+import SearchProfile from './SearchProfile'
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -254,10 +255,12 @@ export default function Search() {
         {isSearching && <div>Searching ...</div>}
 
         {results.map(result => (
-          <div key={result.id}>
-            {result.first_name + ' ' + result.last_name + '\n'}
-            {result.interestname + ' ' + result.name + ' ' + 'Level:' + ' ' + result.level}
-          </div>
+          <SearchProfile key={result.id} 
+                         firstName={result.first_name}
+                         lastName={result.last_name}
+                         interest={result.interestname}
+                         category={result.name}
+                         level={result.level}/>
         ))}
       </div>
     </>
