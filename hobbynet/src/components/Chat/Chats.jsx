@@ -1,7 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+
 import '../styles/Chats.scss';
 
 export default function Main() {
+
+  const location = useLocation();
+  const userId = location.state.userId;
+  const otherUserId = location.state.otherUserId;
+
+  const [conversation, setConversation] = useState([]);
+  console.log('conversation is:', conversation);
+  
+  useEffect(() => {
+    return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
+    .then((res) => {
+      setConversation(res.data);
+    })
+  }, [])
+
+  const displayConversation = conversation.map(msg => {
+
+    if (msg.sender_id === userId) {
+      return (
+        <li class="me">
+          <div class="entete">
+            <span class="status blue"></span>
+            <h2>{msg.sender_first_name} {msg.sender_last_name}</h2>
+            <h3>{msg.time}</h3>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">
+            {msg.text}
+          </div>
+        </li>
+      )
+    } else {
+      return (<li class="you">
+        <div class="entete">
+          <span class="status green"></span>
+          <h2>{msg.sender_first_name} {msg.sender_last_name}</h2>
+          <h3>{msg.time}</h3>
+        </div>
+        <div class="triangle"></div>
+        <div class="message">
+          {msg.text}
+        </div>
+      </li>)
+    }
+
+    })
+
   return (
     <div id="container">
       <aside>
@@ -121,72 +171,7 @@ export default function Main() {
           <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
         </header>
         <ul id="chat">
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
-              <h2>Vincent</h2>
-              <h3>10:12AM, Today</h3>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-            </div>
-          </li>
-          <li class="me">
-            <div class="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>Vincent</h2>
-              <span class="status blue"></span>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-            </div>
-          </li>
-          <li class="me">
-            <div class="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>Vincent</h2>
-              <span class="status blue"></span>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              OK
-            </div>
-          </li>
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
-              <h2>Vincent</h2>
-              <h3>10:12AM, Today</h3>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-            </div>
-          </li>
-          <li class="me">
-            <div class="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>Vincent</h2>
-              <span class="status blue"></span>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-            </div>
-          </li>
-          <li class="me">
-            <div class="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>Vincent</h2>
-              <span class="status blue"></span>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">
-              OK
-            </div>
-          </li>
+          {displayConversation}
         </ul>
         <footer>
           <textarea placeholder="Type your message"></textarea>
