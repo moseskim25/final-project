@@ -69,19 +69,23 @@ export default function Search() {
   useEffect(
     () => {
       // Make sure we have a value (user has entered something in input)
+      getAll().then(results => {
+        results = results.slice(0, 10)
+        results = results.filter(result => category.indexOf(String(result.name)) > -1)
+        results = results.filter(result => level.indexOf(String(result.level)) > -1)
+        setResults(results)
+      })
       if (debouncedSearchTerm) {
-        setResults([]);
-        // Set isSearching state
         setIsSearching(true);
-        // Fire off our API call
-        searchCharacters(debouncedSearchTerm).then(results => {
-          // Set back to false since request finished
-          setIsSearching(false);
+        getAll().then(results => {
+          setResults([])
+          console.log(results)
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          // Set results state
-          setResults(results);
-        });
+          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1|| result.last_name.indexOf(debouncedSearchTerm) > -1|| result.interestname.indexOf(debouncedSearchTerm) > -1)
+          setResults(results)
+          setIsSearching(false);
+        })
       } else {
         setResults([]);
       }
@@ -268,6 +272,15 @@ function searchCharacters(search) {
       console.error(error);
       return [];
     });
+}
+
+function getAll() {
+  return axios.get('http://localhost:8000/search/a')
+    .then(res => res.data)
+    .catch(error => {
+      console.error(error);
+      return [];
+    }); 
 }
 
 
