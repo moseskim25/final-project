@@ -9,8 +9,6 @@ const db = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
@@ -23,8 +21,7 @@ const { getUsers, getUserByEmail, addUser } = require('./helpers/dbHelpers')
 
 var app = express();
 app.use(cors());
-const server = require('http').createServer(app)
-const io = require('socket.io')(server);
+
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -66,9 +63,26 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+const server = require('http').createServer(app)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ['GET', 'POST']
+  },
 });
+
+
+let interval;
+
+io.on("connection", (socket) => {
+  console.log("a user connected.");
+  io.emit("welcome", "hello this is socket")
+});
+
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+// app.listen(PORT, () => {
+//   console.log(`Listening on port ${PORT}`);
+// });
 
 module.exports = app;
 

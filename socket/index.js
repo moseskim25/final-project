@@ -1,10 +1,21 @@
 "use strict";
 
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+const express = require("express");
+const socketIO = require("socket.io");
+
+const PORT = process.env.PORT || 3333;
+const INDEX = "../hobbynet/src/components/SocketTest.jsx";
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = socketIO(server);
+
+let userIdToSocketIdMap = {};
+
+
+
 
 
 io.on("connection", (socket) => {

@@ -14,6 +14,7 @@ import Conversations from "./components/Conversations";
 import Search from "./components/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation"
+import SocketTest from "./components/SocketTest"
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } = helper();
@@ -37,8 +38,12 @@ function App() {
           <UserProfile />
           <Card />
         </Route>
+        <Route path="/sockettest">
+          <Navbar />
+          <SocketTest />
+        </Route>
         <Route path="/search">
-          <Search/>
+          <Search />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
