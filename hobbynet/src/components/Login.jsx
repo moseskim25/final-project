@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import './styles/Registration.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import General from './Registration/General';
 import Categories from './Registration/Categories';
 import axios from 'axios';
@@ -12,8 +12,8 @@ const EMAIL_PASS = 'EMAIL_PASS';
 const GENERAL = 'GENERAL';
 const CATEGORIES = 'CATEGORIES';
 
-
 export default function Registration(props) {
+  let history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +22,8 @@ export default function Registration(props) {
     const data = { email, password };
     return axios.post('http://localhost:8000/login', data)
       .then(res => {
-        cookies.set("user_id", res.data.id)
+        cookies.set("user_id", res.data.id);
+        history.push('/home');
       })
       .catch(err => console.log(err))
   }
@@ -38,9 +39,7 @@ export default function Registration(props) {
           <input className="pass" type="password" align="center" placeholder="Password" onChange={event => {
             setPassword(event.target.value);
           }} />
-          <Link to='/home'>
-            <button className="submit" align="center" onClick={authenticateUser}>Submit</button>
-          </Link>
+          <button className="submit" align="center" onClick={authenticateUser}>Submit</button>
           <p className="forgot" align="center">Forgot Password?</p>
         </form>
       </div>
