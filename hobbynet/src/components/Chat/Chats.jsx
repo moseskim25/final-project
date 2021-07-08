@@ -12,12 +12,44 @@ export default function Main() {
 
   const [conversation, setConversation] = useState([]);
   // console.log('conversation is:', conversation);
-  
-  useEffect(() => {
+
+  const createConvo = () => {
+    axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId })
+      .then(res => {
+        // console.log("res.data client side", res.data);
+        setConversation(res.data[0].id)
+      })
+  }
+
+  const getConvoId = () => {
+    axios.get(`http://localhost:8000/chats/verify/${userId}/${otherUserId}`)
+      .then(res => {
+        if (res.data.length === 0) {
+          createConvo()
+        } else {
+          getConvoMessages()
+        }
+      })
+  }
+
+  const getConvoMessages = () => {
     return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
-    .then((res) => {
-      setConversation(res.data);
-    })
+      .then(res => {
+        setConversation(res.data);
+      })
+  }
+
+  // BUG: inserts new conversation for the same two people every time if a message is not sent
+  useEffect(() => {
+    getConvoId()
+    // return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
+    //   .then((res) => {
+    //     if (res.data.length === 0) {
+    //       createPendingChat()
+    //     } else {
+    //       setConversation(res.data);
+    //     }
+    //   })
   }, [])
 
   const onSubmit = (event) => {
@@ -26,7 +58,7 @@ export default function Main() {
     return axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message })
   }
 
-  const displayConversation = conversation.map(msg => {
+  const displayConversation = Array.isArray(conversation) && conversation.map(msg => {
 
     if (msg.sender_id === userId) {
       return (
@@ -56,7 +88,7 @@ export default function Main() {
       </li>)
     }
 
-    })
+  })
 
   return (
     <div id="container">

@@ -6,7 +6,7 @@ import {
   Text,
   Stack,
   Button,
-  useColorModeValue,
+  useColorModeValue
 } from '@chakra-ui/react';
 
 import { MdLocationOn, MdLink, MdDateRange } from 'react-icons/md';
@@ -14,16 +14,19 @@ import { FaComment } from 'react-icons/fa'
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSpring } from 'framer-motion';
 import './styles/UserProfile.scss';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies()
 
 
 export default function Profile({ getUserInfo, getUserInterests }) {
-
-  const { userId } = useParams();
+  const userId = cookies.get('user_id')
+  const { otherUserId } = useParams();
   const [userInfo, setUserInfo] = useState('');
   const [userInterests, setUserInterests] = useState([]);
 
-  console.log("userId", userId);
+  console.log("otherUserId", otherUserId);
 
   const displayUserInterests = userInterests.map(interest =>
     <div className='user_interest'>
@@ -32,12 +35,12 @@ export default function Profile({ getUserInfo, getUserInterests }) {
   )
 
   useEffect(() => {
-    getUserInfo(userId)
+    getUserInfo(otherUserId)
       .then((res) => {
         setUserInfo(res.data);
       })
 
-    getUserInterests(userId)
+    getUserInterests(otherUserId)
       .then(res => setUserInterests(res.data))
   }, [])
 
@@ -93,14 +96,22 @@ export default function Profile({ getUserInfo, getUserInterests }) {
         </Box>
       </Center>
       <Center py={6} position={'relative'}>
-        <Button position={'relative'}>
-          <Center>
-            <Text ml='1'>
-              {`Send ${userInfo.first_name} a message!   `}
-            </Text>
-            <FaComment style={{ marginLeft: '7px' }}></FaComment>
-          </Center>
-        </Button>
+        <Link to={{
+          pathname: '/chats',
+          state: {
+            userId: userId,
+            otherUserId: otherUserId
+          }
+        }}>
+          <Button position={'relative'}>
+            <Center>
+              <Text ml='1'>
+                {`Send ${userInfo.first_name} a message!   `}
+              </Text>
+              <FaComment style={{ marginLeft: '7px' }}></FaComment>
+            </Center>
+          </Button>
+        </Link>
       </Center>
     </>
   );
