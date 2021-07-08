@@ -260,7 +260,8 @@ export default function Search() {
                          lastName={result.last_name}
                          interest={result.interestname}
                          category={result.name}
-                         level={result.level}/>
+                         level={result.level}
+                         img={result.profile_image}/>
         ))}
       </div>
     </>

@@ -14,9 +14,9 @@ import {
 // level={result.level}/>
 
 export default function SearchProfile(props) {
-    const { name, lastMessage, img } = props;
+    const {key, firstName, lastName, interest, category, level, img} = props;
   return (
-    name ? (
+    firstName ? (
     <Flex
       boxShadow={'lg'}
       maxW={'640px'}
@@ -41,14 +41,16 @@ export default function SearchProfile(props) {
                 fontSize={'2xl'}
                 fontWeight={700}
             >    
-                {name}
+                {firstName + ' ' + lastName}
+            </Text>
+            <Text>
+                {interest + ' ' + category + ' ' + level}
             </Text>
             <Text
                 fontSize={'sm'}
                 color={'gray.500'}
                 as={'i'}
             >
-                {lastMessage.slice(0, 124)}
             </Text>
         </Stack>
       </Center>
