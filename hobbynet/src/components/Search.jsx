@@ -31,7 +31,7 @@ function useDebounce(value, delay) {
     // Only re-call effect if value changes
     // You could also add the "delay" var to inputs array if you ...
     // ... need to be able to change that dynamically.
-    [value] 
+    [value]
   );
 
   return debouncedValue;
@@ -60,14 +60,15 @@ export default function Search() {
 
   const removeFromStateArr = (value, arr) => {
     let newArr = []
-    for(let i = 0; i < arr.length; i++){
-      if(arr[i] !== value){
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== value) {
         newArr.push(arr[i])
       }
     }
     return newArr
   }
 
+  console.log(results);
   // Here's where the API call happens
   // We use useEffect since this is an asynchronous action
   useEffect(
@@ -85,7 +86,7 @@ export default function Search() {
           console.log(results)
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1|| result.last_name.indexOf(debouncedSearchTerm) > -1|| result.interestname.indexOf(debouncedSearchTerm) > -1)
+          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1 || result.last_name.indexOf(debouncedSearchTerm) > -1 || result.interestname.indexOf(debouncedSearchTerm) > -1)
           setResults(results)
           setIsSearching(false);
         })
@@ -302,7 +303,7 @@ function getAll() {
     .catch(error => {
       console.error(error);
       return [];
-    }); 
+    });
 }
 
 
