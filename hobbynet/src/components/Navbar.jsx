@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 import {
@@ -27,6 +28,9 @@ const cookies = new Cookies();
 
 // the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
+
+  let history = useHistory();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({})
@@ -95,12 +99,7 @@ const Navbar = (props) => {
             <EmailIcon align="center"></EmailIcon>
             <Text>Messages</Text>
           </Stack>
-          <Toggle></Toggle>
-          {/* this is a button for testing purposes - this toggles the logged in navbar and the logged out taskbar (replace later w/  login features) */}
-          <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }} onClick={() => setIsLoggedIn(!isLoggedIn)}>
-            <WarningTwoIcon align="center"></WarningTwoIcon>
-            <Text>Toggle Login Mode</Text>
-          </Stack>
+
 
         </Stack>
         <Stack _hover={{ color: "#b3b3b3" }}>
@@ -119,7 +118,7 @@ const Navbar = (props) => {
             </MenuButton>
             {/* the dropdown list for a user - currently all redirects to w3schools but can update later */}
             <MenuList bg="white" color="black">
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Profile</MenuItem>
+              <MenuItem onClick={() => history.push('/profile')}>Profile</MenuItem>
               <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
               <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
               <MenuDivider />
@@ -169,11 +168,7 @@ const Navbar = (props) => {
       >
         {/* this is the navbar menu options, add/subtract later as necessary */}
         <Toggle></Toggle>
-        {/* this is a button for testing purposes - this toggles the logged in navbar and the logged out taskbar (replace later w/  login features) */}
-        <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }} onClick={() => setIsLoggedIn(!isLoggedIn)}>
-          <WarningTwoIcon align="center"></WarningTwoIcon>
-          <Text>Toggle Login Mode</Text>
-        </Stack>
+
 
       </Stack>
       <Stack

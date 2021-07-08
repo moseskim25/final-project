@@ -13,8 +13,9 @@ import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 import Search from "./components/Search"
 import Chats from './components/Chat/Chats';
-import Conversation from "./components/Conversation"
-import SocketTest from "./components/SocketTest"
+import Conversation from "./components/Conversation";
+import SocketTest from "./components/SocketTest";
+import MyProfile from './components/MyProfile';
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } 
@@ -65,6 +66,9 @@ function App() {
         <Route path="/messenger">
           <Navbar />
           <Conversation />
+        </Route>
+        <Route path="/profile">
+          <MyProfile getUserInfo={getUserInfo}/>
         </Route>
 
       </Switch>
