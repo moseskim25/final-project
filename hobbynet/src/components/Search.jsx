@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Select, Checkbox, Center } from "@chakra-ui/react"
+import { Select, Checkbox, Center, Link } from "@chakra-ui/react"
 import { arrayOf } from 'prop-types';
 import SearchProfile from './SearchProfile'
 
@@ -30,7 +30,7 @@ function useDebounce(value, delay) {
     // Only re-call effect if value changes
     // You could also add the "delay" var to inputs array if you ...
     // ... need to be able to change that dynamically.
-    [value] 
+    [value]
   );
 
   return debouncedValue;
@@ -57,8 +57,8 @@ export default function Search() {
 
   const removeFromStateArr = (value, arr) => {
     let newArr = []
-    for(let i = 0; i < arr.length; i++){
-      if(arr[i] !== value){
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== value) {
         newArr.push(arr[i])
       }
     }
@@ -83,7 +83,7 @@ export default function Search() {
           console.log(results)
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1|| result.last_name.indexOf(debouncedSearchTerm) > -1|| result.interestname.indexOf(debouncedSearchTerm) > -1)
+          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1 || result.last_name.indexOf(debouncedSearchTerm) > -1 || result.interestname.indexOf(debouncedSearchTerm) > -1)
           setResults(results)
           setIsSearching(false);
         })
@@ -106,7 +106,7 @@ export default function Search() {
           defaultIsChecked
           value="academics"
           onChange={(e) => {
-            if(category.indexOf(e.target.value) < 0){
+            if (category.indexOf(e.target.value) < 0) {
               setCategory(prev => [...prev, e.target.value])
             } else {
               let newCategory = removeFromStateArr(e.target.value, category)
@@ -120,7 +120,7 @@ export default function Search() {
           defaultIsChecked
           value="arts"
           onChange={(e) => {
-            if(category.indexOf(e.target.value) < 0){
+            if (category.indexOf(e.target.value) < 0) {
               setCategory(prev => [...prev, e.target.value])
             } else {
               let newCategory = removeFromStateArr(e.target.value, category)
@@ -134,7 +134,7 @@ export default function Search() {
           defaultIsChecked
           value="languages"
           onChange={(e) => {
-            if(category.indexOf(e.target.value) < 0){
+            if (category.indexOf(e.target.value) < 0) {
               setCategory(prev => [...prev, e.target.value])
             } else {
               let newCategory = removeFromStateArr(e.target.value, category)
@@ -148,7 +148,7 @@ export default function Search() {
           defaultIsChecked
           value="music"
           onChange={(e) => {
-            if(category.indexOf(e.target.value) < 0){
+            if (category.indexOf(e.target.value) < 0) {
               setCategory(prev => [...prev, e.target.value])
             } else {
               let newCategory = removeFromStateArr(e.target.value, category)
@@ -162,7 +162,7 @@ export default function Search() {
           defaultIsChecked
           value="sports"
           onChange={(e) => {
-            if(category.indexOf(e.target.value) < 0){
+            if (category.indexOf(e.target.value) < 0) {
               setCategory(prev => [...prev, e.target.value])
             } else {
               let newCategory = removeFromStateArr(e.target.value, category)
@@ -174,11 +174,11 @@ export default function Search() {
         </Checkbox>
       </Center>
       <Center>
-       <Checkbox
-         defaultIsChecked
+        <Checkbox
+          defaultIsChecked
           value="1"
           onChange={(e) => {
-            if(level.indexOf(e.target.value) < 0){
+            if (level.indexOf(e.target.value) < 0) {
               setLevel(prev => [...prev, e.target.value])
             } else {
               let newLevel = removeFromStateArr(e.target.value, level)
@@ -192,7 +192,7 @@ export default function Search() {
           defaultIsChecked
           value="2"
           onChange={(e) => {
-            if(level.indexOf(e.target.value) < 0){
+            if (level.indexOf(e.target.value) < 0) {
               setLevel(prev => [...prev, e.target.value])
             } else {
               let newLevel = removeFromStateArr(e.target.value, level)
@@ -203,10 +203,10 @@ export default function Search() {
           Level 2
         </Checkbox>
         <Checkbox
-         defaultIsChecked
+          defaultIsChecked
           value="3"
           onChange={(e) => {
-            if(level.indexOf(e.target.value) < 0){
+            if (level.indexOf(e.target.value) < 0) {
               setLevel(prev => [...prev, e.target.value])
             } else {
               let newLevel = removeFromStateArr(e.target.value, level)
@@ -217,10 +217,10 @@ export default function Search() {
           Level 3
         </Checkbox>
         <Checkbox
-         defaultIsChecked
+          defaultIsChecked
           value="4"
           onChange={(e) => {
-            if(level.indexOf(e.target.value) < 0){
+            if (level.indexOf(e.target.value) < 0) {
               setLevel(prev => [...prev, e.target.value])
             } else {
               let newLevel = removeFromStateArr(e.target.value, level)
@@ -231,10 +231,10 @@ export default function Search() {
           Level 4
         </Checkbox>
         <Checkbox
-         defaultIsChecked
+          defaultIsChecked
           value="5"
           onChange={(e) => {
-            if(level.indexOf(e.target.value) < 0){
+            if (level.indexOf(e.target.value) < 0) {
               setLevel(prev => [...prev, e.target.value])
             } else {
               let newLevel = removeFromStateArr(e.target.value, level)
@@ -255,13 +255,16 @@ export default function Search() {
         {isSearching && <div>Searching ...</div>}
 
         {results.map(result => (
-          <SearchProfile key={result.id} 
-                         firstName={result.first_name}
-                         lastName={result.last_name}
-                         interest={result.interestname}
-                         category={result.name}
-                         level={result.level}
-                         img={result.profile_image}/>
+          <Link href={`/viewprofile/${result.id}`}>
+            <SearchProfile key={result.id}
+              firstName={result.first_name}
+              lastName={result.last_name}
+              interest={result.interestname}
+              category={result.name}
+              level={result.level}
+              img={result.profile_image}
+            />
+          </Link>
         ))}
       </div>
     </>
@@ -284,7 +287,7 @@ function getAll() {
     .catch(error => {
       console.error(error);
       return [];
-    }); 
+    });
 }
 
 

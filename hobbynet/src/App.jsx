@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 
 import helper from "./hooks/helper";
 
@@ -15,10 +15,11 @@ import Search from "./components/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation"
 import SocketTest from "./components/SocketTest"
+import Profile from "./components/Profile"
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } 
-  = helper();
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
+    = helper();
 
   return (
     <main>
@@ -45,6 +46,10 @@ function App() {
         </Route>
         <Route path="/search">
           <Search />
+        </Route>
+        <Route path="/viewprofile/:userId">
+          <Navbar />
+          <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
