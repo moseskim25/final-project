@@ -77,6 +77,10 @@ let interval;
 io.on("connection", (socket) => {
   console.log("a user connected.");
   io.emit("welcome", "hello this is socket")
+  const userId = socket.handshake.query.userId
+  console.log("userId", userId);
+  console.log("socket id", socket.id);
+  db.query(`UPDATE users SET socket_id = $1 WHERE id = $2;`, [socket.id, userId])
 });
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

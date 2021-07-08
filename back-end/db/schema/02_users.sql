@@ -11,6 +11,7 @@ CREATE TABLE users (
   profile_image VARCHAR(255),
   upload_image BYTEA,
   gender VARCHAR(50),
+  socket_id VARCHAR(50) default NULL,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
 
