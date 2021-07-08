@@ -11,7 +11,7 @@ export default function Main() {
   const otherUserId = location.state.otherUserId;
 
   const [conversation, setConversation] = useState([]);
-  console.log('conversation is:', conversation);
+  // console.log('conversation is:', conversation);
   
   useEffect(() => {
     return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
@@ -19,6 +19,12 @@ export default function Main() {
       setConversation(res.data);
     })
   }, [])
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const message = event.target.message.value;
+    return axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message })
+  }
 
   const displayConversation = conversation.map(msg => {
 
@@ -174,12 +180,14 @@ export default function Main() {
           {displayConversation}
         </ul>
         <footer>
-          <textarea placeholder="Type your message"></textarea>
-          <div>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" />
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" />
-          </div>
-          {/**<a href="#">Send</a>*/}
+          <form onSubmit={onSubmit}>
+            <input placeholder="Type your message" name='message'></input>
+            <div>
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" />
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" />
+              <button type='submit'>Send</button>
+            </div>
+          </form>
         </footer>
       </main>
     </div>
