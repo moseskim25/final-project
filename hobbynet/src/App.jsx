@@ -13,8 +13,9 @@ import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
 import Search from "./components/SearchText/Search"
 import Chats from './components/Chat/Chats';
-import Conversation from "./components/Conversation"
-import SocketTest from "./components/SocketTest"
+import Conversation from "./components/Conversation";
+import SocketTest from "./components/SocketTest";
+import MyProfile from './components/MyProfile';
 import Profile from "./components/Profile"
 import AniText from "./components/SearchText/AniText"
 import SearchLanding from "./components/SearchText/SearchLanding"
@@ -74,6 +75,10 @@ function App() {
         <Route path="/messenger">
           <Navbar />
           <Conversation />
+        </Route>
+        <Route path="/profile">
+          <Navbar />
+          <MyProfile getUserInfo={getUserInfo}/>
         </Route>
 
       </Switch>

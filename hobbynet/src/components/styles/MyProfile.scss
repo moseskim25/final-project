@@ -1,0 +1,77 @@
+.edit_profile_1 {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 25px;
+  padding: 25px;
+  width: 1000px;
+  height: 80vh;
+  border: 1px solid grey;
+  border-radius: 5px;
+  border-color: rgba(223,225,229,0);
+  box-shadow: 0 1px 6px rgb(165, 165, 167);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.title {
+  font-size: 28px;
+  font-weight: 600;
+}
+.title_desc {
+  font-size: 11px;
+  color:grey;
+  margin-top: 0;
+}
+
+.edit_profile_2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-left: 40px;
+
+  .image {
+    border-radius: 100%;
+    height: 250px;
+    width: 250px;
+    margin-top: 40px;
+    overflow:hidden;
+  }
+  .image:hover {
+    cursor: pointer;
+    filter: brightness(50%);
+  }
+
+
+
+  .edit_profile_3 {
+    padding-top: 35px;
+    padding-left: 80px;
+
+    .title {
+      padding-bottom: 10px;
+    }
+
+    .double {
+      display: flex;
+      flex-direction: row;
+
+      div:first-of-type {
+        width: 125px;
+      }
+    }
+  
+    .personal_info {
+      margin-bottom: 25px;
+  
+  
+      .description {
+        font-size: 11px;
+      }
+  
+      .data {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
+
+}
