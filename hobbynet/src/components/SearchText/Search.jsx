@@ -125,7 +125,7 @@ export default function Search() {
            <Input
               w={[500, 600, 700]}
               size="lg"
-              placeholder="Search The DB"
+              placeholder="Find your next hobby study buddy..."
               onChange={e => setSearchTerm(e.target.value)}
             />
             <Stack direction="row">
