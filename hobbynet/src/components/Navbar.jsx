@@ -90,15 +90,15 @@ const Navbar = (props) => {
           {/* this is the navbar menu options, add/subtract later as necessary */}
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <ViewIcon align="center"></ViewIcon>
-            <NavLink to="/search">Connect</NavLink>
+            <NavLink to="/search"></NavLink>
           </Stack>
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <BellIcon align="center"></BellIcon>
-            <Text>Notifications</Text>
+            <Text></Text>
           </Stack>
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <EmailIcon align="center"></EmailIcon>
-            <NavLink to="/chats">Messages</NavLink>
+            <NavLink to="/chats"></NavLink>
           </Stack>
 
 
