@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import "../styles/MyProfile.scss";
+import "./MyProfile.scss";
 import UploadImagePopup from './UploadImagePopup';
 import { Center, VStack } from "@chakra-ui/react";
 import moment from 'moment';
