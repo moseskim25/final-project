@@ -4,7 +4,7 @@ const router = express.Router();
 module.exports = (db) => {
 
   // retrieves message history
-  router.get('/:userId/:other_userId', (req, res) => {
+  router.get('/:userId/:otherUserId', (req, res) => {
     db.query(`SELECT messages.sender_id, messages.time, messages.text, conversations_id,
     (SELECT first_name FROM users WHERE users.id = sender_id) AS sender_first_name,
     (SELECT last_name FROM users WHERE users.id = sender_id) AS sender_last_name

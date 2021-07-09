@@ -35,6 +35,8 @@ export default function Main() {
   const getConvoMessages = () => {
     return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
       .then(res => {
+        console.log("res", res);
+        console.log(userId, otherUserId);
         setConversation(res.data);
       })
   }
