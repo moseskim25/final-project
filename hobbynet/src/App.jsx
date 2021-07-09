@@ -47,6 +47,7 @@ function App() {
           <SocketTest />
         </Route>
         <Route path="/search">
+          <Navbar />
           <SearchLanding/>
           <Search />
         </Route>
