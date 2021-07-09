@@ -47,10 +47,6 @@ export default function MyProfile({ getUserInfo }) {
           <p className='data'>{userData.email}</p>
         </div>
 
-        <div className='personal_info'>
-          <p className='description'>Password</p>
-          <p className='data'>{userData.password}</p>
-        </div>
 
         <div className='name'>
           <div className='personal_info'>
