@@ -51,7 +51,7 @@ function App() {
           <SearchLanding/>
           <Search />
         </Route>
-        <Route path="/viewprofile/:userId">
+        <Route path="/viewprofile/:otherUserId">
           <Navbar />
           <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
         </Route>
