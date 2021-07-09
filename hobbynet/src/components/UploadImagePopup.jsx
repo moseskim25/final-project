@@ -7,6 +7,10 @@ export default function UploadImagePopup({ trigger, setButtonPopup, user_id, set
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!imageSelected) {
+      return setButtonPopup(false);
+    }
     const formData = new FormData();
     formData.append("file", imageSelected);
     formData.append("upload_preset", "c26irsnw");

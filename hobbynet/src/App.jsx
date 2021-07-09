@@ -16,8 +16,6 @@ import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation";
 import SocketTest from "./components/SocketTest";
 import MyProfile from './components/MyProfile';
-import Conversation from "./components/Conversation"
-import SocketTest from "./components/SocketTest"
 import Profile from "./components/Profile"
 import AniText from "./components/SearchText/AniText"
 import SearchLanding from "./components/SearchText/SearchLanding"
