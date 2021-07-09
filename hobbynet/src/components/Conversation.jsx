@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { chakra, Flex, Avatar, useColorModeValue, Text, Stack, Center } from '@chakra-ui/react';
-import { io } from "socket.io-client";
+
 
 export default function Conversation(props) {
   const { name, lastMessage, img } = props;
-  const [socket, setSocket] = useState(null);
+
 
   // console.log("inside conversation.jsx");
   // console.log(socket);

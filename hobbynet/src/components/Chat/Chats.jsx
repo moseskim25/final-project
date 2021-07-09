@@ -35,23 +35,12 @@ export default function Main() {
   const getConvoMessages = () => {
     return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
       .then(res => {
-        console.log("res", res);
-        console.log(userId, otherUserId);
         setConversation(res.data);
       })
   }
 
-  // BUG: inserts new conversation for the same two people every time if a message is not sent
   useEffect(() => {
     getConvoId()
-    // return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
-    //   .then((res) => {
-    //     if (res.data.length === 0) {
-    //       createPendingChat()
-    //     } else {
-    //       setConversation(res.data);
-    //     }
-    //   })
   }, [])
 
   const onSubmit = (event) => {

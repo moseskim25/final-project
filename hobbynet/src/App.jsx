@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-// import { useParams } from 'react-router';
+import { io } from "socket.io-client";
 
 import helper from "./hooks/helper";
 
@@ -14,15 +14,44 @@ import Conversations from "./components/Conversations";
 import Search from "./components/SearchText/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation";
-import SocketTest from "./components/SocketTest";
+import SocketTest from "./components/Sockets/SocketHelper";
 import MyProfile from './components/MyProfile';
 import Profile from "./components/Profile"
 import AniText from "./components/SearchText/AniText"
-import SearchLanding from "./components/SearchText/SearchLanding"
+import SearchLanding from "./components/SearchText/SearchLanding";
+import SocketHelper from './components/Sockets/SocketHelper';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
+const cookies = new Cookies();
 
 function App() {
+  
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
     = helper();
+
+  const userId = cookies.get('user_id')
+
+  // const [user, setUser] = useState(null)
+  const [socket, setSocket] = useState(null);
+  const [socketId, setSocketId] = useState(null)
+  const [otherUserId, setOtherUserId] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("ws://localhost:8000", {
+      query: {
+        userId: userId
+      }
+    }))
+  }, [])
+  
+    useEffect(() => {
+    socket?.on("welcome", () => {
+      setSocketId(socket.id);
+
+      return axios.put(`http://localhost:8000/${userId}/${socket.id}`)
+    })
+  }, [socket])
+  
 
   return (
     <main>
@@ -65,10 +94,10 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
-          <Conversations getConversations={getConversations} />
+          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}/>
           <Conversation />
         </Route>
-        <Route path="/chats">
+        <Route path="/chats" >
           <Navbar />
           <Chats />
         </Route>

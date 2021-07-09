@@ -115,5 +115,16 @@ module.exports = (db) => {
     .catch(err => console.error(err));
   })
 
+  //updates user's socket id
+  router.put('/:userId/:socketId', (req, res) => {
+
+    db.query(`UPDATE users
+    SET socket_id = $1
+    WHERE id = $2;`,
+    [req.params.socketId, req.params.userId])
+    .then(() => res.send())
+    .catch(err => console.error(err))
+  });
+
   return router;
 };
