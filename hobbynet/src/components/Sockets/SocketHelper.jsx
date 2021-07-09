@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { chakra, Flex, Avatar, useColorModeValue, Text, Stack, Center } from '@chakra-ui/react';
 import { io } from "socket.io-client";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-export default function Conversation(props) {
+export default function SocketHelper() {
   const [socket, setSocket] = useState(null);
+  const [socketId, setSocketId] = useState(null)
+
   const userId = cookies.get('user_id')
 
   // console.log("inside conversation.jsx");
@@ -21,14 +22,21 @@ export default function Conversation(props) {
     }))
   }, [])
 
-  useEffect(() => {
-    socket?.on("welcome", message => {
-      console.log("message", message);
-      console.log("socket.id", socket.id);
-    })
-  }, [socket])
+  // useEffect(() => {
+  //   socket?.on("welcome", message => {
+  //     setSocketId(message);
+  //   })
+  // }, [socket])
 
-  return (
-    <p>Hello</p>
-  )
+  socket?.on("welcome", () => {
+    return setSocketId(socket.id);
+  })
+  if (socketId) {
+    return socketId;
+  }
+
+  // if (socket) {
+  //   console.log('this is the socket:', socket.id);
+  //   return {socket};
+  // }
 }

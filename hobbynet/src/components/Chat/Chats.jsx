@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import '../styles/Chats.scss';
 
-export default function Main() {
+const cookies = new Cookies();
+
+export default function Main({ otherUserId }) {
 
   const location = useLocation();
-  const userId = location.state.userId;
-  const otherUserId = location.state.otherUserId;
+  const userId = cookies.get('user_id');
 
   const [conversation, setConversation] = useState([]);
-  // console.log('conversation is:', conversation);
+  console.log('conversation is:', conversation);
 
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId })
@@ -39,17 +41,8 @@ export default function Main() {
       })
   }
 
-  // BUG: inserts new conversation for the same two people every time if a message is not sent
   useEffect(() => {
     getConvoId()
-    // return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`)
-    //   .then((res) => {
-    //     if (res.data.length === 0) {
-    //       createPendingChat()
-    //     } else {
-    //       setConversation(res.data);
-    //     }
-    //   })
   }, [])
 
   const onSubmit = (event) => {

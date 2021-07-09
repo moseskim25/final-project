@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (db) => {
+module.exports = (db, userSockets) => {
 
   // retrieves message history
-  router.get('/:userId/:other_userId', (req, res) => {
+  router.get('/:userId/:otherUserId', (req, res) => {
     db.query(`SELECT messages.sender_id, messages.time, messages.text, conversations_id,
     (SELECT first_name FROM users WHERE users.id = sender_id) AS sender_first_name,
     (SELECT last_name FROM users WHERE users.id = sender_id) AS sender_last_name
@@ -23,7 +23,15 @@ module.exports = (db) => {
     db.query(`INSERT INTO messages (conversations_id, sender_id, text)
     VALUES ($1, $2, $3)`,
       [req.params.conversationId, req.params.userId, req.body.message])
-      .then(data => res.json(data.rows))
+      .then(data => {
+        res.json(data.rows);
+        console.log("chat.js LINE 28 data.rows", data.rows);
+        // if (userSockets)
+        // socket stuff!!!!!!!!!!!
+        // if websocket exist, also send message via socket
+        // io.in ... fetch sockets
+
+      })
       .catch(err => console.error(err));
   })
 

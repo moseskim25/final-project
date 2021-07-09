@@ -10,7 +10,7 @@ module.exports = router;
 
 
 
-module.exports = (db) => {
+module.exports = (db, userSockets) => {
   router.post("/new", (req, res) => {
     const { email, password } = req.body
 
@@ -57,35 +57,38 @@ module.exports = (db) => {
     interestsArray.forEach(interest_id => {
       db.query(`INSERT INTO users_interests (user_id, interest_id, level)
       VALUES ($1, $2, $3)`,
-      [req.params.user_id, interest_id, 1])
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(err => console.error(err));
+        [req.params.user_id, interest_id, 1])
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch(err => console.error(err));
     })
   })
 
   router.put('/new/photo', (req, res) => {
 
-    const {image_url, user_id} = req.body;
+    const { image_url, user_id } = req.body;
     console.log(image_url, user_id);
 
     db.query(`UPDATE users
     SET profile_image = $1
     WHERE id = $2;`,
-    [image_url, user_id])
-    .then(() => res.send())
-    .catch(err => console.error(err))
+      [image_url, user_id])
+      .then(() => res.send())
+      .catch(err => console.error(err))
   });
 
   //grabs user's info
   router.get('/:user_id', (req, res) => {
     db.query(`SELECT * FROM users
     WHERE id = $1`,
-    [req.params.user_id])
-    .then(data => {
-      res.json(data.rows[0]);
-    }).catch(err => console.error(err));
+      [req.params.user_id])
+      .then(data => {
+        res.json(data.rows[0]);
+      }).catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   //grabs user's interests
@@ -94,10 +97,13 @@ module.exports = (db) => {
     FROM users_interests
     JOIN interests ON interest_id = interests.id
     WHERE user_id = $1`,
-    [req.params.user_id])
-    .then(data => {
-      res.json(data.rows);
-    }).catch(err => console.error(err));
+      [req.params.user_id])
+      .then(data => {
+        res.json(data.rows);
+      }).catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   router.get('/:user_id/conversations', (req, res) => {
@@ -110,10 +116,30 @@ module.exports = (db) => {
     JOIN messages ON conversations.id = conversations_id
     JOIN users ON sender_id = users.id
     WHERE user1_id = $1 OR user2_id = $1`,
-    [req.params.user_id])
-    .then(data => res.json(data.rows))
-    .catch(err => console.error(err));
+      [req.params.user_id])
+      .then(data => res.json(data.rows))
+      .catch(err => console.error(err));
   })
+
+  // get socket id fpr user from userSockets map
+  router.get('/:user_id/.....',
+
+  )
+
+
+  //updates user's socket id
+  // router.put('/:userId/:socketId', (req, res) => {
+
+  //   db.query(`UPDATE users
+  //   SET socket_id = $1
+  //   WHERE id = $2;`,
+  //     [req.params.socketId, req.params.userId])
+  //     .then(() => res.send())
+  //     .catch(err => console.error(err))
+  // });
+
+
+
 
   return router;
 };

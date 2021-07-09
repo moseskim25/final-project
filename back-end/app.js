@@ -27,6 +27,8 @@ app.use(cors());
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
 
+const userSockets = new Map();
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,12 +41,12 @@ app.use(bodyParser.json());
 
 
 app.use('/', indexRouter());
-app.use('/users', usersRouter(db));
+app.use('/users', usersRouter(db, userSockets));
 app.use('/conversations', conversationsRouter(db));
 app.use('/login', loginRouter(db));
 app.use('/categories', categoriesRouter(db));
 app.use('/search', searchRouter(db));
-app.use('/chats', chatsRouter(db));
+app.use('/chats', chatsRouter(db, userSockets));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -74,13 +76,23 @@ const io = require('socket.io')(server, {
 
 let interval;
 
+
+
+
 io.on("connection", (socket) => {
   console.log("a user connected.");
-  io.emit("welcome", "hello this is socket")
+  socket.emit("welcome", "hello this is socket")
   const userId = socket.handshake.query.userId
   console.log("userId", userId);
   console.log("socket id", socket.id);
-  db.query(`UPDATE users SET socket_id = $1 WHERE id = $2;`, [socket.id, userId])
+  userSockets.set(userId, socket)
+
+  socket.on('disconnect', () => {
+    userSockets.delete(userId)
+  })
+
+
+
 });
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
