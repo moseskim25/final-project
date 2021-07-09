@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Button, Input } from '@chakra-ui/react';
 import axios from 'axios';
-import './styles/UploadImagePopup.scss';
+import './UploadImagePopup.scss';
 
 export default function UploadImagePopup({ trigger, setButtonPopup, user_id, setUserData }) {
   const [imageSelected, setImageSelected] = useState('');
@@ -28,11 +29,14 @@ export default function UploadImagePopup({ trigger, setButtonPopup, user_id, set
   }
 
   return (trigger) ? (
-    <div className='popup'>
-      <form className='popupInner' onSubmit={handleSubmit}>
-        <input type='file' onChange={(event) => setImageSelected(event.target.files[0])}/>
-        <button type='submit'>close</button>
-      </form>
-    </div>
+      <div className='popup'>
+        <form className='popupInner' onSubmit={handleSubmit}>
+          <div className='pii1'>
+            <input type='file' onChange={(event) => setImageSelected(event.target.files[0])} />
+            <button className='submit_button' type='submit'>Submit</button>
+          </div>
+          <a className='pii2' href='#' onClick={() => setButtonPopup(false)}>close</a>
+        </form>
+      </div>
   ) : '';
 }
