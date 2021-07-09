@@ -11,11 +11,13 @@ import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
-import Search from "./components/Search"
+import Search from "./components/SearchText/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation"
 import SocketTest from "./components/SocketTest"
 import Profile from "./components/Profile"
+import AniText from "./components/SearchText/AniText"
+import SearchLanding from "./components/SearchText/SearchLanding"
 
 function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
@@ -45,6 +47,8 @@ function App() {
           <SocketTest />
         </Route>
         <Route path="/search">
+          <Navbar />
+          <SearchLanding/>
           <Search />
         </Route>
         <Route path="/viewprofile/:otherUserId">
