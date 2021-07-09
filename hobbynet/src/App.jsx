@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 
 import helper from "./hooks/helper";
 
@@ -11,15 +11,20 @@ import LandingPage from "./components/LandingPage";
 import Card from "./components/Card";
 import UserProfile from "./components/UserProfile";
 import Conversations from "./components/Conversations";
-import Search from "./components/Search"
+import Search from "./components/SearchText/Search"
 import Chats from './components/Chat/Chats';
 import Conversation from "./components/Conversation";
 import SocketTest from "./components/SocketTest";
 import MyProfile from './components/MyProfile';
+import Conversation from "./components/Conversation"
+import SocketTest from "./components/SocketTest"
+import Profile from "./components/Profile"
+import AniText from "./components/SearchText/AniText"
+import SearchLanding from "./components/SearchText/SearchLanding"
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests } 
-  = helper();
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
+    = helper();
 
   return (
     <main>
@@ -45,7 +50,13 @@ function App() {
           <SocketTest />
         </Route>
         <Route path="/search">
+          <Navbar />
+          <SearchLanding/>
           <Search />
+        </Route>
+        <Route path="/viewprofile/:otherUserId">
+          <Navbar />
+          <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />

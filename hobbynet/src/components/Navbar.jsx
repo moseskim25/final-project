@@ -21,6 +21,7 @@ import {
 import Toggle from './Toggle'
 import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon, WarningTwoIcon } from "@chakra-ui/icons";
 import Cookies from 'universal-cookie'
+import { NavLink } from "react-router-dom"
 
 const cookies = new Cookies();
 
@@ -89,7 +90,7 @@ const Navbar = (props) => {
           {/* this is the navbar menu options, add/subtract later as necessary */}
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <ViewIcon align="center"></ViewIcon>
-            <Text>Connect</Text>
+            <NavLink to="/search">Connect</NavLink>
           </Stack>
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <BellIcon align="center"></BellIcon>
@@ -97,7 +98,7 @@ const Navbar = (props) => {
           </Stack>
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <EmailIcon align="center"></EmailIcon>
-            <Text>Messages</Text>
+            <NavLink to="/chats">Messages</NavLink>
           </Stack>
 
 
@@ -119,8 +120,9 @@ const Navbar = (props) => {
             {/* the dropdown list for a user - currently all redirects to w3schools but can update later */}
             <MenuList bg="white" color="black">
               <MenuItem onClick={() => history.push('/profile')}>Profile</MenuItem>
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/home")}>Home</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/calender")}>Calender</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/settings")}>Settings</MenuItem>
               <MenuDivider />
               <MenuItem onClick={() => {
                 cookies.remove('user_id');
