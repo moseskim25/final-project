@@ -68,6 +68,7 @@ function App() {
           <Conversation />
         </Route>
         <Route path="/profile">
+          <Navbar />
           <MyProfile getUserInfo={getUserInfo}/>
         </Route>
 

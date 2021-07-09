@@ -68,10 +68,11 @@ module.exports = (db) => {
   router.put('/new/photo', (req, res) => {
 
     const {image_url, user_id} = req.body;
+    console.log(image_url, user_id);
 
     db.query(`UPDATE users
     SET profile_image = $1
-    WHERE id = $2`,
+    WHERE id = $2;`,
     [image_url, user_id])
     .then(() => res.send())
     .catch(err => console.error(err))
