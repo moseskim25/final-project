@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './styles/UploadImagePopup.scss';
+import './UploadImagePopup.scss';
 
 export default function UploadImagePopup({ trigger, setButtonPopup, user_id, setUserData }) {
   const [imageSelected, setImageSelected] = useState('');

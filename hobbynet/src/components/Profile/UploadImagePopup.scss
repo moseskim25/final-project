@@ -11,6 +11,10 @@
   align-items: center;
 
   .popupInner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 400px;
     height: 250px;
