@@ -94,7 +94,7 @@ const Navbar = (props) => {
           </Stack>
           <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
             <EmailIcon align="center"></EmailIcon>
-            <Text>Messages</Text>
+            <NavLink to="/chats">Messages</NavLink>
           </Stack>
           <Toggle></Toggle>
           {/* this is a button for testing purposes - this toggles the logged in navbar and the logged out taskbar (replace later w/  login features) */}
@@ -120,9 +120,9 @@ const Navbar = (props) => {
             </MenuButton>
             {/* the dropdown list for a user - currently all redirects to w3schools but can update later */}
             <MenuList bg="white" color="black">
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Profile</MenuItem>
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Calender</MenuItem>
-              <MenuItem onClick={() => window.location.replace("http://www.w3schools.com")}>Settings</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/home")}>Home</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/calender")}>Calender</MenuItem>
+              <MenuItem onClick={() => window.location.replace("/settings")}>Settings</MenuItem>
               <MenuDivider />
               <MenuItem onClick={() => {
                 cookies.remove('user_id');
