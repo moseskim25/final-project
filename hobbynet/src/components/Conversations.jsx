@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Center } from "@chakra-ui/react";
 import Cookies from "universal-cookie";
 import Conversation from "./Conversation";
@@ -7,6 +7,8 @@ import Conversation from "./Conversation";
 const cookies = new Cookies();
 
 export default function Conversations({ getConversations, setOtherUserId }) {
+
+  let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [conversations, setConversations] = useState([]);
 
@@ -35,6 +37,7 @@ export default function Conversations({ getConversations, setOtherUserId }) {
 
   const handleOnClick = (otherUserId) => {
     setOtherUserId(otherUserId);
+    history.push('/chats');
   };
 
   const displayConversations = conversationsArray.map((conversation) => {
@@ -51,11 +54,11 @@ export default function Conversations({ getConversations, setOtherUserId }) {
       //     otherUserId: otherUserId
       //   }
       // }}>
-      <div onClick={() => handleOnClick(otherUserId)}>
+      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }}>
         <Center>
           <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl} />
         </Center>
-      </div>
+      </div >
       // </Link>
     );
   });

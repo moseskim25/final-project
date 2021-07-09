@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import '../styles/Chats.scss';
 
-export default function Main() {
+const cookies = new Cookies();
+
+export default function Main({ otherUserId }) {
 
   const location = useLocation();
-  const userId = location.state.userId;
-  const otherUserId = location.state.otherUserId;
+  const userId = cookies.get('user_id');
 
   const [conversation, setConversation] = useState([]);
-  // console.log('conversation is:', conversation);
+  console.log('conversation is:', conversation);
 
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId })

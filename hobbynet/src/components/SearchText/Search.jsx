@@ -4,6 +4,7 @@ import { Select, Checkbox, Center, Input, Spinner, Button, Stack } from "@chakra
 import { ChevronDownIcon } from "@chakra-ui/icons"
 import { arrayOf } from 'prop-types';
 import SearchProfile from './SearchProfile'
+import { Link } from 'react-router-dom'
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -75,12 +76,12 @@ export default function Search() {
       console.log(level)
       // Make sure we have a value (user has entered something in input)
       getAll().then(results => {
-        if(category.length === 0 && level.length === 0){
+        if (category.length === 0 && level.length === 0) {
           setResults(results)
-        } else if(category.length === 0){
+        } else if (category.length === 0) {
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
           setResults(results)
-        } else if(level.length === 0){
+        } else if (level.length === 0) {
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
           setResults(results)
         } else {
@@ -93,10 +94,10 @@ export default function Search() {
         setIsSearching(true);
         getAll().then(results => {
           setResults([])
-          if(category.length === 0 && level.length === 0){
-          } else if(category.length === 0){
+          if (category.length === 0 && level.length === 0) {
+          } else if (category.length === 0) {
             results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          } else if(level.length === 0){
+          } else if (level.length === 0) {
             results = results.filter(result => category.indexOf(String(result.name)) > -1)
           } else {
             results = results.filter(result => level.indexOf(String(result.level)) > -1)
@@ -120,185 +121,187 @@ export default function Search() {
   // Pretty standard UI with search input and results
   return (
     <>
-       <Center direction="column" mb="10px">
-         <Stack>
-           <Input
-              w={[500, 600, 700]}
-              size="lg"
-              placeholder="Find your next hobby study buddy..."
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-            <Stack direction="row">
-             <Button size="xs" w="15%" padding="5px" fontSize={[8, 10, 12, 14]} onClick={() => {setShowCategories(!showCategories)}}>Categories<ChevronDownIcon/></Button>
-             <Stack position={'absolute'}>
+      <Center direction="column" mb="10px">
+        <Stack>
+          <Input
+            w={[500, 600, 700]}
+            size="lg"
+            placeholder="Find your next hobby study buddy..."
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          <Stack direction="row">
+            <Button size="xs" w="15%" padding="5px" fontSize={[8, 10, 12, 14]} onClick={() => { setShowCategories(!showCategories) }}>Categories<ChevronDownIcon /></Button>
+            <Stack position={'absolute'}>
               {showCategories && <Stack position={'absolute'} left="-20px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
-                  <Checkbox
-                    isChecked={category.indexOf("academics") >= 0 ? true : false}
-                    mr="10px"
-                    value="academics"
-                    onChange={(e) => {
-                      if(category.indexOf(e.target.value) < 0){
-                        setCategory(prev => [...prev, e.target.value])
-                      } else {
-                        let newCategory = removeFromStateArr(e.target.value, category)
-                        setCategory(newCategory)
-                      }
-                    }}
-                  >
-                    Academics
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={category.indexOf("arts") >= 0 ? true : false}
-                    mr="10px"
-                    value="arts"
-                    onChange={(e) => {
-                      if(category.indexOf(e.target.value) < 0){
-                        setCategory(prev => [...prev, e.target.value])
-                      } else {
-                        let newCategory = removeFromStateArr(e.target.value, category)
-                        setCategory(newCategory)
-                      }
-                    }}
-                  >
-                    Arts
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={category.indexOf("languages") >= 0 ? true : false}
-                    mr="10px"
-                    value="languages"
-                    onChange={(e) => {
-                      if(category.indexOf(e.target.value) < 0){
-                        setCategory(prev => [...prev, e.target.value])
-                      } else {
-                        let newCategory = removeFromStateArr(e.target.value, category)
-                        setCategory(newCategory)
-                      }
-                    }}
-                  >
-                    Languages
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={category.indexOf("music") >= 0 ? true : false}
-                    mr="10px"
-                    value="music"
-                    onChange={(e) => {
-                      if(category.indexOf(e.target.value) < 0){
-                        setCategory(prev => [...prev, e.target.value])
-                      } else {
-                        let newCategory = removeFromStateArr(e.target.value, category)
-                        setCategory(newCategory)
-                      }
-                    }}
-                  >
-                    Music
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={category.indexOf("sports") >= 0 ? true : false}
-                    value="sports"
-                    onChange={(e) => {
-                      if(category.indexOf(e.target.value) < 0){
-                        setCategory(prev => [...prev, e.target.value])
-                      } else {
-                        let newCategory = removeFromStateArr(e.target.value, category)
-                        setCategory(newCategory)
-                      }
-                    }}
-                  >
-                    Sports
-                  </Checkbox>
-                </Stack>}
-             </Stack>
-             <Button size="xs" w="12%" fontSize={[8, 10, 12, 14]} onClick={() => {setShowLevels(!showLevels)}}>Levels<ChevronDownIcon/></Button>
-             <Stack position={'absolute'} w="100%">
+                <Checkbox
+                  isChecked={category.indexOf("academics") >= 0 ? true : false}
+                  mr="10px"
+                  value="academics"
+                  onChange={(e) => {
+                    if (category.indexOf(e.target.value) < 0) {
+                      setCategory(prev => [...prev, e.target.value])
+                    } else {
+                      let newCategory = removeFromStateArr(e.target.value, category)
+                      setCategory(newCategory)
+                    }
+                  }}
+                >
+                  Academics
+                </Checkbox>
+                <Checkbox
+                  isChecked={category.indexOf("arts") >= 0 ? true : false}
+                  mr="10px"
+                  value="arts"
+                  onChange={(e) => {
+                    if (category.indexOf(e.target.value) < 0) {
+                      setCategory(prev => [...prev, e.target.value])
+                    } else {
+                      let newCategory = removeFromStateArr(e.target.value, category)
+                      setCategory(newCategory)
+                    }
+                  }}
+                >
+                  Arts
+                </Checkbox>
+                <Checkbox
+                  isChecked={category.indexOf("languages") >= 0 ? true : false}
+                  mr="10px"
+                  value="languages"
+                  onChange={(e) => {
+                    if (category.indexOf(e.target.value) < 0) {
+                      setCategory(prev => [...prev, e.target.value])
+                    } else {
+                      let newCategory = removeFromStateArr(e.target.value, category)
+                      setCategory(newCategory)
+                    }
+                  }}
+                >
+                  Languages
+                </Checkbox>
+                <Checkbox
+                  isChecked={category.indexOf("music") >= 0 ? true : false}
+                  mr="10px"
+                  value="music"
+                  onChange={(e) => {
+                    if (category.indexOf(e.target.value) < 0) {
+                      setCategory(prev => [...prev, e.target.value])
+                    } else {
+                      let newCategory = removeFromStateArr(e.target.value, category)
+                      setCategory(newCategory)
+                    }
+                  }}
+                >
+                  Music
+                </Checkbox>
+                <Checkbox
+                  isChecked={category.indexOf("sports") >= 0 ? true : false}
+                  value="sports"
+                  onChange={(e) => {
+                    if (category.indexOf(e.target.value) < 0) {
+                      setCategory(prev => [...prev, e.target.value])
+                    } else {
+                      let newCategory = removeFromStateArr(e.target.value, category)
+                      setCategory(newCategory)
+                    }
+                  }}
+                >
+                  Sports
+                </Checkbox>
+              </Stack>}
+            </Stack>
+            <Button size="xs" w="12%" fontSize={[8, 10, 12, 14]} onClick={() => { setShowLevels(!showLevels) }}>Levels<ChevronDownIcon /></Button>
+            <Stack position={'absolute'} w="100%">
               {showLevels && <Stack position={'absolute'} left="100px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
                 <Checkbox
-                    isChecked={level.indexOf("1") >= 0 ? true : false}
-                    value="1"
-                    onChange={(e) => {
-                      if(level.indexOf(e.target.value) < 0){
-                        setLevel(prev => [...prev, e.target.value])
-                      } else {
-                        let newLevel = removeFromStateArr(e.target.value, level)
-                        setLevel(newLevel)
-                      }
-                    }}
-                  >
-                    Level 1
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={level.indexOf("2") >= 0 ? true : false}
-                    value="2"
-                    onChange={(e) => {
-                      if(level.indexOf(e.target.value) < 0){
-                        setLevel(prev => [...prev, e.target.value])
-                      } else {
-                        let newLevel = removeFromStateArr(e.target.value, level)
-                        setLevel(newLevel)
-                      }
-                    }}
-                  >
-                    Level 2
-                  </Checkbox>
-                  <Checkbox
-                   isChecked={level.indexOf("3") >= 0 ? true : false}
-                    value="3"
-                    onChange={(e) => {
-                      if(level.indexOf(e.target.value) < 0){
-                        setLevel(prev => [...prev, e.target.value])
-                      } else {
-                        let newLevel = removeFromStateArr(e.target.value, level)
-                        setLevel(newLevel)
-                      }
-                    }}
-                  >
-                    Level 3
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={level.indexOf("4") >= 0 ? true : false}
-                    value="4"
-                    onChange={(e) => {
-                      if(level.indexOf(e.target.value) < 0){
-                        setLevel(prev => [...prev, e.target.value])
-                      } else {
-                        let newLevel = removeFromStateArr(e.target.value, level)
-                        setLevel(newLevel)
-                      }
-                    }}
-                  >
-                    Level 4
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={level.indexOf("5") >= 0 ? true : false}
-                    value="5"
-                    onChange={(e) => {
-                      if(level.indexOf(e.target.value) < 0){
-                        setLevel(prev => [...prev, e.target.value])
-                      } else {
-                        let newLevel = removeFromStateArr(e.target.value, level)
-                        setLevel(newLevel)
-                      }
-                    }}
-                  >
-                    Level 5
-                  </Checkbox>
-                </Stack>}
-              </Stack>
+                  isChecked={level.indexOf("1") >= 0 ? true : false}
+                  value="1"
+                  onChange={(e) => {
+                    if (level.indexOf(e.target.value) < 0) {
+                      setLevel(prev => [...prev, e.target.value])
+                    } else {
+                      let newLevel = removeFromStateArr(e.target.value, level)
+                      setLevel(newLevel)
+                    }
+                  }}
+                >
+                  Level 1
+                </Checkbox>
+                <Checkbox
+                  isChecked={level.indexOf("2") >= 0 ? true : false}
+                  value="2"
+                  onChange={(e) => {
+                    if (level.indexOf(e.target.value) < 0) {
+                      setLevel(prev => [...prev, e.target.value])
+                    } else {
+                      let newLevel = removeFromStateArr(e.target.value, level)
+                      setLevel(newLevel)
+                    }
+                  }}
+                >
+                  Level 2
+                </Checkbox>
+                <Checkbox
+                  isChecked={level.indexOf("3") >= 0 ? true : false}
+                  value="3"
+                  onChange={(e) => {
+                    if (level.indexOf(e.target.value) < 0) {
+                      setLevel(prev => [...prev, e.target.value])
+                    } else {
+                      let newLevel = removeFromStateArr(e.target.value, level)
+                      setLevel(newLevel)
+                    }
+                  }}
+                >
+                  Level 3
+                </Checkbox>
+                <Checkbox
+                  isChecked={level.indexOf("4") >= 0 ? true : false}
+                  value="4"
+                  onChange={(e) => {
+                    if (level.indexOf(e.target.value) < 0) {
+                      setLevel(prev => [...prev, e.target.value])
+                    } else {
+                      let newLevel = removeFromStateArr(e.target.value, level)
+                      setLevel(newLevel)
+                    }
+                  }}
+                >
+                  Level 4
+                </Checkbox>
+                <Checkbox
+                  isChecked={level.indexOf("5") >= 0 ? true : false}
+                  value="5"
+                  onChange={(e) => {
+                    if (level.indexOf(e.target.value) < 0) {
+                      setLevel(prev => [...prev, e.target.value])
+                    } else {
+                      let newLevel = removeFromStateArr(e.target.value, level)
+                      setLevel(newLevel)
+                    }
+                  }}
+                >
+                  Level 5
+                </Checkbox>
+              </Stack>}
             </Stack>
-         </Stack>
-        </Center>
-        {isSearching && <Center><Spinner mr="10px"/>Searching...</Center>}
+          </Stack>
+        </Stack>
+      </Center>
+      {isSearching && <Center><Spinner mr="10px" />Searching...</Center>}
 
-        {results.map(result => (
-          <Center>
-              <SearchProfile key={result.id} 
-                         firstName={result.first_name}
-                         lastName={result.last_name}
-                         interest={result.interestname}
-                         category={result.name}
-                         level={result.level}
-                         img={result.profile_image}/>
-          </Center>
-        ))}
+      {results.map(result => (
+        <Center>
+          <Link onClick={() => window.location.replace(`/viewprofile/${result.user_id}`)} >
+            <SearchProfile key={result.id}
+              firstName={result.first_name}
+              lastName={result.last_name}
+              interest={result.interestname}
+              category={result.name}
+              level={result.level}
+              img={result.profile_image} />
+          </Link>
+        </Center>
+      ))}
     </>
   );
 }

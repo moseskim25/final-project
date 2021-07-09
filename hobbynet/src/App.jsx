@@ -25,13 +25,12 @@ import axios from 'axios';
 const cookies = new Cookies();
 
 function App() {
-  
+
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
     = helper();
 
   const userId = cookies.get('user_id')
 
-  // const [user, setUser] = useState(null)
   const [socket, setSocket] = useState(null);
   const [socketId, setSocketId] = useState(null)
   const [otherUserId, setOtherUserId] = useState(null);
@@ -42,16 +41,13 @@ function App() {
         userId: userId
       }
     }))
-  }, [])
-  
-    useEffect(() => {
-    socket?.on("welcome", () => {
-      setSocketId(socket.id);
 
-      return axios.put(`http://localhost:8000/${userId}/${socket.id}`)
-    })
+  }, [])
+
+  useEffect(() => {
+    console.log("socket.id", socket && socket.id);
   }, [socket])
-  
+
 
   return (
     <main>
@@ -78,7 +74,7 @@ function App() {
         </Route>
         <Route path="/search">
           <Navbar />
-          <SearchLanding/>
+          <SearchLanding />
           <Search />
         </Route>
         <Route path="/viewprofile/:otherUserId">
@@ -94,12 +90,12 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}/>
+          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
           <Conversation />
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats />
+          <Chats otherUserId={otherUserId} />
         </Route>
         <Route path="/messenger">
           <Navbar />
@@ -107,7 +103,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Navbar />
-          <MyProfile getUserInfo={getUserInfo}/>
+          <MyProfile getUserInfo={getUserInfo} />
         </Route>
 
       </Switch>
@@ -116,29 +112,3 @@ function App() {
 }
 
 export default App;
-
-// useEffect(() => {
-//   const getConversations = async () => {
-//     try {
-//       const response = await fetch('http://localhost:8000/conversations');
-//       const data = await response.json();
-//       setConversations(data.rows);
-//     } catch (err) {
-//       console.log(err.message);
-//     }
-//   }
-//   getConversations();
-
-// }, [])
-
-// useEffect(() => {
-//   const getUserBy = async () => {
-//     try {
-//       const response = await fetch('http://localhost:8000/users');
-//       const data = await response.json();
-//       setUser(data.rows);
-//     } catch (err) {
-//       console.log(err.message);
-//     }
-//   }
-// })
