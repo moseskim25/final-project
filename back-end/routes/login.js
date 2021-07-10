@@ -11,7 +11,7 @@ var router = express.Router();
 module.exports = (db) => {
   router.post("/", (req, res) => {
     const { email, password } = req.body
-    console.log("HERE!!!!!!!!!!!!!!!");
+
     console.log(req.body);
 
     const queryString = `SELECT id, email, password FROM users WHERE email = $1;`;

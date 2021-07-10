@@ -32,8 +32,8 @@ function App() {
   const userId = cookies.get('user_id')
 
   const [socket, setSocket] = useState(null);
-  const [socketId, setSocketId] = useState(null)
-  const [otherUserId, setOtherUserId] = useState(null);
+  const [socketId, setSocketId] = useState()
+  const [otherUserId, setOtherUserId] = useState();
 
   useEffect(() => {
     setSocket(io("ws://localhost:8000", {
@@ -43,10 +43,6 @@ function App() {
     }))
 
   }, [])
-
-  useEffect(() => {
-    console.log("socket.id", socket && socket.id);
-  }, [socket])
 
 
   return (
@@ -95,7 +91,7 @@ function App() {
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats otherUserId={otherUserId} />
+          <Chats otherUserId={otherUserId} socket={socket} />
         </Route>
         <Route path="/messenger">
           <Navbar />
