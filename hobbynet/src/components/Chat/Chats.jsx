@@ -7,18 +7,42 @@ import '../styles/Chats.scss';
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId }) {
+export default function Main({ otherUserId, socket }) {
 
   const location = useLocation();
   const userId = cookies.get('user_id');
 
   const [conversation, setConversation] = useState([]);
-  console.log('conversation is:', conversation);
+  const [user, setUser] = useState({})
+  const [otherUser, setOtherUser] = useState({})
+
+  console.log("(Chats.jsx line 19) otherUserId", otherUserId);
+
+  socket?.on('incomingMessage', (msg) => {
+    console.log("(Chats.jsx line 23) incomingMessage", msg);
+    //fetch new message from the database
+    getConvoMessages(conversation.id)
+  })
+
+  const getUserInfo = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}`)
+      .then(res => {
+        setUser(res.data)
+      })
+      .catch(err => console.log("Error: ", err.message))
+  }
+
+  const getOtherUserInfo = (user_id) => {
+    return axios.get(`http://localhost:8000/users/${user_id}`)
+      .then(res => {
+        setOtherUser(res.data)
+      })
+      .catch(err => console.log("Error: ", err.message))
+  }
 
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId })
       .then(res => {
-        // console.log("res.data client side", res.data);
         setConversation(res.data[0].id)
       })
   }
@@ -43,17 +67,29 @@ export default function Main({ otherUserId }) {
 
   useEffect(() => {
     getConvoId()
+    getUserInfo(userId)
+    getOtherUserInfo(otherUserId)
   }, [])
 
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    return axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message })
+    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId })
+      .then(res => {
+        // update page without refreshing
+        setConversation(prev => [...prev, {
+          sender_id: user.id,
+          sender_first_name: user.first_name,
+          sender_last_name: user.last_name,
+          text: message,
+          time: res.data[0].time
+        }])
+      })
   }
 
   const displayConversation = Array.isArray(conversation) && conversation.map(msg => {
 
-    if (msg.sender_id === userId) {
+    if (msg.sender_id === Number(userId)) {
       return (
         <li class="me">
           <div class="entete">

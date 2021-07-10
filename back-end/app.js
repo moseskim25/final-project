@@ -22,11 +22,6 @@ const { getUsers, getUserByEmail, addUser } = require('./helpers/dbHelpers')
 var app = express();
 app.use(cors());
 
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-
 const userSockets = new Map();
 
 app.use(logger('dev'));
@@ -73,6 +68,8 @@ const io = require('socket.io')(server, {
   },
 });
 
+userSockets.set('io', io);
+
 
 let interval;
 
@@ -81,17 +78,14 @@ let interval;
 
 io.on("connection", (socket) => {
   console.log("a user connected.");
-  socket.emit("welcome", "hello this is socket")
   const userId = socket.handshake.query.userId
-  console.log("userId", userId);
-  console.log("socket id", socket.id);
-  userSockets.set(userId, socket)
+
+  userSockets.set(String(userId), socket)
 
   socket.on('disconnect', () => {
-    userSockets.delete(userId)
+    console.log('disconnected~~~~~~~~~~~~~~~');
+    userSockets.delete(String(userId))
   })
-
-
 
 });
 

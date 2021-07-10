@@ -1,15 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = router;
-
-
-
 module.exports = (db, userSockets) => {
   router.post("/new", (req, res) => {
     const { email, password } = req.body
@@ -20,7 +11,10 @@ module.exports = (db, userSockets) => {
       .then(data => {
         return res.json(data.rows[0])
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   });
 
   router.get("/:userId/chats", (req, res) => {
@@ -32,7 +26,10 @@ module.exports = (db, userSockets) => {
         console.log(data.rows);
         return res.send(data.rows)
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
 
     console.log("inside users.js --> users/chats");
     console.log("req.params", req.body);
@@ -48,7 +45,10 @@ module.exports = (db, userSockets) => {
       .then(data => {
         return res.json(data.rows[0])
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   });
 
   router.post('/new/:user_id/interests', (req, res) => {
@@ -61,7 +61,10 @@ module.exports = (db, userSockets) => {
         .then(() => {
           res.sendStatus(200);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          console.error(err);
+          res.status(500).json(err);
+        });
     })
   })
 
@@ -75,7 +78,10 @@ module.exports = (db, userSockets) => {
     WHERE id = $2;`,
       [image_url, user_id])
       .then(() => res.send())
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   });
 
   //grabs user's info
@@ -118,28 +124,16 @@ module.exports = (db, userSockets) => {
     WHERE user1_id = $1 OR user2_id = $1`,
       [req.params.user_id])
       .then(data => res.json(data.rows))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   // get socket id fpr user from userSockets map
   router.get('/:user_id/.....',
 
   )
-
-
-  //updates user's socket id
-  // router.put('/:userId/:socketId', (req, res) => {
-
-  //   db.query(`UPDATE users
-  //   SET socket_id = $1
-  //   WHERE id = $2;`,
-  //     [req.params.socketId, req.params.userId])
-  //     .then(() => res.send())
-  //     .catch(err => console.error(err))
-  // });
-
-
-
 
   return router;
 };

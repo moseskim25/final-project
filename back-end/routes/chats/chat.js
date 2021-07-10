@@ -14,25 +14,34 @@ module.exports = (db, userSockets) => {
     WHERE (user1_id = $1 OR user2_id = $1) AND (user1_id = $2 OR user2_id = $2)`,
       [req.params.userId, req.params.otherUserId])
       .then(data => res.json(data.rows))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   // posts to messages
   router.post('/:conversationId/:userId', (req, res) => {
-    // console.log(req.params.conversationId);
+
+    const io = userSockets.get('io');
+
     db.query(`INSERT INTO messages (conversations_id, sender_id, text)
-    VALUES ($1, $2, $3)`,
+    VALUES ($1, $2, $3) RETURNING *;`,
       [req.params.conversationId, req.params.userId, req.body.message])
       .then(data => {
-        res.json(data.rows);
-        console.log("chat.js LINE 28 data.rows", data.rows);
-        // if (userSockets)
-        // socket stuff!!!!!!!!!!!
-        // if websocket exist, also send message via socket
-        // io.in ... fetch sockets
+        console.log('(chats.js line 29) other user id', req.body);
+        console.log('(chats.js line 30) my user id', req.params.userId);
+        const otherUserSocket = userSockets.get(String(req.body.otherUserId))
 
+        if (otherUserSocket) {
+          otherUserSocket.emit('incomingMessage', req.body.message)
+        }
+        res.json(data.rows);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   // create conversation
@@ -41,6 +50,10 @@ module.exports = (db, userSockets) => {
     VALUES ($1, $2) RETURNING id;`,
       [req.body.userId, req.body.otherUserId])
       .then(data => res.json(data.rows))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
   // get conversation based on two ids... check if it exists
@@ -49,7 +62,10 @@ module.exports = (db, userSockets) => {
     WHERE (user1_id = $1 AND user2_id = $2) OR (user1_id = $2 AND user2_id = $1)`,
       [req.params.userId, req.params.otherUserId])
       .then(data => res.json(data.rows))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        res.status(500).json(err);
+      });
   })
 
 
