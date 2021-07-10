@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -127,6 +127,17 @@ export default function Main({ otherUserId, socket }) {
 
   })
 
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [conversation]);
+
+
   return (
     <div id="container">
       <aside>
@@ -214,26 +225,7 @@ export default function Main({ otherUserId, socket }) {
               </h3>
             </div>
           </li>
-          <li>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_09.jpg" alt="" />
-            <div>
-              <h2>Prénom Nom</h2>
-              <h3>
-                <span class="status green"></span>
-                online
-              </h3>
-            </div>
-          </li>
-          <li>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_10.jpg" alt="" />
-            <div>
-              <h2>Prénom Nom</h2>
-              <h3>
-                <span class="status orange"></span>
-                offline
-              </h3>
-            </div>
-          </li>
+
         </ul>
       </aside>
       <main>
@@ -245,15 +237,18 @@ export default function Main({ otherUserId, socket }) {
           </div>
           <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
         </header>
-        <ul id="chat">
-          {displayConversation}
-        </ul>
+        <div className="MessagesContainer">
+          <ul id="chat">
+            {displayConversation}
+            <div ref={messagesEndRef} />
+          </ul>
+        </div>
         <footer>
           <form onSubmit={onSubmit}>
             <input placeholder="Type your message" name='message'></input>
             <div>
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" />
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" />
+              {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" /> */}
+              {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" /> */}
               <button type='submit'>Send</button>
             </div>
           </form>
