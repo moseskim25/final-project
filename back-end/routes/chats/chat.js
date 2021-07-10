@@ -34,7 +34,9 @@ module.exports = (db, userSockets) => {
         const otherUserSocket = userSockets.get(String(req.body.otherUserId))
 
         if (otherUserSocket) {
-          otherUserSocket.emit('incomingMessage', req.body.message)
+          // otherUserSocket.emit('incomingMessage', req.body.message)
+          console.log(io);
+          io.to(otherUserSocket.id).emit('incomingMessage', req.body.message)
         }
         res.json(data.rows);
       })

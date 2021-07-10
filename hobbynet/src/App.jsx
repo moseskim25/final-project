@@ -36,11 +36,13 @@ function App() {
   const [otherUserId, setOtherUserId] = useState();
 
   useEffect(() => {
-    setSocket(io("ws://localhost:8000", {
-      query: {
-        userId: userId
-      }
-    }))
+    if (userId) {
+      setSocket(io("ws://localhost:8000", {
+        query: {
+          userId: userId
+        }
+      }))
+    }
 
   }, [])
 

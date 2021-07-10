@@ -21,6 +21,7 @@ export default function Main({ otherUserId, socket }) {
   socket?.on('incomingMessage', (msg) => {
     console.log("(Chats.jsx line 23) incomingMessage", msg);
     //fetch new message from the database
+    // setConversation(msg)
     getConvoMessages(conversation.id)
   })
 
