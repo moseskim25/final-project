@@ -78,6 +78,7 @@ let interval;
 
 io.on("connection", (socket) => {
   console.log("a user connected.");
+  socket.removeAllListeners();
   const userId = socket.handshake.query.userId
 
   userSockets.set(String(userId), socket)

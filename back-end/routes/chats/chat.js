@@ -25,6 +25,8 @@ module.exports = (db, userSockets) => {
 
     const io = userSockets.get('io');
 
+    // const { socket } = req.body;
+
     db.query(`INSERT INTO messages (conversations_id, sender_id, text)
     VALUES ($1, $2, $3) RETURNING *;`,
       [req.params.conversationId, req.params.userId, req.body.message])
@@ -32,11 +34,10 @@ module.exports = (db, userSockets) => {
         console.log('(chats.js line 29) other user id', req.body);
         console.log('(chats.js line 30) my user id', req.params.userId);
         const otherUserSocket = userSockets.get(String(req.body.otherUserId))
+        const own_socket = userSockets.get(String(req.params.userId))
 
         if (otherUserSocket) {
-          // otherUserSocket.emit('incomingMessage', req.body.message)
-          console.log(io);
-          io.to(otherUserSocket.id).emit('incomingMessage', req.body.message)
+          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', {msg: req.body.message, sender_id: Number(req.params.userId)})
         }
         res.json(data.rows);
       })

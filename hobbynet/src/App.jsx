@@ -44,7 +44,7 @@ function App() {
       }))
     }
 
-  }, [])
+  }, [userId])
 
 
   return (

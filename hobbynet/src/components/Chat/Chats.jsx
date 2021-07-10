@@ -9,7 +9,6 @@ const cookies = new Cookies();
 
 export default function Main({ otherUserId, socket }) {
 
-  const location = useLocation();
   const userId = cookies.get('user_id');
 
   const [conversation, setConversation] = useState([]);
@@ -18,12 +17,31 @@ export default function Main({ otherUserId, socket }) {
 
   console.log("(Chats.jsx line 19) otherUserId", otherUserId);
 
-  socket?.on('incomingMessage', (msg) => {
-    console.log("(Chats.jsx line 23) incomingMessage", msg);
-    //fetch new message from the database
-    // setConversation(msg)
-    getConvoMessages(conversation.id)
-  })
+  useEffect(() => {
+    getConvoId();
+    getUserInfo(userId);
+    getOtherUserInfo(otherUserId);
+
+    socket?.on('incomingMessage', (data) => {
+      console.log("incomingMessage", data.msg);
+
+      console.log('timestamp:', new Date().getTime());
+
+
+      setConversation(prev => [...prev, {
+        sender_id: data.sender_id,
+        sender_first_name: user.first_name,
+        sender_last_name: user.last_name,
+        text: data.msg,
+        time: new Date().getTime()
+      }])
+      //fetch new message from the database
+      // setConversation(msg)
+      // getConvoMessages(conversation.id)
+    });
+  }, [socket])
+
+
 
   const getUserInfo = (user_id) => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
@@ -66,11 +84,7 @@ export default function Main({ otherUserId, socket }) {
       })
   }
 
-  useEffect(() => {
-    getConvoId()
-    getUserInfo(userId)
-    getOtherUserInfo(otherUserId)
-  }, [])
+
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -78,13 +92,6 @@ export default function Main({ otherUserId, socket }) {
     axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId })
       .then(res => {
         // update page without refreshing
-        setConversation(prev => [...prev, {
-          sender_id: user.id,
-          sender_first_name: user.first_name,
-          sender_last_name: user.last_name,
-          text: message,
-          time: res.data[0].time
-        }])
       })
   }
 
