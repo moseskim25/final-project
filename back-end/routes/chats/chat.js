@@ -31,13 +31,13 @@ module.exports = (db, userSockets) => {
     VALUES ($1, $2, $3) RETURNING *;`,
       [req.params.conversationId, req.params.userId, req.body.message])
       .then(data => {
-        console.log('(chats.js line 29) other user id', req.body);
+        console.log('(chats.js line 29) req.body', req.body);
         console.log('(chats.js line 30) my user id', req.params.userId);
         const otherUserSocket = userSockets.get(String(req.body.otherUserId))
         const own_socket = userSockets.get(String(req.params.userId))
 
-        if (otherUserSocket) {
-          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', {msg: req.body.message, sender_id: Number(req.params.userId)})
+        if (otherUserSocket && req.body.user.first_name) {
+          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', { msg: req.body.message, sender_id: Number(req.params.userId), sender_name: req.body.user.first_name })
         }
         res.json(data.rows);
       })
