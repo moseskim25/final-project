@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import "./Picture.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from 'react-router-dom';
 const cookies = new Cookies();
 
 export default function Picture() {
+  let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [imageSelected, setImageSelected] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -21,8 +22,10 @@ export default function Picture() {
     });
   };
 
-  const onSubmit = () => {
-    axios.put("http://localhost:8000/users/new/photo", { imageUrl, user_id });
+  const handleSubmit = () => {
+    console.log('yes it got here');
+    axios.put("http://localhost:8000/users/new/photo", { imageUrl, user_id })
+    history.push('/home');
   };
 
   const showPreview = !imageUrl ? (
@@ -43,7 +46,7 @@ export default function Picture() {
 
       {showPreview}
 
-      <button onSubmit={onSubmit} className="submit-button">
+      <button onClick={handleSubmit} className="submit-button">
         Submit
       </button>
 
