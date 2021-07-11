@@ -116,7 +116,8 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo, user })
+    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo, user });
+    event.target.message.value = '';
   };
 
   //displays messages in a chat
