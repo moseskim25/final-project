@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
-import Cookies from "universal-cookie";
-
-import "./Chats.scss";
+import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import * as timeago from 'timeago.js';
+import './Chats.scss'
 
 const cookies = new Cookies();
 
@@ -21,7 +21,6 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
     getConvoId();
     getUserInfo(userId);
     getOtherUserInfo(otherUserId);
-    console.log('this happens');
 
     socket?.on("incomingMessage", (data) => {
       setConversation((prev) => [
@@ -130,7 +129,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3>{msg.time}</h3>
+              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
             </div>
             <div class="triangle"></div>
             <div class="message">{msg.text}</div>
@@ -144,7 +143,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3>{msg.time}</h3>
+              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
             </div>
             <div class="triangle"></div>
             <div class="message">{msg.text}</div>
@@ -176,6 +175,17 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
     </li>)
   })
 
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [conversation]);
+
+
   return (
     <div id="container">
       <aside>
@@ -195,14 +205,19 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           </div>
           <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
         </header>
-        <ul id="chat">{displayConversation}</ul>
+        <div className="MessagesContainer">
+          <ul id="chat">
+            {displayConversation}
+            <div ref={messagesEndRef} />
+          </ul>
+        </div>
         <footer>
           <form onSubmit={onSubmit}>
             <input placeholder="Type your message" name="message"></input>
             <div>
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" />
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" />
-              <button type="submit">Send</button>
+              {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" /> */}
+              {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" /> */}
+              <button type='submit'>Send</button>
             </div>
           </form>
         </footer>

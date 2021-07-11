@@ -56,7 +56,7 @@ import {
             mb={4}
             position={'relative'}
           />
-          <Button position={'absolute'}  ml='180'>
+          <Button position={'absolute'}  ml='180' onClick={() => {window.location.href = '/profile'}}>
             <Center>
               <FaEdit></FaEdit>
               <Text ml='1'>
