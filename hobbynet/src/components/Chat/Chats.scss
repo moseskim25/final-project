@@ -68,6 +68,7 @@
   }
   aside li:hover{
     background-color:#5e616a;
+    cursor:pointer;
   }
   h2,h3{
     margin:0;
@@ -76,6 +77,8 @@
     border-radius:50%;
     margin-left:20px;
     margin-right:8px;
+    height: 50px;
+    width:50px;
   }
   aside li div{
     margin: 0;

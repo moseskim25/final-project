@@ -20,24 +20,28 @@ module.exports = (db, userSockets) => {
       });
   })
 
-  // posts to messages
+  // posts to messages + emits websocket info
   router.post('/:conversationId/:userId', (req, res) => {
 
     const io = userSockets.get('io');
 
-    // const { socket } = req.body;
+    const {otherUserInfo} = req.body;
 
     db.query(`INSERT INTO messages (conversations_id, sender_id, text)
     VALUES ($1, $2, $3) RETURNING *;`,
       [req.params.conversationId, req.params.userId, req.body.message])
       .then(data => {
-        console.log('(chats.js line 29) other user id', req.body);
-        console.log('(chats.js line 30) my user id', req.params.userId);
         const otherUserSocket = userSockets.get(String(req.body.otherUserId))
         const own_socket = userSockets.get(String(req.params.userId))
 
         if (otherUserSocket) {
-          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', {msg: req.body.message, sender_id: Number(req.params.userId)})
+          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', 
+            {
+              msg: req.body.message, 
+              sender_id: Number(req.params.userId),
+              sender_first_name: otherUserInfo.first_name,
+              sender_last_name: otherUserInfo.last_name
+            })
         }
         res.json(data.rows);
       })

@@ -3,15 +3,24 @@ import { Link, useHistory } from "react-router-dom";
 import { Center } from "@chakra-ui/react";
 import Cookies from "universal-cookie";
 import Conversation from "./Conversation";
+import axios from 'axios';
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations, setOtherUserId }) {
+export default function Conversations({ getConversations, setOtherUserId, socket }) {
 
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [conversations, setConversations] = useState([]);
 
+  useEffect(() => {
+    socket?.on('incomingMessage', (data) => {
+      // setConversations([...prev])
+      });
+  }, [])
+
+
+  //gets all unique conversation ids
   const uniqueConversations = () => {
     const output = [];
     conversations.forEach((conversation) => {
@@ -24,13 +33,13 @@ export default function Conversations({ getConversations, setOtherUserId }) {
   };
   const conversationIds = uniqueConversations();
 
+  //grabs all conversations with the unique conversation ids
   const chat = () => {
     const output = conversationIds.map((conversationId) =>
       conversations.filter((conversation) => {
         return conversationId === conversation.conversations_id;
       })
     );
-
     return output;
   };
   const conversationsArray = chat();
@@ -47,19 +56,11 @@ export default function Conversations({ getConversations, setOtherUserId }) {
     const otherUserImgUrl = `${conversation[0].profile_image}`;
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
-      // <Link to={{
-      //   pathname: '/chats',
-      //   state: {
-      //     userId: user_id,
-      //     otherUserId: otherUserId
-      //   }
-      // }}>
       <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }}>
         <Center>
           <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl} />
         </Center>
-      </div >
-      // </Link>
+      </div>
     );
   });
 

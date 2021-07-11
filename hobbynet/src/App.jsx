@@ -34,6 +34,7 @@ function App() {
   const [socket, setSocket] = useState(null);
   const [socketId, setSocketId] = useState()
   const [otherUserId, setOtherUserId] = useState();
+  const [globalConversations, setGlobalConversations] = useState();
 
   useEffect(() => {
     if (userId) {
@@ -88,12 +89,20 @@ function App() {
         <Route path="/home">
           <Navbar />
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+          <Conversations 
+            getConversations={getConversations} 
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+            socket={socket}
+            globalConversations={setGlobalConversations}/>
           <Conversation />
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats otherUserId={otherUserId} socket={socket} />
+          <Chats 
+            otherUserId={otherUserId} 
+            socket={socket} 
+            getConversations={getConversations}
+            setOtherUserId={setOtherUserId} />
         </Route>
         <Route path="/messenger">
           <Navbar />
