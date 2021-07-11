@@ -56,21 +56,13 @@ import {
             mb={4}
             position={'relative'}
           />
-          <Button position={'absolute'}  ml='180' onClick={() => {window.location.href = '/profile'}}>
-            <Center>
-              <FaEdit></FaEdit>
-              <Text ml='1'>
-                Edit
-              </Text>
-            </Center>
-          </Button>
           <Heading fontSize={'3xl'}  fontFamily={'body'}>
             {userInfo.first_name} {userInfo.last_name}
           </Heading>
           <Text fontSize={'lg'} color={'gray.500'} mb={4}>
             Fullstack Developer
           </Text>
-          <Stack display='flex' direction='row' spacing='40px' justify='center' fontSize={'sm'} fontWeight={'500'}>
+          <Stack display='flex' direction='column' justify='center' fontSize={'sm'} fontWeight={'500'}>
             <Center color='pink.500'>
               <MdLocationOn/>
               <Text ml={1}>

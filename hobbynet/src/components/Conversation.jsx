@@ -3,22 +3,9 @@ import { chakra, Flex, Avatar, useColorModeValue, Text, Stack, Center } from '@c
 
 
 export default function Conversation(props) {
+
   const { name, lastMessage, img } = props;
-
-
-  // console.log("inside conversation.jsx");
-  // console.log(socket);
-
-  // useEffect(() => {
-  //   setSocket(io("ws:://localhost:8900"))
-  // }, [])
-
-  // useEffect(() => {
-  //   socket?.on("welcome", message => {
-  //     console.log("message", message);
-  //   })
-  // }, [socket])
-
+  
   return (
     name ? (
       <Flex

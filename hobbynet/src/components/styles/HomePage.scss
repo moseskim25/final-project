@@ -1,0 +1,68 @@
+.home-page-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(239, 243, 248, 0.418);
+  padding: 0 100px;
+  
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    .sub-header-text {
+      color: rgb(47, 58, 90);
+      font-size: 40px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button {
+      margin-top: 10px;
+      width: 250px;
+    }
+  }
+
+  .user-profile {
+    width: 300px;
+    height: 400px;
+    margin-right: 80px;
+    margin-left: 25px;
+  }
+
+  .trending {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: rgb(47, 58, 90);
+
+    p {
+      font-size: 25px;
+      font-weight: 700;
+      padding-bottom: 10px;
+      margin-left: 5px;
+    }
+
+    .trending-img-container {
+      display: flex;
+      flex-direction: row;
+
+      .trending-img {
+        margin: 0 5px;
+        height: 250px;
+        width: 350px;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .conversation {
+    height: 400px;
+  }
+
+}

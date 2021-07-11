@@ -25,6 +25,7 @@ import SearchLanding from "./components/SearchText/SearchLanding";
 import SocketHelper from './components/Sockets/SocketHelper';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import HomePage from './components/HomePage';
 const cookies = new Cookies();
 
 toast.configure()
@@ -109,9 +110,7 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
-          <Conversation />
+          <HomePage getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
         </Route>
         <Route path="/chats" >
           <Navbar />
