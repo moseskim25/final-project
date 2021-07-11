@@ -6,7 +6,7 @@ module.exports = (db) => {
   router.get(`/:category`, (req, res) => {
     db.query(`SELECT * FROM categories
     WHERE name = $1;`,
-    [req.params.category])
+    [req.params.category.toLowerCase()])
     .then(data => {
       db.query(`SELECT * FROM interests
       WHERE category_id = ${data.rows[0].id}`)
