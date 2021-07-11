@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
@@ -29,6 +29,7 @@ const cookies = new Cookies();
 
 // the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
+  const { socket, notify } = props;
 
   let history = useHistory();
 
@@ -36,6 +37,19 @@ const Navbar = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({})
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+
+  useEffect(() => {
+    socket?.on('incomingMessage', (data) => {
+      // console.log('timestamp:', new Date().getTime());
+      if (user.first_name && data.sender_name !== user.first_name) {
+        notify(`${data.sender_name}: ${data.msg}`)
+      }
+    })
+  }, [socket])
+
+  // props.newMessage.notify()
+
+
 
   const getUserInfo = (user_id) => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
@@ -52,6 +66,8 @@ const Navbar = (props) => {
       getUserInfo(userId)
     }
   }, [])
+
+
 
   if (isLoggedIn) {
     return (<Flex

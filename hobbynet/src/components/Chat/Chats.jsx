@@ -30,7 +30,6 @@ export default function Main({ otherUserId, socket }) {
 
       console.log('timestamp:', new Date().getTime());
 
-
       setConversation(prev => [...prev, {
         sender_id: data.sender_id,
         sender_first_name: user.first_name,
@@ -42,8 +41,12 @@ export default function Main({ otherUserId, socket }) {
       // setConversation(msg)
       // getConvoMessages(conversation.id)
     });
+
   }, [socket])
 
+  // useEffect(() => {
+
+  // }, [])
 
 
   const getUserInfo = (user_id) => {
@@ -92,7 +95,7 @@ export default function Main({ otherUserId, socket }) {
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId })
+    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, user })
       .then(res => {
         // update page without refreshing
       })

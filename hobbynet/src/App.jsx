@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { io } from "socket.io-client";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 import helper from "./hooks/helper";
 
@@ -24,8 +27,9 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 const cookies = new Cookies();
 
-function App() {
+toast.configure()
 
+function App() {
   const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
     = helper();
 
@@ -34,6 +38,24 @@ function App() {
   const [socket, setSocket] = useState(null);
   const [socketId, setSocketId] = useState()
   const [otherUserId, setOtherUserId] = useState();
+  const [newMessage, setNewMessage] = useState({});
+
+  const notify = (msg) => {
+    toast(msg, {
+      position: toast.POSITION.BOTTOM_LEFT
+    })
+  }
+  // socket?.once('incomingMessage', (data) => {
+  //   // console.log('timestamp:', new Date().getTime());
+  //   if (user.first_name && data.sender_name !== user.first_name) {
+  //     setNewMessage({
+  //       notify,
+  //       data
+  //     })
+  //     // notify(`${data.sender_name}: ${data.msg}`)
+  //   }
+  // })
+
 
   useEffect(() => {
     if (userId) {
@@ -71,12 +93,12 @@ function App() {
           <SocketTest />
         </Route>
         <Route path="/search">
-          <Navbar />
+          <Navbar notify={notify} socket={socket} />
           <SearchLanding />
           <Search />
         </Route>
         <Route path="/viewprofile/:otherUserId">
-          <Navbar />
+          <Navbar notify={notify} socket={socket} />
           <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
         </Route>
         <Route path="/register">
@@ -86,8 +108,8 @@ function App() {
           <Login />
         </Route>
         <Route path="/home">
-          <Navbar />
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
+          <Navbar notify={notify} socket={socket} />
+          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
           <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
           <Conversation />
         </Route>
