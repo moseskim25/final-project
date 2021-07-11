@@ -13,15 +13,12 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const userId = Number(cookies.get("user_id"));
 
   const [conversation, setConversation] = useState([]);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [otherUserInfo, setOtherUser] = useState({});
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
-    getConvoId();
-    getUserInfo(userId);
-    getOtherUserInfo(otherUserId);
-
+    
     socket?.on("incomingMessage", (data) => {
       setConversation((prev) => [
         ...prev,
@@ -37,13 +34,20 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       // setConversation(msg)
       // getConvoMessages(conversation.id)
     });
-
+    
+  }, [socket]);
+  
+  useEffect(() => {
+    getConvoId();
+    getUserInfo(userId);
+    getOtherUserInfo(otherUserId);
+    
     getConversations(userId)
       .then((res) => {
         setConversations(res.data);
       })
       .catch((err) => console.error(err));
-  }, [socket, otherUserId]);
+  }, [otherUserId])
 
   //gets all unique conversation ids
   const uniqueConversations = () => {
@@ -112,9 +116,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo }).then((res) => {
-      // update page without refreshing
-    });
+    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo, user })
   };
 
   //displays messages in a chat

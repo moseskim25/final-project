@@ -25,30 +25,38 @@ module.exports = (db, userSockets) => {
 
     const io = userSockets.get('io');
 
-    const {otherUserInfo} = req.body;
-
+    const {user, otherUserInfo} = req.body;
+    
     db.query(`INSERT INTO messages (conversations_id, sender_id, text)
     VALUES ($1, $2, $3) RETURNING *;`,
-      [req.params.conversationId, req.params.userId, req.body.message])
-      .then(data => {
-        const otherUserSocket = userSockets.get(String(req.body.otherUserId))
-        const own_socket = userSockets.get(String(req.params.userId))
+    [req.params.conversationId, req.params.userId, req.body.message])
+    .then(data => {
+      const otherUserSocket = userSockets.get(String(req.body.otherUserId))
+      const own_socket = userSockets.get(String(req.params.userId));
 
-        if (otherUserSocket) {
-          io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', 
-            {
-              msg: req.body.message, 
-              sender_id: Number(req.params.userId),
-              sender_first_name: otherUserInfo.first_name,
-              sender_last_name: otherUserInfo.last_name
-            })
-        }
-        res.json(data.rows);
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).json(err);
-      });
+      if (otherUserSocket) {
+        io.to(otherUserSocket.id).to(own_socket.id).emit('incomingMessage', 
+          {
+            msg: req.body.message, 
+            sender_id: Number(req.params.userId),
+            sender_first_name: user.first_name,
+            sender_last_name: user.last_name
+          })
+      } else {
+        io.to(own_socket.id).emit('incomingMessage', 
+          {
+            msg: req.body.message, 
+            sender_id: Number(req.params.userId),
+            sender_first_name: user.first_name,
+            sender_last_name: user.last_name
+          })
+      }
+      res.json(data.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json(err);
+    });
   })
 
   // create conversation
