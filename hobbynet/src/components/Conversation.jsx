@@ -10,8 +10,10 @@ export default function Conversation(props) {
     name ? (
       <Flex
         boxShadow={'lg'}
-        maxW={'640px'}
-        direction={{ base: 'column-reverse', md: 'row' }}
+        maxW={'250px'}
+        height='250px'
+        mr='25px'
+        direction={{ base: 'column', md: 'column' }}
         width={'full'}
         rounded={'xl'}
         p={10}

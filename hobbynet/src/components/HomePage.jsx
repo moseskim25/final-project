@@ -31,7 +31,7 @@ export default function HomePage(props) {
       </div>
 
       <div className="trending">
-        <p>What's Trending</p>
+        <p className='title'>What's Trending</p>
         <div className='trending-img-container'>
           <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045520/Screen_Shot_2021-07-11_at_7.17.36_PM_ythrrm.png" alt="" className="trending-img" />
           <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045827/Screen_Shot_2021-07-11_at_7.23.27_PM_enfw5o.png" alt="" className="trending-img" />
@@ -40,7 +40,10 @@ export default function HomePage(props) {
       </div>
 
       <div className="conversation">
-        <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+        <p className='title'>Your Conversations</p>
+        <div>
+          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Center } from "@chakra-ui/react";
 import Cookies from "universal-cookie";
 import Conversation from "./Conversation";
-import axios from 'axios';
+import './styles/Conversations.scss';
 
 const cookies = new Cookies();
 
@@ -57,9 +57,7 @@ export default function Conversations({ getConversations, setOtherUserId, socket
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
       <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }}>
-        <Center>
-          <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl} />
-        </Center>
+        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl} />
       </div>
     );
   });
@@ -72,5 +70,5 @@ export default function Conversations({ getConversations, setOtherUserId, socket
       .catch((err) => console.error(err));
   }, []);
 
-  return <div>{displayConversations}</div>;
+  return (<div className='conversations-container'>{displayConversations}</div>);
 }
