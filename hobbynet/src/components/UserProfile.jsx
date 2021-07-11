@@ -86,7 +86,7 @@ import {
             <Center color='pink.500'>
               <MdDateRange/>
               <Text ml={1}>
-                Joined {userInfo.created_at}
+                Joined {userInfo.created_at ? userInfo.created_at.slice(0, 10) : null}
               </Text>
             </Center>
           </Stack>

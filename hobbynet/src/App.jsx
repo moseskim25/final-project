@@ -115,7 +115,11 @@ function App() {
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats otherUserId={otherUserId} socket={socket} />
+          <Chats 
+            otherUserId={otherUserId} 
+            socket={socket} 
+            getConversations={getConversations}
+            setOtherUserId={setOtherUserId} />
         </Route>
         <Route path="/messenger">
           <Navbar />
