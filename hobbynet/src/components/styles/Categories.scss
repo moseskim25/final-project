@@ -1,13 +1,21 @@
+.category_container {
+  // display: flex;
+  // justify-content: space-between;
+}
+
 .category_image {
   height: 200px;
+  max-width: 200px;
   border-radius: 4px;
   padding: 10px;
+  margin: 0px 10px;
 }
 .hvr-grow {
   display: inline-block;
   vertical-align: middle;
   transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  // box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   transition-duration: 0.3s;
@@ -15,10 +23,13 @@
 }
 .hvr-grow:hover {
   transform: scale(1.1);
+  // box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+
 }
 
 .registration_navigate {
   display: flex;
+  justify-content: space-between;
   color: #8C55AA;
 
   span {
