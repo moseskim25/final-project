@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/Interests.scss'
 
-export default function Interests({ interestsArray, goNext }) {
+export default function Interests({ interestsArray, goNext, goBack }) {
 
   const [interests, setInterests] = useState([]);
 
@@ -39,7 +39,7 @@ export default function Interests({ interestsArray, goNext }) {
         {displayInterests}
       </div>
       <div className='registration_navigate'>
-        <span className='back_next' >Back</span>
+        <span className='back_next' onClick={goBack} >Back</span>
         <p> </p>
         <span className='back_next' onClick={() => goNext(interests)}>Next</span>
       </div>

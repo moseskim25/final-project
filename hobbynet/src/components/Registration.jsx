@@ -14,7 +14,7 @@ const UPLOAD_PIC = 'UPLOAD_PIC';
 
 export default function Registration(props) {
 
-  const {createUser, createUserGeneral, getInterests, setUserInterests} = props;
+  const { createUser, createUserGeneral, getInterests, setUserInterests } = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,43 +29,43 @@ export default function Registration(props) {
 
   return (
     <div>
-      {mode === EMAIL_PASS && 
+      {mode === EMAIL_PASS &&
         <Fragment>
           <div className="main">
             <p className="sign" align="center">Register</p>
-              <form className="form1" onSubmit={event => event.preventDefault()}>
-                <input className="un " type="text" align="center" placeholder="Username" onChange={event => {
-                  setEmail(event.target.value)
-                }}/>
-                <input className="pass" type="password" align="center" placeholder="Password" onChange={event => {
-                  setPassword(event.target.value);
-                }}/>
-                <button className="submit" align="center" onClick={() => {
-                  createUser(email, password);
-                  setMode(GENERAL);
-                }}>Submit</button>
-                <p className="forgot" align="center">Forgot Password?</p>
-              </form>
+            <form className="form1" onSubmit={event => event.preventDefault()}>
+              <input className="un " type="text" align="center" placeholder="Username" onChange={event => {
+                setEmail(event.target.value)
+              }} />
+              <input className="pass" type="password" align="center" placeholder="Password" onChange={event => {
+                setPassword(event.target.value);
+              }} />
+              <button className="submit" align="center" onClick={() => {
+                createUser(email, password);
+                setMode(GENERAL);
+              }}>Submit</button>
+              <p className="forgot" align="center">Forgot Password?</p>
+            </form>
           </div>
         </Fragment>
       }
-      {mode === GENERAL && 
-        <General createUserGeneral={createUserGeneral} setMode={() => setMode(CATEGORIES)}/>
+      {mode === GENERAL &&
+        <General createUserGeneral={createUserGeneral} setMode={() => setMode(CATEGORIES)} />
       }
-      {mode === CATEGORIES && 
+      {mode === CATEGORIES &&
         <Categories goBack={() => setMode(GENERAL)} goNext={(selected) => {
           getInterests(selected)
-          .then(res => { 
-            setInterestsArray(res);
-          }).then(() => {
-            setMode(INTERESTS)
-          })
-          .catch(err => console.error(err));
-        }}/>
+            .then(res => {
+              setInterestsArray(res);
+            }).then(() => {
+              setMode(INTERESTS)
+            })
+            .catch(err => console.error(err));
+        }} />
       }
       {mode === INTERESTS &&
         <div>
-          <Interests interestsArray={interestsArray} goNext={(interests) => goNext(interests)}/>
+          <Interests interestsArray={interestsArray} goBack={() => setMode(CATEGORIES)} goNext={(interests) => goNext(interests)} />
         </div>
       }
 
