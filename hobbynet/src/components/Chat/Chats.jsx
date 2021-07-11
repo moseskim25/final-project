@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import * as timeago from 'timeago.js';
+import './Chats.scss'
+
 
 import '../styles/Chats.scss';
 
@@ -103,7 +106,7 @@ export default function Main({ otherUserId, socket }) {
           <div class="entete">
             <span class="status blue"></span>
             <h2>{msg.sender_first_name} {msg.sender_last_name}</h2>
-            <h3>{msg.time}</h3>
+            <h3 class="dateSent">{timeago.format(msg.time)}</h3>
           </div>
           <div class="triangle"></div>
           <div class="message">
@@ -116,7 +119,7 @@ export default function Main({ otherUserId, socket }) {
         <div class="entete">
           <span class="status green"></span>
           <h2>{msg.sender_first_name} {msg.sender_last_name}</h2>
-          <h3>{msg.time}</h3>
+          <h3 class="dateSent">{timeago.format(msg.time)}</h3>
         </div>
         <div class="triangle"></div>
         <div class="message">
