@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/Interests.scss'
 
-export default function Interests({ interestsArray, goNext }) {
+export default function Interests({ interestsArray, goNext, goBack }) {
 
   const [interests, setInterests] = useState([]);
 
@@ -14,13 +14,22 @@ export default function Interests({ interestsArray, goNext }) {
     return;
   }
 
-  const displayInterests = interestsArray.data.map(interest => <div
-    className='interestContainer'
-    key={interest.id} 
-    onClick={() => select(interest.id)}>
+  function toTitleCase(str) {
+    return str.toLowerCase().split(' ').map(function (word) {
+      return (word.charAt(0).toUpperCase() + word.slice(1));
+    }).join(' ');
+  }
 
-    <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'}src={interest.image} alt={interest.id}></img>
-    {interest.name}
+  const displayInterests = interestsArray.data.map(interest =>
+    <div
+      className='interestContainer'
+      key={interest.id}
+      onClick={() => select(interest.id)}
+      style={{ fontWeight: 600, fontSize: '30px' }}
+    >
+
+      <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'} src={interest.image} alt={interest.id}></img>
+      {toTitleCase(interest.name)}
 
     </div>)
 
@@ -30,9 +39,9 @@ export default function Interests({ interestsArray, goNext }) {
         {displayInterests}
       </div>
       <div className='registration_navigate'>
-        <span className='back_next' >Back</span>
+        <span className='back_next' onClick={goBack} >Back</span>
         <p> </p>
-        <span  className='back_next' onClick={() => goNext(interests)}>Next</span>
+        <span className='back_next' onClick={() => goNext(interests)}>Next</span>
       </div>
     </div>)
 };

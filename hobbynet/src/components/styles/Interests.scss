@@ -17,9 +17,12 @@
   align-items: center;
 
   .interests_image {
-    padding: 25px;
-    height: 250px;
-    width: 400px;
+    height: 200px;
+    width: 300px;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 0px 10px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   }
 }
 
