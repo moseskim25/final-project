@@ -79,7 +79,7 @@ const Navbar = (props) => {
       color='gray.600'
       {...props}
     >
-      <Flex align="center" mr={5}>
+      <Flex align="center" mr={5} cursor="pointer" onClick={() => window.location.replace("/home")}>
         <Heading as="h1" size="lg" letterSpacing={"tighter"}>
           {/* note to self: design a logo & title and stick it here later */}
           HOBBYNET
