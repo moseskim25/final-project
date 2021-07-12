@@ -30,7 +30,15 @@ const cookies = new Cookies();
 toast.configure()
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
+  const {
+    createUser,
+    createUserGeneral,
+    getInterests,
+    setUserInterests,
+    getConversationMessages,
+    getUserInfo,
+    getUserInterests
+  }
     = helper();
 
   const userId = cookies.get('user_id')
@@ -99,7 +107,12 @@ function App() {
         </Route>
         <Route path="/viewprofile/:otherUserId">
           <Navbar notify={notify} socket={socket} />
-          <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
+          <Profile
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            otherUserId={otherUserId}
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+          />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
@@ -109,17 +122,26 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+          <UserProfile
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            notify={notify}
+            socket={socket}
+          />
+          <Conversations
+            getConversationMessages={getConversationMessages}
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+          />
           <Conversation />
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats 
-            otherUserId={otherUserId} 
-            socket={socket} 
-            getConversations={getConversations}
-            setOtherUserId={setOtherUserId} />
+          <Chats
+            otherUserId={otherUserId}
+            socket={socket}
+            getConversationMessages={getConversationMessages}
+            setOtherUserId={setOtherUserId}
+          />
         </Route>
         <Route path="/messenger">
           <Navbar />

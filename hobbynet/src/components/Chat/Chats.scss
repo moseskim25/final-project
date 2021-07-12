@@ -127,6 +127,10 @@
   }
   main header img:first-child{
     border-radius:50%;
+    object-fit: cover;
+    width: 65px;
+    height: 65px;
+
   }
   main header img:last-child{
     width:24px;
@@ -137,8 +141,8 @@
     margin-right:145px;
   }
   main header h2{
-    font-size:16px;
-    margin-bottom:5px;
+    font-size:20px;
+    // margin-bottom:5px;
   }
   main header h3{
     font-size:14px;

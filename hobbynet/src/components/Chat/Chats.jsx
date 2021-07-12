@@ -1,3 +1,4 @@
+//used on /chats page
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -7,20 +8,19 @@ import './Chats.scss'
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId }) {
+export default function Main({ otherUserId, socket, getConversationMessages, setOtherUserId }) {
 
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
 
-  const [conversation, setConversation] = useState([]);
+  const [conversationId, setConversationId] = useState([]);
   const [user, setUser] = useState({});
   const [otherUserInfo, setOtherUser] = useState({});
-  const [conversations, setConversations] = useState([]);
+  const [conversationMessages, setConversationMessages] = useState([]);
 
   useEffect(() => {
-    
     socket?.on("incomingMessage", (data) => {
-      setConversation((prev) => [
+      setConversationMessages((prev) => [
         ...prev,
         {
           sender_id: data.sender_id,
@@ -30,21 +30,18 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           time: new Date().getTime(),
         },
       ]);
-      //fetch new message from the database
-      // setConversation(msg)
-      // getConvoMessages(conversation.id)
     });
-    
+
   }, [socket]);
-  
+
   useEffect(() => {
     getConvoId();
     getUserInfo(userId);
     getOtherUserInfo(otherUserId);
-    
-    getConversations(userId)
+
+    getConversationMessages(userId)
       .then((res) => {
-        setConversations(res.data);
+        setConversationMessages(res.data);
       })
       .catch((err) => console.error(err));
   }, [otherUserId])
@@ -52,8 +49,8 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   //gets all unique conversation ids
   const uniqueConversations = () => {
     const output = [];
-    conversations.forEach((conversation) => {
-      const id = conversation.conversations_id;
+    conversationMessages.forEach((message) => {
+      const id = message.conversations_id;
       if (output.indexOf(id) === -1) {
         output.push(id);
       }
@@ -64,14 +61,15 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   //grabs all conversations with the unique conversation ids
   const chat = () => {
-    const output = conversationIds.map((conversationId) =>
-      conversations.filter((conversation) => {
-        return conversationId === conversation.conversations_id;
+    const output = conversationIds.map((id) =>
+      conversationMessages.filter((message) => {
+        return id === message.conversations_id;
       })
     );
     return output;
   };
   const conversationsArray = chat();
+  console.log("conversationsArray", conversationsArray);
 
   const getUserInfo = (user_id) => {
     return axios
@@ -91,39 +89,45 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.log("Error: ", err.message));
   };
 
+  // create convo and set conversation id
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId }).then((res) => {
-      setConversation(res.data[0].id);
+      setConversationId(res.data[0].id);
     });
   };
 
   const getConvoId = () => {
-    axios.get(`http://localhost:8000/chats/verify/${userId}/${otherUserId}`).then((res) => {
-      if (res.data.length === 0) {
-        createConvo();
-      } else {
-        getConvoMessages();
-      }
-    });
+    axios.get(`http://localhost:8000/chats/verify/${userId}/${otherUserId}`)
+      .then((res) => {
+        if (res.data.length === 0) {
+          console.log("(Chats.jsx line 103) conversation does not exist");
+          createConvo();
+        } else {
+          console.log("(Chats.jsx line 106) conversation DOES exist");
+          setConversationId(res.data[0].id)
+          getConvoMessages();
+        }
+      })
+      .catch(err => console.log("Error: ", err.message))
   };
 
   const getConvoMessages = () => {
     return axios.get(`http://localhost:8000/chats/${userId}/${otherUserId}`).then((res) => {
-      setConversation(res.data);
+      setConversationMessages(res.data);
     });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo, user });
+    axios.post(`http://localhost:8000/chats/${conversationId}/${userId}`, { message, otherUserId, otherUserInfo, user });
     event.target.message.value = '';
   };
 
   //displays messages in a chat
   const displayConversation =
-    Array.isArray(conversation) &&
-    conversation.map((msg) => {
+    Array.isArray(conversationMessages) &&
+    conversationMessages.map((msg) => {
       if (msg.sender_id === Number(userId)) {
         return (
           <li class="me">
@@ -155,19 +159,19 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       }
     });
 
-    console.log('conversations array:', conversationsArray);
+  console.log('conversations array:', conversationsArray);
 
   //displays the list of convos on the left of chatbox
   const displayConversationsLeft = conversationsArray.map(conversation => {
     const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
     const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
-    return(<li
-    key={conversation[0].id}
-    onClick={() => {
-      setOtherUserId(otherUserId);
-      history.push('/chats');
-    }}>
-      <img src={conversation[0].profile_image} alt="" className='left-image'/>
+    return (<li
+      key={conversation[0].id}
+      onClick={() => {
+        setOtherUserId(otherUserId);
+        history.push('/chats');
+      }}>
+      <img src={conversation[0].profile_image} alt="" className='left-image' />
       <div>
         <h2>{otherUser}</h2>
         <h3>
@@ -186,7 +190,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   useEffect(() => {
     scrollToBottom()
-  }, [conversation]);
+  }, [conversationMessages]);
 
 
   return (
@@ -201,12 +205,15 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       </aside>
       <main>
         <header>
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+          <img
+            src={otherUserInfo.profile_image} alt=""
+          // style={{ height: '55px', width: '55px' }}
+          />
           <div>
             <h2>Chat with {otherUserInfo.first_name}</h2>
-            <h3>already 1902 messages</h3>
+            {/* <h3>already 1902 messages</h3> */}
           </div>
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
+          {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" /> */}
         </header>
         <div className="MessagesContainer">
           <ul id="chat">

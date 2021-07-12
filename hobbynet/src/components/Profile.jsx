@@ -20,7 +20,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies()
 
 
-export default function Profile({ getUserInfo, getUserInterests }) {
+export default function Profile({ getUserInfo, getUserInterests, setOtherUserId }) {
   const userId = cookies.get('user_id')
   const { otherUserId } = useParams();
   const [userInfo, setUserInfo] = useState('');
@@ -35,11 +35,11 @@ export default function Profile({ getUserInfo, getUserInterests }) {
   )
 
   useEffect(() => {
+    setOtherUserId(otherUserId)
     getUserInfo(otherUserId)
       .then((res) => {
         setUserInfo(res.data);
       })
-
     getUserInterests(otherUserId)
       .then(res => setUserInterests(res.data))
   }, [])
@@ -97,11 +97,7 @@ export default function Profile({ getUserInfo, getUserInterests }) {
       </Center>
       <Center py={6} position={'relative'}>
         <Link to={{
-          pathname: '/chats',
-          state: {
-            userId: userId,
-            otherUserId: otherUserId
-          }
+          pathname: '/chats'
         }}>
           <Button position={'relative'}>
             <Center>

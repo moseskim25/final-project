@@ -1,3 +1,4 @@
+// used only on /home page
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Center } from "@chakra-ui/react";
@@ -7,23 +8,23 @@ import axios from 'axios';
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations, setOtherUserId, socket }) {
+export default function Conversations({ getConversationMessages, setOtherUserId, socket }) {
 
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
-  const [conversations, setConversations] = useState([]);
+  const [conversationMessages, setConversationMessages] = useState([]);
 
   useEffect(() => {
     socket?.on('incomingMessage', (data) => {
-      // setConversations([...prev])
-      });
+      // setConversationMessages([...prev])
+    });
   }, [])
 
 
   //gets all unique conversation ids
   const uniqueConversations = () => {
     const output = [];
-    conversations.forEach((conversation) => {
+    conversationMessages.forEach((conversation) => {
       const id = conversation.conversations_id;
       if (output.indexOf(id) === -1) {
         output.push(id);
@@ -36,7 +37,7 @@ export default function Conversations({ getConversations, setOtherUserId, socket
   //grabs all conversations with the unique conversation ids
   const chat = () => {
     const output = conversationIds.map((conversationId) =>
-      conversations.filter((conversation) => {
+      conversationMessages.filter((conversation) => {
         return conversationId === conversation.conversations_id;
       })
     );
@@ -65,9 +66,9 @@ export default function Conversations({ getConversations, setOtherUserId, socket
   });
 
   useEffect(() => {
-    getConversations(user_id)
+    getConversationMessages(user_id)
       .then((res) => {
-        setConversations(res.data);
+        setConversationMessages(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
