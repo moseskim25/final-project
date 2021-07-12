@@ -48,9 +48,15 @@ export default function HomePage(props) {
       <div className="trending">
         <p className='title'>What's Trending</p>
         <div className='trending-img-container'>
-          <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045520/Screen_Shot_2021-07-11_at_7.17.36_PM_ythrrm.png" alt="" className="trending-img" />
-          <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045827/Screen_Shot_2021-07-11_at_7.23.27_PM_enfw5o.png" alt="" className="trending-img" />
-          <img src="https://images.pexels.com/photos/3774606/pexels-photo-3774606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" className="trending-img" />
+          <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045520/Screen_Shot_2021-07-11_at_7.17.36_PM_ythrrm.png" alt="" className="trending-img" onClick={() => {
+            history.push('/search/baking');
+          }}/>
+          <img src="https://res.cloudinary.com/dm4r202h4/image/upload/v1626045827/Screen_Shot_2021-07-11_at_7.23.27_PM_enfw5o.png" alt="" className="trending-img" onClick={() => {
+            history.push('/search/biking');
+          }}/>
+          <img src="https://images.pexels.com/photos/3774606/pexels-photo-3774606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" className="trending-img" onClick={() => {
+            history.push('/search/guitar');
+          }}/>
         </div>
       </div>
 
