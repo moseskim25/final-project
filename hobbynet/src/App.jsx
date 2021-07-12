@@ -24,6 +24,7 @@ import AniText from "./components/SearchText/AniText"
 import SearchLanding from "./components/SearchText/SearchLanding";
 import SocketHelper from './components/Sockets/SocketHelper';
 import ProfileLanding from './components/Profile/ProfileLanding'
+import Footer from './components/Footer'
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 const cookies = new Cookies();
@@ -76,6 +77,7 @@ function App() {
         <Route path="/" exact>
           <Navbar />
           <LandingPage />
+          <Footer></Footer>
         </Route>
         <Route path="/register">
           <Navbar />
@@ -86,8 +88,7 @@ function App() {
             setUserInterests={setUserInterests} />
         </Route>
         <Route path="/testpath">
-          <UserProfile />
-          <Card />
+          <Footer/>
         </Route>
         <Route path="/sockettest">
           <Navbar />
@@ -97,6 +98,7 @@ function App() {
           <Navbar notify={notify} socket={socket} />
           <SearchLanding />
           <Search />
+          <Footer></Footer>
         </Route>
         <Route path="/viewprofile/:otherUserId">
           <Navbar notify={notify} socket={socket} />
@@ -113,6 +115,7 @@ function App() {
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
           <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
           <Conversation />
+          <Footer></Footer>
         </Route>
         <Route path="/chats" >
           <Navbar />
@@ -121,15 +124,18 @@ function App() {
             socket={socket} 
             getConversations={getConversations}
             setOtherUserId={setOtherUserId} />
+            <Footer></Footer>
         </Route>
         <Route path="/messenger">
           <Navbar />
           <Conversation />
+          <Footer></Footer>
         </Route>
         <Route path="/profile">
           <Navbar />
           <ProfileLanding/>
           <MyProfile getUserInfo={getUserInfo} />
+          <Footer></Footer>
         </Route>
 
       </Switch>

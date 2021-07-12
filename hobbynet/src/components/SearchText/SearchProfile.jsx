@@ -59,16 +59,17 @@ export default function SearchProfile(props) {
       </Stack>
       <Center>
         <Stack spacing='0px'>
-        <Center>
+
           <Text
               fontSize={'2xl'}
               fontWeight='bold'
+              mb={"0.5vh"}
           >    
               {firstName + ' ' + lastName}
           </Text>
-        </Center>
+
             <Text fontSize={'sm'}>
-                {'is looking for a buddy interested in learning...'} <Center><Text fontSize={'2xl'}>{titleCase(interest)}</Text></Center>
+                {'is looking for a buddy interested in learning...'} <Text fontSize={'2xl'}>{titleCase(interest)}</Text>
             </Text>
             <Text
                 fontSize={'sm'}
