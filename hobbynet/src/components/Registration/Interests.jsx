@@ -53,7 +53,7 @@ export default function Interests({ interestsArray, goNext, goBack }) {
   const displayInterests = interestsArray.data.map((interest, index) =>
     <div
       className='interestContainer'
-      key={interest.id}
+      key={interest.name}
       onClick={() => select(interest.id)}
       style={{ fontWeight: 600, fontSize: '30px' }}
     >
