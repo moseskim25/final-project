@@ -112,6 +112,9 @@ export default function Search() {
             results = results.filter(result => level.indexOf(String(result.level)) > -1)
             results = results.filter(result => category.indexOf(String(result.name)) > -1)
           }
+          if (cities.length !== 0) {
+            results = results.filter(result => cities.indexOf(String(result.city)) > -1)
+          }
           results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1 || result.last_name.indexOf(debouncedSearchTerm) > -1 || result.interestname.indexOf(debouncedSearchTerm) > -1)
           setResults(results)
           setIsSearching(false);
@@ -220,7 +223,7 @@ export default function Search() {
             </Stack>
             <Button size="xs" w="12%" fontSize={[8, 10, 12, 14]} onClick={() => { setShowLevels(!showLevels) }}>Levels<ChevronDownIcon /></Button>
             <Stack position={'absolute'} w="100%">
-              {showLevels && <Stack position={'absolute'} left="100px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
+              {showLevels && <Stack position={'absolute'} left="99px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
                 <Checkbox
                   isChecked={level.indexOf("1") >= 0 ? true : false}
                   value="1"
@@ -295,7 +298,7 @@ export default function Search() {
             </Stack>
             <Button size="xs" w="12%" fontSize={[8, 10, 12, 14]} onClick={() => { setShowCities(!showCities) }}>Cities<ChevronDownIcon /></Button>
             <Stack position={'absolute'} w="100%">
-              {showCities && <Stack position={'absolute'} left="180px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
+              {showCities && <Stack position={'absolute'} left="178px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
                 <Checkbox
                   isChecked={cities.indexOf("Toronto") >= 0 ? true : false}
                   value="Toronto"
@@ -379,6 +382,20 @@ export default function Search() {
                   }}
                 >
                   Halifax
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Ottawa") >= 0 ? true : false}
+                  value="Ottawa"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Ottawa
                 </Checkbox>
               </Stack>}
             </Stack>
