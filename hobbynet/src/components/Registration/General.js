@@ -6,13 +6,15 @@ export default function General(props) {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
 
   const validate = () => {
-    setFirstName(firstName);
-    setLastName(lastName);
-    setPostalCode(postalCode);
-    createUserGeneral(firstName, lastName, postalCode);
+    // setFirstName(firstName);
+    // setLastName(lastName);
+    // setCity(city);
+    // setCountry(country);
+    createUserGeneral(firstName, lastName, city);
     setMode();
     return;
   }
@@ -28,9 +30,10 @@ export default function General(props) {
             <input className="un " type="text" align="center" placeholder="Last Name" onChange={event => {
               setLastName(event.target.value)
             }}/>
-            <input className="un " type="text" align="center" placeholder="Postal Code" onChange={event => {
-              setPostalCode(event.target.value)
+            <input className="un " type="text" align="center" placeholder="City" onChange={event => {
+              setCity(event.target.value)
             }}/>
+
             <button className="submit" align="center" onClick={validate}>Submit</button>
           </form>
       </div>

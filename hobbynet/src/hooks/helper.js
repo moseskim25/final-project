@@ -20,9 +20,9 @@ const helper = () => {
       });
   }
 
-  const createUserGeneral = (first_name, last_name, postal_code) => {
+  const createUserGeneral = (first_name, last_name, city) => {
     const id = cookies.get('user_id');
-    const data = { first_name, last_name, postal_code, id };
+    const data = { first_name, last_name, city, id };
     return axios.put('http://localhost:8000/users/new/general', data);
   }
 
@@ -39,17 +39,22 @@ const helper = () => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
   }
 
-  const getAllUsersInfo = (conversations) => {
 
+  // problem  is here...
+  // conversation.id is whoever user1_id happens to be
+  // we have to get EITHER user1 or user2, whichever is not me!
+  const getAllUsersInfo = (conversations, userId) => {
     let userIds = [];
     for (let conversation of conversations) {
       for (let convo in conversation) {
-        if (!userIds.includes(conversation.id)) {
-          userIds.push(conversation.id);
+        if (conversation.user1_id !== userId && !userIds.includes(conversation.user1_id)) {
+          userIds.push(conversation.user1_id);
+        }
+        if (conversation.user2_id !== userId && !userIds.includes(conversation.user2_id)) {
+          userIds.push(conversation.user2_id);
         }
       }
     }
-
     return axios.get(`http://localhost:8000/users/all/${userIds}`)
   }
 

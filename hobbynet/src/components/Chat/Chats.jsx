@@ -7,7 +7,7 @@ import "./Chats.scss";
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers }) {
+export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers, getAllUsersInfo }) {
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
 
@@ -16,9 +16,10 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const [user, setUser] = useState({});
   const [otherUserInfo, setOtherUser] = useState({});
   const [conversations, setConversations] = useState([]);
-
+  const [online, setOnline] = useState(onlineUsers);
 
   useEffect(() => {
+    // LISTENS FOR INCOMING MESSAGES FROM SOCKET
     socket?.on("incomingMessage", (data) => {
       setConversation((prev) => [
         ...prev,
@@ -32,10 +33,19 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       ]);
     });
 
+    socket?.on("onlineUsers", (users) => {
+      setOnline(users);
+    })
+
   }, [socket]);
 
   useEffect(() => {
+    otherUserId && getConvoId();
+    getAllUsersInfo(conversations, userId)
+  }, []);
 
+  // RUNS EVERY TIME A CHAT IS SELECTED
+  useEffect(() => {
     otherUserId && getConvoId();
     getUserInfo(userId);
     otherUserId && getOtherUserInfo(otherUserId);
@@ -47,9 +57,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.error(err));
   }, [otherUserId]);
 
-  useEffect(() => {
-    otherUserId && getConvoId();
-  }, []);
+
 
   //gets all unique conversation ids
   const uniqueConversations = () => {
@@ -75,6 +83,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   };
   const conversationsArray = chat();
 
+  // GETS/SETS MY INFO
   const getUserInfo = (user_id) => {
     return axios
       .get(`http://localhost:8000/users/${user_id}`)
@@ -84,6 +93,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.log("Error: ", err.message));
   };
 
+  // GETS/INFO INFO FOR OTHER USER
   const getOtherUserInfo = (user_id) => {
     return axios
       .get(`http://localhost:8000/users/${user_id}`)
@@ -93,12 +103,14 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.log("Error: ", err.message));
   };
 
+  // CREATES A CONVERSATION BETWEEN ME AND OTHER USER IN DATABASE. SETS CONVERSATION ID
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId }).then((res) => {
       setConversationId(res.data[0].id);
     });
   };
 
+  // CHECKS IF CONVO EXISTS, AND EITHER CREATES ONE OR SETS THE ID AND GETS MESSAGES
   const getConvoId = () => {
     axios.get(`http://localhost:8000/chats/verify/${userId}/${otherUserId}`).then((res) => {
       if (res.data.length === 0) {
@@ -166,7 +178,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
       const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
       const img = allUsersInfo[Number(otherUserId)] && allUsersInfo[Number(otherUserId)].profile_image;
-
+      console.log(otherUserId, otherUser, img);
       return (
         <li
           key={conversation[0].id}
@@ -179,8 +191,8 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           <div>
             <h2>{otherUser}</h2>
             <h3>
-              <span className={"status " + (onlineUsers.includes(String(otherUserId)) ? 'green' : 'orange')}></span>
-              {onlineUsers.includes(String(otherUserId)) ? 'online' : 'offline'}
+              <span className={"status " + (online.includes(String(otherUserId)) ? 'green' : 'orange')}></span>
+              {online.includes(String(otherUserId)) ? 'online' : 'offline'}
             </h3>
           </div>
         </li>
@@ -212,7 +224,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
             <h2>Chat with {otherUserInfo.first_name}</h2>
             {/* <h3>already 1902 messages</h3> */}
           </div>
-          <img src={otherUserInfo.profile_image} alt="" />
+          {/* <img src={otherUserInfo.profile_image} alt="" /> */}
         </header>
         <div className="MessagesContainer">
           <ul id="chat">

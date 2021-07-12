@@ -36,12 +36,12 @@ module.exports = (db, userSockets) => {
   })
 
   router.put("/new/general", (req, res) => {
-    const { first_name, last_name, postal_code, id } = req.body
+    const { first_name, last_name, city, id } = req.body
 
     db.query(`UPDATE users
-    SET first_name = $1, last_name = $2, postal_code = $3
+    SET first_name = $1, last_name = $2, city = $3
     WHERE id = $4;`,
-      [first_name, last_name, postal_code, id])
+      [first_name, last_name, city, id])
       .then(data => {
         return res.json(data.rows[0])
       })
@@ -116,7 +116,10 @@ module.exports = (db, userSockets) => {
     JOIN users ON sender_id = users.id
     WHERE user1_id = $1 OR user2_id = $1`,
       [req.params.user_id])
-      .then(data => res.json(data.rows))
+      .then(data => {
+        console.log(data.rows);
+        res.json(data.rows);
+      })
       .catch(err => {
         console.error(err);
         res.status(500).json(err);
@@ -141,14 +144,14 @@ module.exports = (db, userSockets) => {
     })
 
     return db.query(queryString)
-    .then(data => {
-      const output = {};
-      for (let user of data.rows) {
-        output[user.id] = {...user};
-      }
-      res.json(output);
-    })
-    ;
+      .then(data => {
+        const output = {};
+        for (let user of data.rows) {
+          output[user.id] = { ...user };
+        }
+        res.json(output);
+      })
+      ;
 
   })
 

@@ -60,10 +60,6 @@ function App() {
     })
   }
 
-  
-
-
-
   useEffect(() => {
     if (userId) {
       setSocket(io("ws://localhost:8000", {
@@ -72,16 +68,15 @@ function App() {
         }
       }))
     }
-    
+
   }, [userId])
-  
+
   useEffect(() => {
     socket?.on("onlineUsers", (users) => {
-      console.log('users:', users);
       setOnlineUsers(users);
     });
   }, [socket])
-  
+
 
   return (
     <main>
@@ -135,8 +130,8 @@ function App() {
             socket={socket}
             getConversations={getConversations}
             setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
-            getAllUsersInfo={(conversations) => {
-              getAllUsersInfo(conversations)
+            getAllUsersInfo={(conversations, userId) => {
+              getAllUsersInfo(conversations, userId)
                 .then((res) => {
                   setAllUsersInfo(res.data);
                 })
@@ -153,7 +148,9 @@ function App() {
             getConversations={getConversations}
             setOtherUserId={setOtherUserId}
             allUsersInfo={allUsersInfo}
-            onlineUsers={onlineUsers} />
+            onlineUsers={onlineUsers}
+            getAllUsersInfo={getAllUsersInfo}
+          />
         </Route>
         <Route path="/messenger">
           <Navbar />

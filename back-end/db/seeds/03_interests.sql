@@ -18,6 +18,10 @@ insert into interests (category_id, name, image) values (2, 'Spanish', 'https://
 
 insert into interests (category_id, name, image) values (2, 'Russian', 'https://cdn.britannica.com/42/3842-004-F47B77BC/Flag-Russia.jpg');
 
+insert into interests (category_id, name, image) values (3, 'Baking', 'https://res.cloudinary.com/dm4r202h4/image/upload/v1626123965/ux15kvbij8wxmusgwxac.png');
+
+insert into interests (category_id, name, image) values (1, 'Biking', 'https://res.cloudinary.com/dm4r202h4/image/upload/v1626107380/lfsvokcw8b4mih4xfqac.png');
+
 
 -- insert into categories (id, name) values (1, 'sports');
 -- insert into categories (id, name) values (2, 'languages');
