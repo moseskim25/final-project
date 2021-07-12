@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { RadioGroup, Stack, Radio } from '@chakra-ui/react'
 import '../styles/Interests.scss'
 
 export default function Interests({ interestsArray, goNext, goBack }) {
@@ -29,8 +30,16 @@ export default function Interests({ interestsArray, goNext, goBack }) {
     >
 
       <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'} src={interest.image} alt={interest.id}></img>
+      <RadioGroup defaultValue="">
+        <Stack spacing={4} direction="row" padding="10px 0 0 0" >
+          <Radio value="1">1</Radio>
+          <Radio value="2">2</Radio>
+          <Radio value="3">3</Radio>
+          <Radio value="4">4</Radio>
+          <Radio value="5">5</Radio>
+        </Stack>
+      </RadioGroup>
       {toTitleCase(interest.name)}
-
     </div>)
 
   return (
