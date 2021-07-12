@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Conversations from "./Conversations";
 import UserProfile from "./UserProfile";
 import "./styles/HomePage.scss";
 import { Button } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies()
 
 export default function HomePage(props) {
-  const { getUserInfo, getUserInterests, notify, socket, getConversations, setOtherUserId, getAllUsersInfo, allUsersInfo, setAllUsersInfo} = props;
+  const { getUserInfo, getUserInterests, notify, socket, getConversations, setOtherUserId, getAllUsersInfo, allUsersInfo, setAllUsersInfo } = props;
   let history = useHistory();
+  const [userInfo, setUserInfo] = useState({})
+
+  const userId = cookies.get('user_id')
 
   const toSearchPage = () => {
     return history.push("/search");
   };
+
+
+  useEffect(() => {
+    getUserInfo(userId)
+      .then(res => {
+        setUserInfo(res.data)
+      })
+  }, [])
 
   return (
     <div className="home-page-main">
@@ -21,7 +35,7 @@ export default function HomePage(props) {
         </div>
         <div className="sub-header-text">
           <div>
-            <p>Great to see you, Moses!</p>
+            <p>Great to see you, {userInfo.first_name}!</p>
             <p>Find a pal and discover new talents!</p>
           </div>
           <Button colorScheme="teal" variant="solid" className="button" onClick={toSearchPage}>
@@ -42,7 +56,7 @@ export default function HomePage(props) {
       <div className="conversation">
         <p className='title'>Your Conversations</p>
         <div>
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)} allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo}/>
+          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)} allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo} />
         </div>
       </div>
     </div>
