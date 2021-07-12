@@ -30,6 +30,7 @@ const cookies = new Cookies();
 // the really messy navbar component - currently this is the logged-in version and I need to make a not-logged-in one later and figure out how to cycle it in
 const Navbar = (props) => {
   const { socket, notify } = props;
+  const userId = cookies.get('user_id')
 
   let history = useHistory();
 
@@ -39,10 +40,18 @@ const Navbar = (props) => {
   const handleToggle = () => (isOpen ? onClose() : onOpen());
 
   useEffect(() => {
+    if (userId) {
+      setIsLoggedIn(true)
+      getUserInfo(userId)
+    }
+  }, [])
+  
+  useEffect(() => {
     socket?.on('incomingMessage', (data) => {
-      // console.log('timestamp:', new Date().getTime());
-      if (user.first_name && data.sender_name !== user.first_name) {
-        notify(`${data.sender_name}: ${data.msg}`)
+      console.log('data:', data);
+      console.log('user:', user);
+      if (user.first_name && data.sender_first_name !== user.first_name) {
+        notify(`${data.sender_first_name}: ${data.msg}`)
       }
     })
   }, [socket])
@@ -59,13 +68,7 @@ const Navbar = (props) => {
       .catch(err => console.log("Error: ", err.message))
   }
 
-  useState(() => {
-    const userId = cookies.get('user_id')
-    if (userId) {
-      setIsLoggedIn(true)
-      getUserInfo(userId)
-    }
-  }, [])
+
 
 
 
