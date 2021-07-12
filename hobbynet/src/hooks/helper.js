@@ -39,6 +39,20 @@ const helper = () => {
     return axios.get(`http://localhost:8000/users/${user_id}`)
   }
 
+  const getAllUsersInfo = (conversations) => {
+
+    let userIds = [];
+    for (let conversation of conversations) {
+      for (let convo in conversation) {
+        if (!userIds.includes(conversation.id)) {
+          userIds.push(conversation.id);
+        }
+      }
+    }
+
+    return axios.get(`http://localhost:8000/users/all/${userIds}`)
+  }
+
   const getUserInterests = (user_id) => {
     return axios.get(`http://localhost:8000/users/${user_id}/interests`)
   }
@@ -47,7 +61,7 @@ const helper = () => {
     return axios.get(`http://localhost:8000/users/${user_id}/conversations`)
   }
 
-  return { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests };
+  return { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests, getAllUsersInfo };
 
 }
 

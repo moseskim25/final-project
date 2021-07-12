@@ -3,34 +3,24 @@ import { chakra, Flex, Avatar, useColorModeValue, Text, Stack, Center } from '@c
 
 
 export default function Conversation(props) {
+
   const { name, lastMessage, img } = props;
-
-
-  // console.log("inside conversation.jsx");
-  // console.log(socket);
-
-  // useEffect(() => {
-  //   setSocket(io("ws:://localhost:8900"))
-  // }, [])
-
-  // useEffect(() => {
-  //   socket?.on("welcome", message => {
-  //     console.log("message", message);
-  //   })
-  // }, [socket])
-
+  
   return (
     name ? (
       <Flex
         boxShadow={'lg'}
-        maxW={'640px'}
-        direction={{ base: 'column-reverse', md: 'row' }}
+        maxW={'250px'}
+        height='250px'
+        mr='25px'
+        direction={{ base: 'column', md: 'column' }}
         width={'full'}
         rounded={'xl'}
         p={10}
         position={'relative'}
         _hover={{ bg: "gray.50" }}
         mb={5}
+        cursor='pointer'
       >
         <Avatar
           src={img}

@@ -129,5 +129,30 @@ module.exports = (db, userSockets) => {
 
   )
 
+  router.get('/all/:userIdArray', (req, res) => {
+    const userIds = req.params.userIdArray.split(',');
+    let queryString = 'SELECT * FROM users WHERE ';
+
+    userIds.forEach(id => {
+      console.log(id);
+      if (id === userIds[userIds.length - 1]) {
+        queryString += `id = ${id};`;
+      } else {
+        queryString += `id = ${id} OR `;
+      }
+    })
+
+    return db.query(queryString)
+    .then(data => {
+      const output = {};
+      for (let user of data.rows) {
+        output[user.id] = {...user};
+      }
+      res.json(output);
+    })
+    ;
+
+  })
+
   return router;
 };

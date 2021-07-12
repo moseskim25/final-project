@@ -27,12 +27,22 @@ import ProfileLanding from './components/Profile/ProfileLanding'
 import Footer from './components/Footer'
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import HomePage from './components/HomePage';
 const cookies = new Cookies();
 
 toast.configure()
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
+  const {
+    createUser,
+    createUserGeneral,
+    getInterests,
+    setUserInterests,
+    getConversations,
+    getUserInfo,
+    getUserInterests,
+    getAllUsersInfo
+  }
     = helper();
 
   const userId = cookies.get('user_id')
@@ -41,22 +51,14 @@ function App() {
   const [socketId, setSocketId] = useState()
   const [otherUserId, setOtherUserId] = useState();
   const [newMessage, setNewMessage] = useState({});
+  const [allUsersInfo, setAllUsersInfo] = useState({});
 
   const notify = (msg) => {
     toast(msg, {
       position: toast.POSITION.BOTTOM_LEFT
     })
   }
-  // socket?.once('incomingMessage', (data) => {
-  //   // console.log('timestamp:', new Date().getTime());
-  //   if (user.first_name && data.sender_name !== user.first_name) {
-  //     setNewMessage({
-  //       notify,
-  //       data
-  //     })
-  //     // notify(`${data.sender_name}: ${data.msg}`)
-  //   }
-  // })
+
 
 
   useEffect(() => {
@@ -102,7 +104,12 @@ function App() {
         </Route>
         <Route path="/viewprofile/:otherUserId">
           <Navbar notify={notify} socket={socket} />
-          <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
+          <Profile
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            setOtherUserId={setOtherUserId}
+            otherUserId={otherUserId}
+          />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
@@ -112,16 +119,35 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
+<<<<<<< HEAD
           <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
           <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
           <Conversation />
           <Footer></Footer>
+=======
+          <HomePage
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            notify={notify}
+            socket={socket}
+            getConversations={getConversations}
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+            getAllUsersInfo={(conversations) => {
+              getAllUsersInfo(conversations)
+                .then((res) => {
+                  console.log('res.data:', res.data);
+                  setAllUsersInfo(res.data);
+                })
+            }}
+            allUsersInfo={allUsersInfo}
+            setAllUsersInfo={setAllUsersInfo} />
+>>>>>>> d0c825a825c001b38c21d12fbd663b7753ae940a
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats 
-            otherUserId={otherUserId} 
-            socket={socket} 
+          <Chats
+            otherUserId={otherUserId}
+            socket={socket}
             getConversations={getConversations}
             setOtherUserId={setOtherUserId} />
             <Footer></Footer>
