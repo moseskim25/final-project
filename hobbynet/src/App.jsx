@@ -52,12 +52,15 @@ function App() {
   const [otherUserId, setOtherUserId] = useState();
   const [newMessage, setNewMessage] = useState({});
   const [allUsersInfo, setAllUsersInfo] = useState({});
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const notify = (msg) => {
     toast(msg, {
       position: toast.POSITION.BOTTOM_LEFT
     })
   }
+
+  
 
 
 
@@ -69,9 +72,16 @@ function App() {
         }
       }))
     }
-
+    
   }, [userId])
-
+  
+  useEffect(() => {
+    socket?.on("onlineUsers", (users) => {
+      console.log('users:', users);
+      setOnlineUsers(users);
+    });
+  }, [socket])
+  
 
   return (
     <main>
@@ -142,7 +152,8 @@ function App() {
             socket={socket}
             getConversations={getConversations}
             setOtherUserId={setOtherUserId}
-            allUsersInfo={allUsersInfo} />
+            allUsersInfo={allUsersInfo}
+            onlineUsers={onlineUsers} />
         </Route>
         <Route path="/messenger">
           <Navbar />

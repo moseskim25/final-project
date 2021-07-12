@@ -11,10 +11,10 @@ import {
 
 import { MdLocationOn, MdLink, MdDateRange } from 'react-icons/md';
 import { FaComment } from 'react-icons/fa'
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpring } from 'framer-motion';
 import './styles/UserProfile.scss';
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies()
