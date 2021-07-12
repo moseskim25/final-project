@@ -10,10 +10,6 @@ export default function SocketHelper() {
 
   const userId = cookies.get('user_id')
 
-  // console.log("inside conversation.jsx");
-  // console.log("test", socket && socket.connected);
-  // console.log("userId", userId);
-
   useEffect(() => {
     setSocket(io("ws://localhost:8000", {
       query: {

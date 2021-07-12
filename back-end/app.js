@@ -70,12 +70,6 @@ const io = require('socket.io')(server, {
 
 userSockets.set('io', io);
 
-
-let interval;
-
-
-
-
 io.on("connection", (socket) => {
   console.log("a user connected.");
   socket.removeAllListeners();
@@ -87,13 +81,9 @@ io.on("connection", (socket) => {
     console.log('disconnected~~~~~~~~~~~~~~~');
     userSockets.delete(String(userId))
   })
-
 });
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-// app.listen(PORT, () => {
-//   console.log(`Listening on port ${PORT}`);
-// });
 
 module.exports = app;
 

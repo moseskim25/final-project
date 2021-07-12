@@ -51,24 +51,25 @@ export default function SearchProfile(props) {
       <Stack>
         <Avatar
           src={img}
-          height={'80px'}
-          width={'80px'}
+          height={'110px'}
+          width={'110px'}
           alignSelf={'center'}
           m={{ base: '0 17px 35px 0', md: '0 50px 0 50px' }}
         />
-        <Center>
-          <Text
-              fontSize={'md'}
-              fontWeight={500}
-          >    
-              {firstName + ' ' + lastName}
-          </Text>
-        </Center>
       </Stack>
       <Center>
         <Stack spacing='0px'>
+
+          <Text
+              fontSize={'2xl'}
+              fontWeight='bold'
+              mb={"0.5vh"}
+          >    
+              {firstName + ' ' + lastName}
+          </Text>
+
             <Text fontSize={'sm'}>
-                {'is looking for a buddy interested in learning...'} <Text fontWeight='bold' fontSize={'2xl'}>{titleCase(interest)}</Text>
+                {'is looking for a buddy interested in learning...'} <Text fontSize={'2xl'}>{titleCase(interest)}</Text>
             </Text>
             <Text
                 fontSize={'sm'}

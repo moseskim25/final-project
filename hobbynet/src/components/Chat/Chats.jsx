@@ -151,8 +151,6 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       }
     });
 
-  console.log('conversations array:', conversationsArray);
-
   //displays the list of convos on the left of chatbox
   const displayConversationsLeft = conversationsArray.filter(conversation => conversation[0]).map(conversation => {
     const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
