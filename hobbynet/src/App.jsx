@@ -90,7 +90,7 @@ function App() {
             setUserInterests={setUserInterests} />
         </Route>
         <Route path="/testpath">
-          <Footer/>
+          <Footer />
         </Route>
         <Route path="/sockettest">
           <Navbar />
@@ -134,7 +134,7 @@ function App() {
             }}
             allUsersInfo={allUsersInfo}
             setAllUsersInfo={setAllUsersInfo} />
-            <Footer></Footer>
+          <Footer></Footer>
         </Route>
         <Route path="/chats" >
           <Navbar />
@@ -143,7 +143,6 @@ function App() {
             socket={socket}
             getConversations={getConversations}
             setOtherUserId={setOtherUserId} />
-            <Footer></Footer>
         </Route>
         <Route path="/messenger">
           <Navbar />
@@ -152,7 +151,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Navbar />
-          <ProfileLanding/>
+          <ProfileLanding />
           <MyProfile getUserInfo={getUserInfo} />
           <Footer></Footer>
         </Route>
