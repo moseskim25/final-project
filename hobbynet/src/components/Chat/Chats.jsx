@@ -13,12 +13,12 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const userId = Number(cookies.get("user_id"));
 
   const [conversation, setConversation] = useState([]);
+  const [conversationId, setConversationId] = useState();
   const [user, setUser] = useState({});
   const [otherUserInfo, setOtherUser] = useState({});
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
-    
     socket?.on("incomingMessage", (data) => {
       setConversation((prev) => [
         ...prev,
@@ -30,18 +30,14 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           time: new Date().getTime(),
         },
       ]);
-      //fetch new message from the database
-      // setConversation(msg)
-      // getConvoMessages(conversation.id)
     });
-    
   }, [socket]);
-  
+
   useEffect(() => {
-    getConvoId();
+    otherUserId && getConvoId();
     getUserInfo(userId);
-    getOtherUserInfo(otherUserId);
-    
+    otherUserId && getOtherUserInfo(otherUserId);
+
     getConversations(userId)
       .then((res) => {
         setConversations(res.data);
@@ -93,7 +89,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId }).then((res) => {
-      setConversation(res.data[0].id);
+      setConversationId(res.data[0].id);
     });
   };
 
@@ -116,7 +112,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const onSubmit = (event) => {
     event.preventDefault();
     const message = event.target.message.value;
-    axios.post(`http://localhost:8000/chats/${conversation[0].conversations_id}/${userId}`, { message, otherUserId, otherUserInfo, user });
+    axios.post(`http://localhost:8000/chats/${conversationId}/${userId}`, { message, otherUserId, otherUserInfo, user });
     event.target.message.value = '';
   };
 
@@ -155,19 +151,19 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       }
     });
 
-    console.log('conversations array:', conversationsArray);
+  console.log('conversations array:', conversationsArray);
 
   //displays the list of convos on the left of chatbox
-  const displayConversationsLeft = conversationsArray.map(conversation => {
+  const displayConversationsLeft = conversationsArray.filter(conversation => conversation[0]).map(conversation => {
     const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
     const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
-    return(<li
-    key={conversation[0].id}
-    onClick={() => {
-      setOtherUserId(otherUserId);
-      history.push('/chats');
-    }}>
-      <img src={conversation[0].profile_image} alt="" className='left-image'/>
+    return (<li
+      key={conversation[0].id}
+      onClick={() => {
+        setOtherUserId(otherUserId);
+        history.push('/chats');
+      }}>
+      <img src={conversation[0].profile_image} alt="" className='left-image' />
       <div>
         <h2>{otherUser}</h2>
         <h3>
@@ -201,12 +197,12 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       </aside>
       <main>
         <header>
-          <img src={otherUserInfo.profile_image} alt="" className='other-user-image'/>
+          <img src={otherUserInfo.profile_image} alt="" className='other-user-image' />
           <div>
             <h2>Chat with {otherUserInfo.first_name}</h2>
-            <h3>already 1902 messages</h3>
+            {/* <h3>already 1902 messages</h3> */}
           </div>
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="" />
+          <img src={otherUserInfo.profile_image} alt="" />
         </header>
         <div className="MessagesContainer">
           <ul id="chat">
