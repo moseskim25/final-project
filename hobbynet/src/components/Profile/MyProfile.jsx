@@ -49,7 +49,7 @@ export default function MyProfile({ getUserInfo }) {
       </Center>
       {/* <p class='title'>General account settings</p>
       <p class='title_desc'>Click on any item to edit</p> */}
-      <VStack>
+      <VStack mb="2vh">
         <div className="edit_profile_2">
         <Stack>
           <Stack width="50vw">
@@ -144,6 +144,20 @@ export default function MyProfile({ getUserInfo }) {
       </div>
       </VStack>
       </Flex>
+      <Center>
+        <Stack w="5xl" h="20vh" borderWidth="1px" borderRadius="lg" overflow="hidden" padding="15px">
+          <Center>
+            <Stack>
+              <Heading>
+                My Biography
+              </Heading>
+              <Text>
+                You have no bio yet... create one now!
+              </Text>
+            </Stack>
+          </Center>         
+        </Stack>
+      </Center>
     </div>
   );
 }
