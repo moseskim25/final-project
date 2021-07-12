@@ -122,30 +122,30 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
     conversation.map((msg) => {
       if (msg.sender_id === Number(userId)) {
         return (
-          <li class="me">
-            <div class="entete">
-              <span class="status blue"></span>
+          <li className="me">
+            <div className="entete">
+              <span className="status blue"></span>
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
+              <h3 className="dateSent">{timeago.format(msg.time)}</h3>
             </div>
-            <div class="triangle"></div>
-            <div class="message">{msg.text}</div>
+            <div className="triangle"></div>
+            <div className="message">{msg.text}</div>
           </li>
         );
       } else {
         return (
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
+          <li className="you">
+            <div className="entete">
+              <span className="status green"></span>
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
+              <h3 className="dateSent">{timeago.format(msg.time)}</h3>
             </div>
-            <div class="triangle"></div>
-            <div class="message">{msg.text}</div>
+            <div className="triangle"></div>
+            <div className="message">{msg.text}</div>
           </li>
         );
       }
@@ -165,7 +165,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       <div>
         <h2>{otherUser}</h2>
         <h3>
-          <span class="status orange"></span>
+          <span className="status orange"></span>
           offline
         </h3>
       </div>
@@ -205,7 +205,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
         <div className="MessagesContainer">
           <ul id="chat">
             {displayConversation}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef}></div>
           </ul>
         </div>
         <footer>
