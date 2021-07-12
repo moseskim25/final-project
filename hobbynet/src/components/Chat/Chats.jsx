@@ -7,7 +7,7 @@ import './Chats.scss'
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId }) {
+export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo }) {
 
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
@@ -161,13 +161,15 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const displayConversationsLeft = conversationsArray.filter(conversation => conversation[0]).map(conversation => {
     const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
     const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
+    const img = allUsersInfo[Number(otherUserId)] && allUsersInfo[Number(otherUserId)].profile_image;
+
     return (<li
       key={conversation[0].id}
       onClick={() => {
         setOtherUserId(otherUserId);
         history.push('/chats');
       }}>
-      <img src={conversation[0].profile_image} alt="" className='left-image' />
+      <img src={img} alt="" className='left-image' />
       <div>
         <h2>{otherUser}</h2>
         <h3>

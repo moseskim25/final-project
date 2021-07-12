@@ -141,7 +141,8 @@ function App() {
             otherUserId={otherUserId}
             socket={socket}
             getConversations={getConversations}
-            setOtherUserId={setOtherUserId} />
+            setOtherUserId={setOtherUserId}
+            allUsersInfo={allUsersInfo} />
         </Route>
         <Route path="/messenger">
           <Navbar />
