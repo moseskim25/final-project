@@ -9,7 +9,7 @@ const cookies = new Cookies();
 
 export default function Conversations({ getConversations, setOtherUserId, socket, getAllUsersInfo, allUsersInfo, setAllUsersInfo }) {
 
-  console.log('all users info:', allUsersInfo);
+  // console.log('all users info in conversations:', allUsersInfo);
 
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
@@ -73,10 +73,12 @@ export default function Conversations({ getConversations, setOtherUserId, socket
     const otherUserId = convo.user1_id === user_id ? convo.user2_id : convo.user1_id;
     const otherUser = convo.user1_id === user_id ? `${convo.user2_first_name} ${convo.user2_last_name}` : `${convo.user1_first_name} ${convo.user1_last_name}`;
 
+    const img = allUsersInfo[Number(otherUserId)] && allUsersInfo[Number(otherUserId)].profile_image;
+
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
       <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key='otherUserId'>
-        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} />
+        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={img}/>
       </div>
     );
   });

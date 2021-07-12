@@ -144,7 +144,11 @@ module.exports = (db, userSockets) => {
 
     return db.query(queryString)
     .then(data => {
-      res.json(data.rows);
+      const output = {};
+      for (let user of data.rows) {
+        output[user.id] = {...user};
+      }
+      res.json(output);
     })
     ;
 
