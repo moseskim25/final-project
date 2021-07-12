@@ -16,7 +16,7 @@ import {
 // level={result.level}/>
 
 export default function SearchProfile(props) {
-  const {key, firstName, lastName, interest, category, level, img} = props;
+  const {key, firstName, lastName, interest, category, level, img, city} = props;
 
   function titleCase(str) {
     str = str.toLowerCase().split(' ');
@@ -80,13 +80,17 @@ export default function SearchProfile(props) {
         </Stack>
       </Center>
       <Flex w="94%" justify='space-between' position={'absolute'} mt={'-20px'} ml={'-20px'}>
-        <Badge variant="subtle">
+        <Badge variant="subtle" mr="1vw">
             {category}
         </Badge>
-        <Badge variant="outline" colorScheme={levelToColor(level)}>
-            {'Level ' + level}
-        </Badge>
-
+        <Flex>
+          <Badge variant="outline" colorScheme={"gray"} mr="0.25vw">
+              {city} 
+          </Badge>
+          <Badge variant="outline" colorScheme={levelToColor(level)}>
+              {'Level ' + level}
+          </Badge>
+        </Flex>
       </Flex>
     </Flex>) : ''
   );

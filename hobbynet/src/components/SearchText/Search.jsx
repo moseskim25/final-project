@@ -50,6 +50,8 @@ export default function Search() {
   const [showCategories, setShowCategories] = useState(false)
   const [showLevels, setShowLevels] = useState(false)
   const [level, setLevel] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [showCities, setShowCities] = useState(false)
 
   // Now we call our hook, passing in the current searchTerm value.
   // The hook will only return the latest value (what we passed in) ...
@@ -76,18 +78,25 @@ export default function Search() {
       console.log(level)
       // Make sure we have a value (user has entered something in input)
       getAll().then(results => {
+        let filteredResults = [];
         if (category.length === 0 && level.length === 0) {
-          setResults(results)
+          filteredResults = results
         } else if (category.length === 0) {
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
-          setResults(results)
+          filteredResults = results
         } else if (level.length === 0) {
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
-          setResults(results)
+          filteredResults = results
         } else {
           results = results.filter(result => level.indexOf(String(result.level)) > -1)
           results = results.filter(result => category.indexOf(String(result.name)) > -1)
-          setResults(results)
+          filteredResults = results
+        }
+        if (cities.length === 0) {
+          setResults(filteredResults)
+        } else {
+          filteredResults = results.filter(result => cities.indexOf(String(result.city)) > -1)
+          setResults(filteredResults)
         }
       })
       if (debouncedSearchTerm) {
@@ -115,7 +124,7 @@ export default function Search() {
     // Our useEffect function will only execute if this value changes ...
     // ... and thanks to our hook it will only change if the original ...
     // value (searchTerm) hasn't changed for more than 500ms.
-    [debouncedSearchTerm, category, level]
+    [debouncedSearchTerm, category, level, cities]
   );
 
   // Pretty standard UI with search input and results
@@ -284,6 +293,95 @@ export default function Search() {
                 </Checkbox>
               </Stack>}
             </Stack>
+            <Button size="xs" w="12%" fontSize={[8, 10, 12, 14]} onClick={() => { setShowCities(!showCities) }}>Cities<ChevronDownIcon /></Button>
+            <Stack position={'absolute'} w="100%">
+              {showCities && <Stack position={'absolute'} left="180px" top="30px" bg="white" zIndex='5' rounded="md" border="1px" borderColor="gray.200" padding="10px">
+                <Checkbox
+                  isChecked={cities.indexOf("Toronto") >= 0 ? true : false}
+                  value="Toronto"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Toronto
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Montreal") >= 0 ? true : false}
+                  value="Montreal"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Montreal
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Vancouver") >= 0 ? true : false}
+                  value="Vancouver"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Vancouver
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Calgary") >= 0 ? true : false}
+                  value="Calgary"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Calgary
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Edmonton") >= 0 ? true : false}
+                  value="Edmonton"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Edmonton
+                </Checkbox>
+                <Checkbox
+                  isChecked={cities.indexOf("Halifax") >= 0 ? true : false}
+                  value="Halifax"
+                  onChange={(e) => {
+                    if (cities.indexOf(e.target.value) < 0) {
+                      setCities(prev => [...prev, e.target.value])
+                    } else {
+                      let newCities = removeFromStateArr(e.target.value, cities)
+                      setCities(newCities)
+                    }
+                  }}
+                >
+                  Halifax
+                </Checkbox>
+              </Stack>}
+            </Stack>
           </Stack>
         </Stack>
       </Center>
@@ -298,7 +396,9 @@ export default function Search() {
               interest={result.interestname}
               category={result.name}
               level={result.level}
-              img={result.profile_image} />
+              img={result.profile_image}
+              city={result.city} 
+            />
           </Link>
         </Center>
       ))}
