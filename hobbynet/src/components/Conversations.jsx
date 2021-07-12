@@ -71,8 +71,8 @@ export default function Conversations({ getConversations, setOtherUserId, socket
 
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
-      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key={otherUserId}>
-        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={img}/>
+      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key={conversation.time}>
+        <Conversation key={conversation.time} name={otherUser} lastMessage={lastMessage} img={img}/>
       </div>
     );
   });
