@@ -6,13 +6,14 @@ CREATE TABLE users (
   last_name VARCHAR(50),
   email VARCHAR(50) NOT NULL,
   password VARCHAR(50) NOT NULL,
-  postal_code VARCHAR(25),
+  city VARCHAR(59),
   birthday DATE,
   profile_image VARCHAR(255),
   upload_image TEXT,
   gender VARCHAR(50),
   socket_id VARCHAR(50) default NULL,
-  created_at TIMESTAMP default current_timestamp NOT NULL
+  created_at TIMESTAMP default current_timestamp NOT NULL,
+  biography VARCHAR(600)
 );
 
 -- INSERT INTO users (first_name, last_name, email, password, postal_code, age, profile_image, gender)
