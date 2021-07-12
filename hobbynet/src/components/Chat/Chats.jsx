@@ -7,7 +7,7 @@ import './Chats.scss'
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId }) {
+export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo }) {
 
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
@@ -44,6 +44,10 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       })
       .catch((err) => console.error(err));
   }, [otherUserId])
+
+  useEffect(() => {
+    otherUserId && getConvoId();
+  }, [])
 
   //gets all unique conversation ids
   const uniqueConversations = () => {
@@ -98,6 +102,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       if (res.data.length === 0) {
         createConvo();
       } else {
+        setConversationId(res.data[0].id)
         getConvoMessages();
       }
     });
@@ -110,6 +115,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   };
 
   const onSubmit = (event) => {
+    console.log("dsfbsghsftghfsrthsbrtbsvfbg", event.target.message.value, conversationId, userId); /////////////////////////////////////////////////////////
     event.preventDefault();
     const message = event.target.message.value;
     axios.post(`http://localhost:8000/chats/${conversationId}/${userId}`, { message, otherUserId, otherUserInfo, user });
@@ -122,30 +128,30 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
     conversation.map((msg) => {
       if (msg.sender_id === Number(userId)) {
         return (
-          <li class="me">
-            <div class="entete">
-              <span class="status blue"></span>
+          <li className="me">
+            <div className="entete">
+              <span className="status blue"></span>
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
+              <h3 className="dateSent">{timeago.format(msg.time)}</h3>
             </div>
-            <div class="triangle"></div>
-            <div class="message">{msg.text}</div>
+            <div className="triangle"></div>
+            <div className="message">{msg.text}</div>
           </li>
         );
       } else {
         return (
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
+          <li className="you">
+            <div className="entete">
+              <span className="status green"></span>
               <h2>
                 {msg.sender_first_name} {msg.sender_last_name}
               </h2>
-              <h3 class="dateSent">{timeago.format(msg.time)}</h3>
+              <h3 className="dateSent">{timeago.format(msg.time)}</h3>
             </div>
-            <div class="triangle"></div>
-            <div class="message">{msg.text}</div>
+            <div className="triangle"></div>
+            <div className="message">{msg.text}</div>
           </li>
         );
       }
@@ -155,17 +161,19 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const displayConversationsLeft = conversationsArray.filter(conversation => conversation[0]).map(conversation => {
     const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
     const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
+    const img = allUsersInfo[Number(otherUserId)] && allUsersInfo[Number(otherUserId)].profile_image;
+
     return (<li
       key={conversation[0].id}
       onClick={() => {
         setOtherUserId(otherUserId);
         history.push('/chats');
       }}>
-      <img src={conversation[0].profile_image} alt="" className='left-image' />
+      <img src={img} alt="" className='left-image' />
       <div>
         <h2>{otherUser}</h2>
         <h3>
-          <span class="status orange"></span>
+          <span className="status orange"></span>
           offline
         </h3>
       </div>
@@ -205,12 +213,12 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
         <div className="MessagesContainer">
           <ul id="chat">
             {displayConversation}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef}></div>
           </ul>
         </div>
         <footer>
           <form onSubmit={onSubmit}>
-            <input placeholder="Type your message" name="message"></input>
+            <input type="text" placeholder="Type your message" name="message"></input>
             <div>
               {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" /> */}
               {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" /> */}

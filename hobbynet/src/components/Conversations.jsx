@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Center } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Conversation from "./Conversation";
 import './styles/Conversations.scss';

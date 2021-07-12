@@ -90,7 +90,7 @@ function App() {
             setUserInterests={setUserInterests} />
         </Route>
         <Route path="/testpath">
-          <Footer/>
+          <Footer />
         </Route>
         <Route path="/sockettest">
           <Navbar />
@@ -128,13 +128,12 @@ function App() {
             getAllUsersInfo={(conversations) => {
               getAllUsersInfo(conversations)
                 .then((res) => {
-                  console.log('res.data:', res.data);
                   setAllUsersInfo(res.data);
                 })
             }}
             allUsersInfo={allUsersInfo}
             setAllUsersInfo={setAllUsersInfo} />
-            <Footer></Footer>
+          <Footer></Footer>
         </Route>
         <Route path="/chats" >
           <Navbar />
@@ -142,8 +141,8 @@ function App() {
             otherUserId={otherUserId}
             socket={socket}
             getConversations={getConversations}
-            setOtherUserId={setOtherUserId} />
-            <Footer></Footer>
+            setOtherUserId={setOtherUserId}
+            allUsersInfo={allUsersInfo} />
         </Route>
         <Route path="/messenger">
           <Navbar />
@@ -152,7 +151,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Navbar />
-          <ProfileLanding/>
+          <ProfileLanding />
           <MyProfile getUserInfo={getUserInfo} />
           <Footer></Footer>
         </Route>
