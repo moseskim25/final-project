@@ -19,6 +19,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const [online, setOnline] = useState(onlineUsers);
 
   useEffect(() => {
+    // LISTENS FOR INCOMING MESSAGES FROM SOCKET
     socket?.on("incomingMessage", (data) => {
       setConversation((prev) => [
         ...prev,
@@ -38,8 +39,8 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   }, [socket]);
 
+  // RUNS EVERY TIME A CHAT IS SELECTED
   useEffect(() => {
-
     otherUserId && getConvoId();
     getUserInfo(userId);
     otherUserId && getOtherUserInfo(otherUserId);
@@ -79,6 +80,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   };
   const conversationsArray = chat();
 
+  // GETS/SETS MY INFO
   const getUserInfo = (user_id) => {
     return axios
       .get(`http://localhost:8000/users/${user_id}`)
@@ -88,6 +90,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.log("Error: ", err.message));
   };
 
+  // GETS/INFO INFO FOR OTHER USER
   const getOtherUserInfo = (user_id) => {
     return axios
       .get(`http://localhost:8000/users/${user_id}`)
@@ -97,12 +100,14 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.log("Error: ", err.message));
   };
 
+  // CREATES A CONVERSATION BETWEEN ME AND OTHER USER IN DATABASE. SETS CONVERSATION ID
   const createConvo = () => {
     axios.post(`http://localhost:8000/chats/new`, { userId, otherUserId }).then((res) => {
       setConversationId(res.data[0].id);
     });
   };
 
+  // CHECKS IF CONVO EXISTS, AND EITHER CREATES ONE OR SETS THE ID AND GETS MESSAGES
   const getConvoId = () => {
     axios.get(`http://localhost:8000/chats/verify/${userId}/${otherUserId}`).then((res) => {
       if (res.data.length === 0) {
