@@ -36,12 +36,12 @@ module.exports = (db, userSockets) => {
   })
 
   router.put("/new/general", (req, res) => {
-    const { first_name, last_name, postal_code, id } = req.body
+    const { first_name, last_name, city, id } = req.body
 
     db.query(`UPDATE users
-    SET first_name = $1, last_name = $2, postal_code = $3
+    SET first_name = $1, last_name = $2, city = $3
     WHERE id = $4;`,
-      [first_name, last_name, postal_code, id])
+      [first_name, last_name, city, id])
       .then(data => {
         return res.json(data.rows[0])
       })

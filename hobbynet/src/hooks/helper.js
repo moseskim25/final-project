@@ -20,9 +20,9 @@ const helper = () => {
       });
   }
 
-  const createUserGeneral = (first_name, last_name, postal_code) => {
+  const createUserGeneral = (first_name, last_name, city) => {
     const id = cookies.get('user_id');
-    const data = { first_name, last_name, postal_code, id };
+    const data = { first_name, last_name, city, id };
     return axios.put('http://localhost:8000/users/new/general', data);
   }
 
