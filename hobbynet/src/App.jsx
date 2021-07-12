@@ -31,7 +31,16 @@ const cookies = new Cookies();
 toast.configure()
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests, getAllUsersInfo }
+  const {
+    createUser,
+    createUserGeneral,
+    getInterests,
+    setUserInterests,
+    getConversations,
+    getUserInfo,
+    getUserInterests,
+    getAllUsersInfo
+  }
     = helper();
 
   const userId = cookies.get('user_id')
@@ -92,7 +101,12 @@ function App() {
         </Route>
         <Route path="/viewprofile/:otherUserId">
           <Navbar notify={notify} socket={socket} />
-          <Profile getUserInfo={getUserInfo} getUserInterests={getUserInterests} />
+          <Profile
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            setOtherUserId={setOtherUserId}
+            otherUserId={otherUserId}
+          />
         </Route>
         <Route path="/register">
           <Registration createUser={createUser} />
@@ -102,19 +116,28 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
-          <HomePage getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => {getAllUsersInfo(conversations)
-            .then((res) => {
-              console.log('res.data:', res.data);
-              setAllUsersInfo(res.data);
-            })}}
+          <HomePage
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            notify={notify}
+            socket={socket}
+            getConversations={getConversations}
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+            getAllUsersInfo={(conversations) => {
+              getAllUsersInfo(conversations)
+                .then((res) => {
+                  console.log('res.data:', res.data);
+                  setAllUsersInfo(res.data);
+                })
+            }}
             allUsersInfo={allUsersInfo}
-            setAllUsersInfo={setAllUsersInfo}/>
+            setAllUsersInfo={setAllUsersInfo} />
         </Route>
         <Route path="/chats" >
           <Navbar />
-          <Chats 
-            otherUserId={otherUserId} 
-            socket={socket} 
+          <Chats
+            otherUserId={otherUserId}
+            socket={socket}
             getConversations={getConversations}
             setOtherUserId={setOtherUserId} />
         </Route>
