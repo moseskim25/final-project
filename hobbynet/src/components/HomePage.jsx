@@ -32,14 +32,24 @@ export default function HomePage(props) {
     <div className="home-page-main">
       <div className="header">
         <div className="user-profile">
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
+          <UserProfile
+            getUserInfo={getUserInfo}
+            getUserInterests={getUserInterests}
+            notify={notify}
+            socket={socket}
+          />
         </div>
         <div className="sub-header-text">
           <div>
             <p>Great to see you, {userInfo.first_name}!</p>
             <p>Find a pal and discover new talents!</p>
           </div>
-          <Button colorScheme="teal" variant="solid" className="button" onClick={toSearchPage}>
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            className="button"
+            onClick={toSearchPage}
+          >
             Discover Your Talents
           </Button>
         </div>
@@ -57,7 +67,12 @@ export default function HomePage(props) {
       <div className="conversation">
         <p className='title'>Your Conversations</p>
         <div>
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)} allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo} />
+          <Conversations
+            getConversations={getConversations}
+            setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
+            getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)}
+            allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo}
+          />
         </div>
       </div>
     </div>
