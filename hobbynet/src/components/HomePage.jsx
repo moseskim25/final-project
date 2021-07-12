@@ -24,6 +24,7 @@ export default function HomePage(props) {
     getUserInfo(userId)
       .then(res => {
         setUserInfo(res.data)
+        console.log(' what is respones.data:', res.data);
       })
   }, [])
 

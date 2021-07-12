@@ -64,13 +64,12 @@ module.exports = (db, userSockets) => {
 
   router.put('/new/photo', (req, res) => {
 
-    const { image_url, user_id } = req.body;
-    console.log(image_url, user_id);
+    const { imageUrl, user_id } = req.body;
 
     db.query(`UPDATE users
     SET profile_image = $1
     WHERE id = $2;`,
-      [image_url, user_id])
+      [imageUrl, user_id])
       .then(() => res.send())
       .catch(err => {
         console.error(err);
