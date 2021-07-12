@@ -41,7 +41,6 @@ function App() {
   const [otherUserId, setOtherUserId] = useState();
   const [newMessage, setNewMessage] = useState({});
   const [allUsersInfo, setAllUsersInfo] = useState({});
-  // console.log('allusersinfo', allUsersInfo);
 
   const notify = (msg) => {
     toast(msg, {

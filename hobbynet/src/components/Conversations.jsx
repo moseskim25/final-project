@@ -9,8 +9,6 @@ const cookies = new Cookies();
 
 export default function Conversations({ getConversations, setOtherUserId, socket, getAllUsersInfo, allUsersInfo, setAllUsersInfo }) {
 
-  // console.log('all users info in conversations:', allUsersInfo);
-
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [conversations, setConversations] = useState([]);
@@ -66,8 +64,6 @@ export default function Conversations({ getConversations, setOtherUserId, socket
   };
 
   const displayConversations = conversationsArray.map((conversation) => {
-
-    console.log(conversation);
 
     const convo = conversation[0];
     const otherUserId = convo.user1_id === user_id ? convo.user2_id : convo.user1_id;
