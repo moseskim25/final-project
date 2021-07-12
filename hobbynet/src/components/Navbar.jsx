@@ -161,7 +161,7 @@ const Navbar = (props) => {
     {...props}
   >
     <Flex align="center" mr={5}>
-      <Heading onClick={() => window.location.replace("/home")} as="h1" size="lg" letterSpacing={"tighter"}>
+      <Heading cursor="pointer" onClick={() => window.location.replace("/home")} as="h1" size="lg" letterSpacing={"tighter"}>
         {/* note to self: design a logo & title and stick it here later */}
         HOBBYNET
       </Heading>

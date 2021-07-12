@@ -23,6 +23,7 @@ import Profile from "./components/Profile"
 import AniText from "./components/SearchText/AniText"
 import SearchLanding from "./components/SearchText/SearchLanding";
 import SocketHelper from './components/Sockets/SocketHelper';
+import ProfileLanding from './components/Profile/ProfileLanding'
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 const cookies = new Cookies();
@@ -127,6 +128,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Navbar />
+          <ProfileLanding/>
           <MyProfile getUserInfo={getUserInfo} />
         </Route>
 
