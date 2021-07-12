@@ -16,7 +16,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   const [user, setUser] = useState({});
   const [otherUserInfo, setOtherUser] = useState({});
   const [conversations, setConversations] = useState([]);
-
+  const [online, setOnline] = useState(onlineUsers);
 
   useEffect(() => {
     socket?.on("incomingMessage", (data) => {
@@ -31,6 +31,10 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
         },
       ]);
     });
+
+    socket?.on("onlineUsers", (users) => {
+      setOnline(users);
+    })
 
   }, [socket]);
 
@@ -179,8 +183,8 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           <div>
             <h2>{otherUser}</h2>
             <h3>
-              <span className={"status " + (onlineUsers.includes(String(otherUserId)) ? 'green' : 'orange')}></span>
-              {onlineUsers.includes(String(otherUserId)) ? 'online' : 'offline'}
+              <span className={"status " + (online.includes(String(otherUserId)) ? 'green' : 'orange')}></span>
+              {online.includes(String(otherUserId)) ? 'online' : 'offline'}
             </h3>
           </div>
         </li>

@@ -70,7 +70,7 @@ const io = require('socket.io')(server, {
 
 userSockets.set('io', io);
 
-const onlineUsers = [];
+let onlineUsers = [];
 
 io.on("connection", (socket) => {
   console.log("a user connected.");
@@ -80,11 +80,13 @@ io.on("connection", (socket) => {
   userSockets.set(String(userId), socket)
   onlineUsers.push(userId);
 
-  socket.emit('onlineUsers', onlineUsers);
+  io.emit('onlineUsers', onlineUsers);
 
   socket.on('disconnect', () => {
     console.log('disconnected~~~~~~~~~~~~~~~');
     userSockets.delete(String(userId))
+    onlineUsers = onlineUsers.filter(user => user !== userId);
+    io.emit('onlineUsers', onlineUsers);
   })
 });
 
