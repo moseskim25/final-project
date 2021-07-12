@@ -6,7 +6,7 @@ import { Button } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 
 export default function HomePage(props) {
-  const { getUserInfo, getUserInterests, notify, socket, getConversations, setOtherUserId } = props;
+  const { getUserInfo, getUserInterests, notify, socket, getConversations, setOtherUserId, getAllUsersInfo, allUsersInfo, setAllUsersInfo} = props;
   let history = useHistory();
 
   const toSearchPage = () => {
@@ -42,7 +42,7 @@ export default function HomePage(props) {
       <div className="conversation">
         <p className='title'>Your Conversations</p>
         <div>
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)} allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo}/>
         </div>
       </div>
     </div>

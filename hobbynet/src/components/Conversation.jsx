@@ -20,6 +20,7 @@ export default function Conversation(props) {
         position={'relative'}
         _hover={{ bg: "gray.50" }}
         mb={5}
+        cursor='pointer'
       >
         <Avatar
           src={img}

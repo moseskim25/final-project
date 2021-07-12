@@ -31,7 +31,7 @@ const cookies = new Cookies();
 toast.configure()
 
 function App() {
-  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests }
+  const { createUser, createUserGeneral, getInterests, setUserInterests, getConversations, getUserInfo, getUserInterests, getAllUsersInfo }
     = helper();
 
   const userId = cookies.get('user_id')
@@ -40,22 +40,15 @@ function App() {
   const [socketId, setSocketId] = useState()
   const [otherUserId, setOtherUserId] = useState();
   const [newMessage, setNewMessage] = useState({});
+  const [allUsersInfo, setAllUsersInfo] = useState({});
+  console.log('allusersinfo', allUsersInfo);
 
   const notify = (msg) => {
     toast(msg, {
       position: toast.POSITION.BOTTOM_LEFT
     })
   }
-  // socket?.once('incomingMessage', (data) => {
-  //   // console.log('timestamp:', new Date().getTime());
-  //   if (user.first_name && data.sender_name !== user.first_name) {
-  //     setNewMessage({
-  //       notify,
-  //       data
-  //     })
-  //     // notify(`${data.sender_name}: ${data.msg}`)
-  //   }
-  // })
+
 
 
   useEffect(() => {
@@ -110,7 +103,13 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
-          <HomePage getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
+          <HomePage getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} getAllUsersInfo={(conversations) => {getAllUsersInfo(conversations)
+            .then((res) => {
+              console.log('res.data:', res.data);
+              setAllUsersInfo(res.data);
+            })}}
+            allUsersInfo={allUsersInfo}
+            setAllUsersInfo={setAllUsersInfo}/>
         </Route>
         <Route path="/chats" >
           <Navbar />

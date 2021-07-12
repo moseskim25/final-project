@@ -201,7 +201,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       </aside>
       <main>
         <header>
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+          <img src={otherUserInfo.profile_image} alt="" className='other-user-image'/>
           <div>
             <h2>Chat with {otherUserInfo.first_name}</h2>
             <h3>already 1902 messages</h3>

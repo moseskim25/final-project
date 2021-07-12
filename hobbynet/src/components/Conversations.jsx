@@ -7,17 +7,33 @@ import './styles/Conversations.scss';
 
 const cookies = new Cookies();
 
-export default function Conversations({ getConversations, setOtherUserId, socket }) {
+export default function Conversations({ getConversations, setOtherUserId, socket, getAllUsersInfo, allUsersInfo, setAllUsersInfo }) {
+
+  console.log('all users info:', allUsersInfo);
 
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [conversations, setConversations] = useState([]);
+  console.log('allusersinfo:', allUsersInfo);
 
   useEffect(() => {
     socket?.on('incomingMessage', (data) => {
       // setConversations([...prev])
       });
   }, [])
+
+  useEffect(() => {
+    getConversations(user_id)
+      .then((res) => {
+        setConversations(res.data);
+        getAllUsersInfo(res.data)
+          .then(res => {
+            setAllUsersInfo(res.data);
+          })
+      })
+      .catch((err) => console.error(err));
+    }, []);
+
 
 
   //gets all unique conversation ids
@@ -50,25 +66,22 @@ export default function Conversations({ getConversations, setOtherUserId, socket
   };
 
   const displayConversations = conversationsArray.map((conversation) => {
+
+    console.log(conversation);
+
     const convo = conversation[0];
     const otherUserId = convo.user1_id === user_id ? convo.user2_id : convo.user1_id;
-    const otherUser = conversation[0].user1_id === user_id ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
-    const otherUserImgUrl = `${conversation[0].profile_image}`;
+    const otherUser = convo.user1_id === user_id ? `${convo.user2_first_name} ${convo.user2_last_name}` : `${convo.user1_first_name} ${convo.user1_last_name}`;
+
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
-      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }}>
-        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={otherUserImgUrl} />
+      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key='otherUserId'>
+        <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} />
       </div>
     );
   });
 
-  useEffect(() => {
-    getConversations(user_id)
-      .then((res) => {
-        setConversations(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+
 
   return (<div className='conversations-container'>{displayConversations}</div>);
 }
