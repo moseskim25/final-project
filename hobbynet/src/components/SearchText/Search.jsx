@@ -72,6 +72,10 @@ export default function Search() {
   // We use useEffect since this is an asynchronous action
   useEffect(
     () => {
+      if (document.getElementsByClassName('input')[0]) {
+        document.getElementsByClassName('input')[0].defaultValue = capitalizeFirstLetter(window.location.href.slice(29));
+        setSearchTerm(capitalizeFirstLetter(window.location.href.slice(29)));
+      } 
       console.log(category)
       console.log(level)
       // Make sure we have a value (user has entered something in input)
@@ -118,6 +122,12 @@ export default function Search() {
     [debouncedSearchTerm, category, level]
   );
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+
+
   // Pretty standard UI with search input and results
   return (
     <>
@@ -128,6 +138,7 @@ export default function Search() {
             size="lg"
             placeholder="Find your next hobby study buddy..."
             onChange={e => setSearchTerm(e.target.value)}
+            className='input'
           />
           <Stack direction="row">
             <Button size="xs" w="15%" padding="5px" fontSize={[8, 10, 12, 14]} onClick={() => { setShowCategories(!showCategories) }}>Categories<ChevronDownIcon /></Button>
