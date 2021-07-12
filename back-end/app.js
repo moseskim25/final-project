@@ -70,12 +70,17 @@ const io = require('socket.io')(server, {
 
 userSockets.set('io', io);
 
+const onlineUsers = [];
+
 io.on("connection", (socket) => {
   console.log("a user connected.");
   socket.removeAllListeners();
   const userId = socket.handshake.query.userId
 
   userSockets.set(String(userId), socket)
+  onlineUsers.push(userId);
+
+  socket.emit('onlineUsers', onlineUsers);
 
   socket.on('disconnect', () => {
     console.log('disconnected~~~~~~~~~~~~~~~');
