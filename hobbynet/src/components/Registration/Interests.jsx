@@ -1,17 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RadioGroup, Stack, Radio } from '@chakra-ui/react'
 import '../styles/Interests.scss'
+// require("@babel/core").transformSync("code", {
+//   plugins: ["@babel/plugin-proposal-object-rest-spread"],
+// });
 
 export default function Interests({ interestsArray, goNext, goBack }) {
 
   const [interests, setInterests] = useState([]);
+  const [buttonVisibility, setButtonVisibility] = useState({ "4": true, "9": false, "10": false })
+  console.log("(Interests.jsx Line 8) interests~~~~~", interests);
+  console.log("interestsArray.data", interestsArray.data);
+  console.log("buttonVisibility", buttonVisibility);
+
+  useEffect(() => {
+    const currentInterests = {};
+    for (const interest of interestsArray.data) {
+      currentInterests[interest.id] = false;
+    }
+    console.log("currentInterests", currentInterests);
+    setButtonVisibility({ ...currentInterests })
+  }, [])
+
+  // useEffect(() => {
+  //   interests?.some(interest => interest.id === )
+  // }, interests)
 
   const select = (interest_id) => {
+    // if already selected
     if (interests.includes(interest_id)) {
       setInterests(interests.filter(interest => interest !== interest_id))
-    } else (
+      // hide radio buttons
+      const temp = buttonVisibility;
+      temp[interest_id] = false;
+      setButtonVisibility(temp)
+    } else {
       setInterests(prev => [...prev, interest_id])
-    )
+      // make radio buttons visible
+      const temp = buttonVisibility;
+      temp[interest_id] = true;
+      setButtonVisibility(temp)
+    }
     return;
   }
 
@@ -21,7 +50,7 @@ export default function Interests({ interestsArray, goNext, goBack }) {
     }).join(' ');
   }
 
-  const displayInterests = interestsArray.data.map(interest =>
+  const displayInterests = interestsArray.data.map((interest, index) =>
     <div
       className='interestContainer'
       key={interest.id}
@@ -30,7 +59,8 @@ export default function Interests({ interestsArray, goNext, goBack }) {
     >
 
       <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'} src={interest.image} alt={interest.id}></img>
-      <RadioGroup defaultValue="">
+      {toTitleCase(interest.name)}
+      <RadioGroup className={`button-${interest.name}`} visibility={buttonVisibility[interest.id] ? "visible" : "hidden"} defaultValue="1">
         <Stack spacing={4} direction="row" padding="10px 0 0 0" >
           <Radio value="1">1</Radio>
           <Radio value="2">2</Radio>
@@ -39,7 +69,6 @@ export default function Interests({ interestsArray, goNext, goBack }) {
           <Radio value="5">5</Radio>
         </Stack>
       </RadioGroup>
-      {toTitleCase(interest.name)}
     </div>)
 
   return (
