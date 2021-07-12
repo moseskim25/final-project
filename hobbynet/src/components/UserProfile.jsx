@@ -24,7 +24,7 @@ import {
     const [userInterests, setUserInterests] = useState([]);
 
     const displayUserInterests = userInterests.map(interest => 
-      <div className='user_interest'>
+      <div className='user_interest' key={interest.name}>
         #{interest.name}
       </div>
     )

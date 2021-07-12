@@ -30,9 +30,6 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
           time: new Date().getTime(),
         },
       ]);
-      //fetch new message from the database
-      // setConversation(msg)
-      // getConvoMessages(conversation.id)
     });
     
   }, [socket]);
@@ -154,8 +151,6 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
         );
       }
     });
-
-    console.log('conversations array:', conversationsArray);
 
   //displays the list of convos on the left of chatbox
   const displayConversationsLeft = conversationsArray.map(conversation => {

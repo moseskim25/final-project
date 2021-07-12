@@ -134,7 +134,6 @@ module.exports = (db, userSockets) => {
     let queryString = 'SELECT * FROM users WHERE ';
 
     userIds.forEach(id => {
-      console.log(id);
       if (id === userIds[userIds.length - 1]) {
         queryString += `id = ${id};`;
       } else {

@@ -12,7 +12,6 @@ export default function Conversations({ getConversations, setOtherUserId, socket
   let history = useHistory();
   const user_id = Number(cookies.get("user_id"));
   const [conversations, setConversations] = useState([]);
-  console.log('allusersinfo:', allUsersInfo);
 
   useEffect(() => {
     socket?.on('incomingMessage', (data) => {
@@ -73,7 +72,7 @@ export default function Conversations({ getConversations, setOtherUserId, socket
 
     const lastMessage = `${conversation[conversation.length - 1].first_name} ${conversation[conversation.length - 1].last_name}: ${conversation[conversation.length - 1].text}`;
     return (
-      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key='otherUserId'>
+      <div onClick={() => handleOnClick(otherUserId)} _hover={{ opacity: 0.75 }} key={otherUserId}>
         <Conversation key={otherUser} name={otherUser} lastMessage={lastMessage} img={img}/>
       </div>
     );

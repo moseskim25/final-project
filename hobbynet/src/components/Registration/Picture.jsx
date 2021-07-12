@@ -23,7 +23,6 @@ export default function Picture() {
   };
 
   const handleSubmit = () => {
-    console.log('yes it got here');
     axios.put("http://localhost:8000/users/new/photo", { imageUrl, user_id })
     history.push('/home');
   };
