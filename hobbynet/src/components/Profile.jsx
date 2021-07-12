@@ -20,7 +20,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies()
 
 
-export default function Profile({ getUserInfo, getUserInterests }) {
+export default function Profile({ getUserInfo, getUserInterests, setOtherUserId }) {
   const userId = cookies.get('user_id')
   const { otherUserId } = useParams();
   const [userInfo, setUserInfo] = useState('');
@@ -96,22 +96,25 @@ export default function Profile({ getUserInfo, getUserInterests }) {
         </Box>
       </Center>
       <Center py={6} position={'relative'}>
-        <Link to={{
+        {/* <Link to={{
           pathname: '/chats',
           state: {
             userId: userId,
             otherUserId: otherUserId
           }
-        }}>
-          <Button position={'relative'}>
-            <Center>
-              <Text ml='1'>
-                {`Send ${userInfo.first_name} a message!   `}
-              </Text>
-              <FaComment style={{ marginLeft: '7px' }}></FaComment>
-            </Center>
-          </Button>
-        </Link>
+        }}> */}
+        <Button position={'relative'} onClick={() => {
+          setOtherUserId(otherUserId);
+          window.location.replace("/chats")
+        }} >
+          <Center>
+            <Text ml='1'>
+              {`Send ${userInfo.first_name} a message!   `}
+            </Text>
+            <FaComment style={{ marginLeft: '7px' }}></FaComment>
+          </Center>
+        </Button>
+        {/* </Link> */}
       </Center>
     </>
   );
