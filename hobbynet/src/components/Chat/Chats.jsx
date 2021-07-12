@@ -39,6 +39,10 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   }, [socket]);
 
+  useEffect(() => {
+    otherUserId && getConvoId();
+  }, []);
+
   // RUNS EVERY TIME A CHAT IS SELECTED
   useEffect(() => {
     otherUserId && getConvoId();
@@ -52,9 +56,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.error(err));
   }, [otherUserId]);
 
-  useEffect(() => {
-    otherUserId && getConvoId();
-  }, []);
+
 
   //gets all unique conversation ids
   const uniqueConversations = () => {
@@ -221,7 +223,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
             <h2>Chat with {otherUserInfo.first_name}</h2>
             {/* <h3>already 1902 messages</h3> */}
           </div>
-          <img src={otherUserInfo.profile_image} alt="" />
+          {/* <img src={otherUserInfo.profile_image} alt="" /> */}
         </header>
         <div className="MessagesContainer">
           <ul id="chat">

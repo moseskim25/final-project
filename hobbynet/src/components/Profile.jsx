@@ -14,7 +14,7 @@ import { FaComment } from 'react-icons/fa'
 import React, { useEffect, useState } from 'react';
 import { useSpring } from 'framer-motion';
 import './styles/UserProfile.scss';
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies()
@@ -25,8 +25,7 @@ export default function Profile({ getUserInfo, getUserInterests, setOtherUserId 
   const { otherUserId } = useParams();
   const [userInfo, setUserInfo] = useState('');
   const [userInterests, setUserInterests] = useState([]);
-
-  console.log("otherUserId", otherUserId);
+  let history = useHistory()
 
   const displayUserInterests = userInterests.map(interest =>
     <div className='user_interest'>
@@ -96,16 +95,9 @@ export default function Profile({ getUserInfo, getUserInterests, setOtherUserId 
         </Box>
       </Center>
       <Center py={6} position={'relative'}>
-        {/* <Link to={{
-          pathname: '/chats',
-          state: {
-            userId: userId,
-            otherUserId: otherUserId
-          }
-        }}> */}
         <Button position={'relative'} onClick={() => {
           setOtherUserId(otherUserId);
-          window.location.replace("/chats")
+          history.push("/chats")
         }} >
           <Center>
             <Text ml='1'>
@@ -114,7 +106,6 @@ export default function Profile({ getUserInfo, getUserInterests, setOtherUserId 
             <FaComment style={{ marginLeft: '7px' }}></FaComment>
           </Center>
         </Button>
-        {/* </Link> */}
       </Center>
     </>
   );
