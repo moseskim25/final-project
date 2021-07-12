@@ -49,3 +49,6 @@ insert into users_interests (user_id, interest_id, level) values (49, 9, 1);
 insert into users_interests (user_id, interest_id, level) values (4, 9, 5);
 insert into users_interests (user_id, interest_id, level) values (35, 10, 3);
 insert into users_interests (user_id, interest_id, level) values (50, 5, 4);
+insert into users_interests (user_id, interest_id, level) values (2, 11, 2);
+insert into users_interests (user_id, interest_id, level) values (3, 12, 5);
+insert into users_interests (user_id, interest_id, level) values (51, 12, 4);
