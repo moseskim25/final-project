@@ -118,6 +118,7 @@ const Navbar = (props) => {
           </Stack>
 
 
+
         </Stack>
         <Stack _hover={{ color: "#b3b3b3" }}>
           <Menu>
@@ -137,8 +138,11 @@ const Navbar = (props) => {
             <MenuList bg="white" color="black">
               <MenuItem onClick={() => history.push('/profile')}>Profile</MenuItem>
               <MenuItem onClick={() => window.location.replace("/home")}>Home</MenuItem>
-              <MenuItem onClick={() => window.location.replace("/calender")}>Calender</MenuItem>
-              <MenuItem onClick={() => window.location.replace("/settings")}>Settings</MenuItem>
+              <MenuItem>
+                <Toggle isLoggedIn={true}></Toggle>
+              </MenuItem>
+              {/* <MenuItem onClick={() => window.location.replace("/calender")}>Calender</MenuItem> */}
+              {/* <MenuItem onClick={() => window.location.replace("/settings")}>Settings</MenuItem> */}
               <MenuDivider />
               <MenuItem onClick={() => {
                 cookies.remove('user_id');
@@ -151,72 +155,75 @@ const Navbar = (props) => {
     </Flex>
     )
   }
-  return (<Flex
-    as="nav"
-    align="center"
-    justify="space-between"
-    wrap="wrap"
-    padding={6}
-    color='gray.600'
-    {...props}
-  >
-    <Flex align="center" mr={5}>
-      <Heading cursor="pointer" onClick={() => window.location.replace("/home")} as="h1" size="lg" letterSpacing={"tighter"}>
-        {/* note to self: design a logo & title and stick it here later */}
-        HOBBYNET
-      </Heading>
-    </Flex>
 
-    <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-      <HamburgerIcon />
-    </Box>
-    <Stack
-      direction="row"
+  // if logged out:
+  return (
+    <Flex
+      as="nav"
       align="center"
       justify="space-between"
-      spacing="50px"
+      wrap="wrap"
+      padding={6}
+      color='gray.600'
+      {...props}
     >
-      <Stack
-        direction={{ base: "column", md: "row" }}
-        display={{ base: isOpen ? "block" : "none", md: "flex" }}
-        width={{ base: "full", md: "auto" }}
-        alignItems="center"
-        mt={{ base: 4, md: 0 }}
-        spacing="50px"
-      >
-        {/* this is the navbar menu options, add/subtract later as necessary */}
-        <Toggle></Toggle>
+      <Flex align="center" mr={5}>
+        <Heading cursor="pointer" onClick={() => window.location.replace("/home")} as="h1" size="lg" letterSpacing={"tighter"}>
+          {/* note to self: design a logo & title and stick it here later */}
+          HOBBYNET
+        </Heading>
+      </Flex>
 
-
-      </Stack>
+      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
+        <HamburgerIcon />
+      </Box>
       <Stack
         direction="row"
-        spacing="30px"
+        align="center"
+        justify="space-between"
+        spacing="50px"
       >
-        <Button
-          as={'a'}
-          fontSize={'md'}
-          fontWeight={400}
-          variant={'link'}
-          href={'/login'}>
-          Sign In
-        </Button>
-        <Button
-          as={'a'}
-          display={{ base: 'none', md: 'inline-flex' }}
-          fontSize={'md'}
-          fontWeight={600}
-          color={'white'}
-          bg={'pink.400'}
-          href={'/register'}
-          _hover={{
-            bg: 'pink.300',
-          }}>
-          Sign Up
-        </Button>
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          display={{ base: isOpen ? "block" : "none", md: "flex" }}
+          width={{ base: "full", md: "auto" }}
+          alignItems="center"
+          mt={{ base: 4, md: 0 }}
+          spacing="50px"
+        >
+          {/* this is the navbar menu options, add/subtract later as necessary */}
+          <Toggle isLoggedIn={false}></Toggle>
+
+
+        </Stack>
+        <Stack
+          direction="row"
+          spacing="30px"
+        >
+          <Button
+            as={'a'}
+            fontSize={'md'}
+            fontWeight={400}
+            variant={'link'}
+            href={'/login'}>
+            Sign In
+          </Button>
+          <Button
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'md'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            href={'/register'}
+            _hover={{
+              bg: 'pink.300',
+            }}>
+            Sign Up
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
-  </Flex>
+    </Flex>
   )
 }
 export default Navbar;
