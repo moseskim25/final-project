@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RadioGroup, Stack, Radio } from '@chakra-ui/react'
+import { RadioGroup, Stack, Radio, Text, Box, Center } from '@chakra-ui/react'
 import '../styles/Interests.scss'
 // require("@babel/core").transformSync("code", {
 //   plugins: ["@babel/plugin-proposal-object-rest-spread"],
@@ -59,15 +59,24 @@ export default function Interests({ interestsArray, goNext, goBack }) {
     >
 
       <img className={`${interests.includes(interest.id) ? 'selectedImg ' : ''}` + 'interests_image hvr-grow'} src={interest.image} alt={interest.id}></img>
-      {toTitleCase(interest.name)}
+      <Center padding="10px 0 0 0">{toTitleCase(interest.name)}</Center>
       <RadioGroup className={`button-${interest.name}`} visibility={buttonVisibility[interest.id] ? "visible" : "hidden"} defaultValue="1">
-        <Stack spacing={4} direction="row" padding="10px 0 0 0" >
-          <Radio value="1">1</Radio>
-          <Radio value="2">2</Radio>
-          <Radio value="3">3</Radio>
-          <Radio value="4">4</Radio>
-          <Radio value="5">5</Radio>
-        </Stack>
+        <Center fontSize="2.5vh">What level are you?</Center>
+        <Box>
+          <Stack spacing={20} direction="row" padding="10px 0 0 0" >
+            <Text fontSize="1.7vh">(Total Beginner)</Text>
+            <Text fontSize="1.7vh">(Life-long Passion)</Text>
+          </Stack>
+          <Center>
+            <Stack spacing={4} direction="row" padding="10px 0 0 0" >
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
+              <Radio value="4">4</Radio>
+              <Radio value="5">5</Radio>
+            </Stack>
+          </Center>
+        </Box>
       </RadioGroup>
     </div>)
 
