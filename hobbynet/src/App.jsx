@@ -60,10 +60,6 @@ function App() {
     })
   }
 
-  
-
-
-
   useEffect(() => {
     if (userId) {
       setSocket(io("ws://localhost:8000", {
@@ -72,16 +68,15 @@ function App() {
         }
       }))
     }
-    
+
   }, [userId])
-  
+
   useEffect(() => {
     socket?.on("onlineUsers", (users) => {
-      console.log('users:', users);
       setOnlineUsers(users);
     });
   }, [socket])
-  
+
 
   return (
     <main>
