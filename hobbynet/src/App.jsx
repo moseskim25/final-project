@@ -128,7 +128,6 @@ function App() {
             getAllUsersInfo={(conversations) => {
               getAllUsersInfo(conversations)
                 .then((res) => {
-                  console.log('res.data:', res.data);
                   setAllUsersInfo(res.data);
                 })
             }}
