@@ -119,12 +119,6 @@ function App() {
         </Route>
         <Route path="/home">
           <Navbar notify={notify} socket={socket} />
-<<<<<<< HEAD
-          <UserProfile getUserInfo={getUserInfo} getUserInterests={getUserInterests} notify={notify} socket={socket} />
-          <Conversations getConversations={getConversations} setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)} />
-          <Conversation />
-          <Footer></Footer>
-=======
           <HomePage
             getUserInfo={getUserInfo}
             getUserInterests={getUserInterests}
@@ -141,7 +135,7 @@ function App() {
             }}
             allUsersInfo={allUsersInfo}
             setAllUsersInfo={setAllUsersInfo} />
->>>>>>> d0c825a825c001b38c21d12fbd663b7753ae940a
+            <Footer></Footer>
         </Route>
         <Route path="/chats" >
           <Navbar />
