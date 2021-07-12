@@ -66,7 +66,7 @@ import {
             <Center color='pink.500'>
               <MdLocationOn/>
               <Text ml={1}>
-                {userInfo.postal_code}
+                {userInfo.city}
               </Text>
             </Center>
             <Center color='pink.500'>
