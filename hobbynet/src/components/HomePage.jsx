@@ -19,7 +19,6 @@ export default function HomePage(props) {
     return history.push("/search");
   };
 
-
   useEffect(() => {
     getUserInfo(userId)
       .then(res => {
@@ -70,8 +69,9 @@ export default function HomePage(props) {
           <Conversations
             getConversations={getConversations}
             setOtherUserId={(otherUserId) => setOtherUserId(otherUserId)}
-            getAllUsersInfo={(conversations) => getAllUsersInfo(conversations)}
-            allUsersInfo={allUsersInfo} setAllUsersInfo={setAllUsersInfo}
+            getAllUsersInfo={getAllUsersInfo}
+            allUsersInfo={allUsersInfo}
+            setAllUsersInfo={setAllUsersInfo}
           />
         </div>
       </div>

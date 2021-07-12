@@ -7,7 +7,7 @@ import "./Chats.scss";
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers }) {
+export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers, getAllUsersInfo }) {
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
 
@@ -41,6 +41,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
 
   useEffect(() => {
     otherUserId && getConvoId();
+    getAllUsersInfo(conversations, userId)
   }, []);
 
   // RUNS EVERY TIME A CHAT IS SELECTED
@@ -177,7 +178,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       const otherUserId = conversation[0].user1_id === userId ? conversation[0].user2_id : conversation[0].user1_id;
       const otherUser = conversation[0].user1_id === userId ? `${conversation[0].user2_first_name} ${conversation[0].user2_last_name}` : `${conversation[0].user1_first_name} ${conversation[0].user1_last_name}`;
       const img = allUsersInfo[Number(otherUserId)] && allUsersInfo[Number(otherUserId)].profile_image;
-
+      console.log(otherUserId, otherUser, img);
       return (
         <li
           key={conversation[0].id}
