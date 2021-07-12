@@ -45,6 +45,10 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       .catch((err) => console.error(err));
   }, [otherUserId])
 
+  useEffect(() => {
+    otherUserId && getConvoId();
+  }, [])
+
   //gets all unique conversation ids
   const uniqueConversations = () => {
     const output = [];
@@ -98,6 +102,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
       if (res.data.length === 0) {
         createConvo();
       } else {
+        setConversationId(res.data[0].id)
         getConvoMessages();
       }
     });
@@ -110,6 +115,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
   };
 
   const onSubmit = (event) => {
+    console.log("dsfbsghsftghfsrthsbrtbsvfbg", event.target.message.value, conversationId, userId); /////////////////////////////////////////////////////////
     event.preventDefault();
     const message = event.target.message.value;
     axios.post(`http://localhost:8000/chats/${conversationId}/${userId}`, { message, otherUserId, otherUserInfo, user });
@@ -210,7 +216,7 @@ export default function Main({ otherUserId, socket, getConversations, setOtherUs
         </div>
         <footer>
           <form onSubmit={onSubmit}>
-            <input placeholder="Type your message" name="message"></input>
+            <input type="text" placeholder="Type your message" name="message"></input>
             <div>
               {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="" /> */}
               {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="" /> */}
