@@ -7,7 +7,7 @@ insert into interests (category_id, name, image) values (2, 'Spanish', 'https://
 insert into interests (category_id, name, image) values (2, 'Russian', 'https://cdn.britannica.com/42/3842-004-F47B77BC/Flag-Russia.jpg');
 
 insert into interests (category_id, name, image) values (3, 'painting', 'https://images.pexels.com/photos/374009/pexels-photo-374009.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
-insert into interests (category_id, name, image) values (3, 'whittling', 'https://images.pexels.com/photos/5124843/pexels-photo-5124843.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+insert into interests (category_id, name, image) values (3, 'whittling', 'https://images.pexels.com/photos/5711877/pexels-photo-5711877.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
 insert into interests (category_id, name, image) values (3, 'baking', 'https://res.cloudinary.com/dm4r202h4/image/upload/v1626123965/ux15kvbij8wxmusgwxac.png');
 
 insert into interests (category_id, name, image) values (4, 'computer science', 'https://images.pexels.com/photos/325111/pexels-photo-325111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
