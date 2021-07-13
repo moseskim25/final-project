@@ -113,6 +113,7 @@ function App() {
             getUserInfo={getUserInfo}
             getUserInterests={getUserInterests}
             setOtherUserId={setOtherUserId}
+            allUsersInfo={allUsersInfo}
           />
         </Route>
         <Route path="/register">

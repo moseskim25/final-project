@@ -20,13 +20,14 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies()
 
 
-export default function Profile({ getUserInfo, getUserInterests, setOtherUserId }) {
+export default function Profile({ getUserInfo, getUserInterests, setOtherUserId, allUsersInfo }) {
   const userId = cookies.get('user_id')
   const { otherUserId } = useParams();
   const [userInfo, setUserInfo] = useState('');
   const [userInterests, setUserInterests] = useState([]);
   let history = useHistory()
 
+  console.log('allUsersInfo on Profile.jsx:', allUsersInfo);
   const displayUserInterests = userInterests.map(interest =>
     <div className='user_interest'>
       #{interest.name}
