@@ -35,10 +35,12 @@ const Navbar = (props) => {
   }, [userId])
 
   useEffect(() => {
+    // socket?.removeAllListeners()
     socket?.on("incomingMessage", (data) => {
       console.log("data:", data);
       console.log("user:", user);
-      if (user.first_name && data.sender_first_name !== user.first_name) {
+      if (user.first_name && data.sender_first_name !== user.first_name && window.location.href !== 'http://localhost:3000/chats') {
+        console.log("NAVBAR user", user);
         notify(`${data.sender_first_name}: ${data.msg}`);
       }
     });
