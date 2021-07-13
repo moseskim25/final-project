@@ -2,9 +2,9 @@ insert into interests (category_id, name, image) values (1, 'tennis', 'https://i
 insert into interests (category_id, name, image) values (1, 'running', 'https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
 insert into interests (category_id, name, image) values (1, 'biking', 'https://res.cloudinary.com/dm4r202h4/image/upload/v1626107380/lfsvokcw8b4mih4xfqac.png');
 
-insert into interests (category_id, name, image) values (2, 'French', 'https://images.pexels.com/photos/6161502/pexels-photo-6161502.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
-insert into interests (category_id, name, image) values (2, 'Spanish', 'https://images.pexels.com/photos/54097/spain-flag-flutter-spanish-54097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
-insert into interests (category_id, name, image) values (2, 'Russian', 'https://cdn.britannica.com/42/3842-004-F47B77BC/Flag-Russia.jpg');
+insert into interests (category_id, name, image) values (2, 'french', 'https://images.pexels.com/photos/6161502/pexels-photo-6161502.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+insert into interests (category_id, name, image) values (2, 'spanish', 'https://images.pexels.com/photos/54097/spain-flag-flutter-spanish-54097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+insert into interests (category_id, name, image) values (2, 'russian', 'https://cdn.britannica.com/42/3842-004-F47B77BC/Flag-Russia.jpg');
 
 insert into interests (category_id, name, image) values (3, 'painting', 'https://images.pexels.com/photos/374009/pexels-photo-374009.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
 insert into interests (category_id, name, image) values (3, 'whittling', 'https://images.pexels.com/photos/5711877/pexels-photo-5711877.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');

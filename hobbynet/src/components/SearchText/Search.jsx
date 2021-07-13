@@ -74,10 +74,10 @@ export default function Search() {
   // We use useEffect since this is an asynchronous action
   useEffect(
     () => {
-      if (document.getElementsByClassName('input')[0]) {
-        document.getElementsByClassName('input')[0].defaultValue = capitalizeFirstLetter(window.location.href.slice(29));
-        setSearchTerm(capitalizeFirstLetter(window.location.href.slice(29)));
-      } 
+      // if (document.getElementsByClassName('input')[0]) {
+      //   document.getElementsByClassName('input')[0].defaultValue = capitalizeFirstLetter(window.location.href.slice(29));
+      //   setSearchTerm(capitalizeFirstLetter(window.location.href.slice(29)));
+      // } 
       console.log(category)
       console.log(level)
       // Make sure we have a value (user has entered something in input)
