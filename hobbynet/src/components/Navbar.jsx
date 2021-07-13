@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Box, Stack, Heading, Flex, Text, Button, useDisclosure, Menu, MenuList, MenuButton, MenuItem, MenuDivider, Image, Center } from "@chakra-ui/react";
 import Toggle from "./Toggle";
-import { HamburgerIcon, ChevronDownIcon, EmailIcon, BellIcon, ViewIcon, WarningTwoIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, ChevronDownIcon, ChatIcon, BellIcon, WarningTwoIcon, SearchIcon } from "@chakra-ui/icons";
 import Cookies from "universal-cookie";
 import { NavLink } from "react-router-dom";
 
@@ -21,17 +21,17 @@ const Navbar = (props) => {
   const [user, setUser] = useState({});
   const handleToggle = () => (isOpen ? onClose() : onOpen());
 
-  
+
   useEffect(() => {
     const getUserInfo = (user_id) => {
       return axios.get(`http://localhost:8000/users/${user_id}`)
     };
 
     getUserInfo(userId)
-    .then((res) => {
-      console.log('yes:', res.data);
-      setUser(res.data);
-    });
+      .then((res) => {
+        console.log('yes:', res.data);
+        setUser(res.data);
+      });
   }, [userId])
 
   useEffect(() => {
@@ -62,17 +62,15 @@ const Navbar = (props) => {
         <Stack direction="row" align="center" justify="space-between" spacing="50px">
           <Stack direction={{ base: "column", md: "row" }} display={{ base: isOpen ? "block" : "none", md: "flex" }} width={{ base: "full", md: "auto" }} alignItems="center" mt={{ base: 4, md: 0 }} spacing="50px">
             {/* this is the navbar menu options, add/subtract later as necessary */}
-            <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
-              <ViewIcon align="center"></ViewIcon>
-              <NavLink to="/search"></NavLink>
-            </Stack>
-            <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
-              <BellIcon align="center"></BellIcon>
+            {/* <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
+              <Text align="center"><i class="fas fa-home"></i></Text>
               <Text></Text>
+            </Stack> */}
+            <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
+              <NavLink to="/search"><SearchIcon align="center" /></NavLink>
             </Stack>
             <Stack display="flex" alignItems="center" spacing="0px" _hover={{ opacity: 0.85 }}>
-              <EmailIcon align="center"></EmailIcon>
-              <NavLink to="/chats"></NavLink>
+              <NavLink to="/chats"><ChatIcon align="center" /></NavLink>
             </Stack>
           </Stack>
           <Stack _hover={{ color: "#b3b3b3" }}>
