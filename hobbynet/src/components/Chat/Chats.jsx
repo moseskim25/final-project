@@ -7,7 +7,7 @@ import "./Chats.scss";
 
 const cookies = new Cookies();
 
-export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers, getAllUsersInfo }) {
+export default function Main({ otherUserId, socket, getConversations, setOtherUserId, allUsersInfo, onlineUsers, getAllUsersInfo, setAllUsersInfo }) {
   let history = useHistory();
   const userId = Number(cookies.get("user_id"));
 
