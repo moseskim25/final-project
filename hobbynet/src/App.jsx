@@ -148,9 +148,10 @@ function App() {
             socket={socket}
             getConversations={getConversations}
             setOtherUserId={setOtherUserId}
-            allUsersInfo={allUsersInfo}
             onlineUsers={onlineUsers}
             getAllUsersInfo={getAllUsersInfo}
+            allUsersInfo={allUsersInfo}
+            setAllUsersInfo={setAllUsersInfo}
           />
         </Route>
         <Route path="/messenger">
