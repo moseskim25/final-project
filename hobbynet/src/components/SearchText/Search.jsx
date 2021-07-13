@@ -104,6 +104,7 @@ export default function Search() {
         }
       })
       if (debouncedSearchTerm) {
+        let cleanSearchTerm = debouncedSearchTerm.toLowerCase();
         setIsSearching(true);
         getAll().then(results => {
           setResults([])
@@ -119,7 +120,7 @@ export default function Search() {
           if (cities.length !== 0) {
             results = results.filter(result => cities.indexOf(String(result.city)) > -1)
           }
-          results = results.filter(result => result.first_name.indexOf(debouncedSearchTerm) > -1 || result.last_name.indexOf(debouncedSearchTerm) > -1 || result.interestname.indexOf(debouncedSearchTerm) > -1)
+          results = results.filter(result => result.first_name.toLowerCase().indexOf(cleanSearchTerm) > -1 || result.last_name.toLowerCase().indexOf(cleanSearchTerm) > -1 || result.interestname.indexOf(cleanSearchTerm) > -1)
           setResults(results)
           setIsSearching(false);
         })
