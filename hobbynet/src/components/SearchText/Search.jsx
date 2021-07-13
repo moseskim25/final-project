@@ -4,7 +4,7 @@ import { Select, Checkbox, Center, Input, Spinner, Button, Stack } from "@chakra
 import { ChevronDownIcon } from "@chakra-ui/icons"
 import { arrayOf } from 'prop-types';
 import SearchProfile from './SearchProfile'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -39,6 +39,7 @@ function useDebounce(value, delay) {
 }
 // Usage
 export default function Search() {
+  let history = useHistory();
   // State and setter for search term
   const [searchTerm, setSearchTerm] = useState('');
   // State and setter for search results
@@ -136,6 +137,10 @@ export default function Search() {
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const handleClick = (result) => {
+    history.push(`/viewprofile/${result.user_id}`)
   }
 
 
@@ -417,7 +422,7 @@ export default function Search() {
 
       {results.map(result => (
         <Center>
-          <Link onClick={() => window.location.replace(`/viewprofile/${result.user_id}`)} >
+          <div onClick={() => handleClick(result)} >
             <SearchProfile key={result.id}
               firstName={result.first_name}
               lastName={result.last_name}
@@ -427,7 +432,7 @@ export default function Search() {
               img={result.profile_image}
               city={result.city} 
             />
-          </Link>
+          </div>
         </Center>
       ))}
     </>
