@@ -39,8 +39,8 @@ export default function LandingPage() {
               </Text>{' '}
             </Heading>
             <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Amet non, voluptatibus soluta voluptas suscipit fugit laudantium!
+              Tired of practicing French alone? Need a friend to start a rock band?
+              Looking for accountability in your running routine? Hobbynet is here to help!
             </Text>
             <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
               <Button
