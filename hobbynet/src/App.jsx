@@ -55,7 +55,7 @@ function App() {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   const notify = (msg) => {
-    toast(msg, {
+    toast.info(msg, {
       position: toast.POSITION.BOTTOM_LEFT
     })
   }
